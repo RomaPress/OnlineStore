@@ -7,14 +7,8 @@ import com.pres.model.Product;
 import com.pres.model.User;
 
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Level;
+import java.sql.*;
+import java.util.*;
 
 public class OrderRepository implements Repository {
     private static OrderRepository orderRepository;
@@ -46,7 +40,7 @@ public class OrderRepository implements Repository {
         return order;
     }
 
-    public boolean createProductInOrder(Product product, Order order) {
+    public boolean addProductInOrder(Product product, Order order) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_ORDER_PRODUCT)) {
             statement.setInt(1, order.getId());
@@ -67,9 +61,10 @@ public class OrderRepository implements Repository {
             connection = getConnection();
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+
             Order order = OrderRepository.getInstance().createOrder(user);
             for (Map.Entry<Integer, Product> i : products.entrySet()) {
-                createProductInOrder(i.getValue(), order);
+                addProductInOrder(i.getValue(), order);
             }
             connection.commit();
         } catch (SQLException | NamingException e) {
@@ -91,5 +86,59 @@ public class OrderRepository implements Repository {
             }
         }
         return true;
+    }
+
+    public List<Order> findAllOrders() {
+        List<Order> orders = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_ORDER)) {
+            int id = 0;
+            Order order = null;
+            List<Product> products = null;
+            while (rs.next()) {
+                id = rs.getInt(ConstantDB.ID);
+
+                //если заказа с currentId еще не было
+                if (!set.contains(id)) {
+                    set.add(id);
+
+                    //если заказ был создан и больше его товаров нет --> добавляем его в список
+                    if (order != null) {
+                        order.setProducts(products);
+                        orders.add(order);
+                    }
+
+                    //инициализируем ресурсы, для следующего заказа
+                    products = new ArrayList<>();
+                    order = new Order();
+
+                    //добавляю инф заказа
+                    order.setId(id);
+                    order.setDateTime(rs.getString(ConstantDB.DATE_TIME));
+                    order.setTotal(rs.getDouble(ConstantDB.TOTAL));
+                    order.setStatus(rs.getString(ConstantDB.STATUS));
+                    order.setUser(new User.Builder()
+                            .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
+                            .setLastName(rs.getString(ConstantDB.LAST_NAME))
+                            .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
+                            .build());
+                }
+                //добавляю информацию о продукте
+                products.add(new Product.Builder()
+                        .setName(rs.getString(ConstantDB.PRODUCT))
+                        .setAmount(rs.getInt(ConstantDB.AMOUNT))
+                        .setPrice(rs.getDouble(ConstantDB.PRICE))
+                        .build());
+            }
+            if (order != null) {
+                order.setProducts(products);
+                orders.add(order);
+            }
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

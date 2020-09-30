@@ -11,7 +11,7 @@
     <input  type="submit" value="Регистрация">
 </form>
 <br><br><br><br><br>
-<form method="post" action="${pageContext.request.contextPath}/authorization">
+<form method="post" action="${pageContext.request.contextPath}/">
     <input  type="text" name="login" required placeholder="login" pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
     <br><br>
     <input  type="password" name="password" required placeholder="password" pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>

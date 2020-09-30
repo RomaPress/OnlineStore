@@ -83,9 +83,17 @@ public class User implements Serializable {
             return this;
         }
 
-        public Builder setRole(Role role) {
-            this.role = role;
-            return this;
+        public Builder setRole(String role) {
+            if (role.equalsIgnoreCase(Role.ADMIN.value())){
+                this.role = Role.ADMIN;
+                return this;
+            }else if (role.equalsIgnoreCase(Role.USER.value())){
+                this.role = Role.USER;
+                return this;
+            }else{
+                this.role = Role.UNKNOWN;
+                return this;
+            }
         }
 
         public Builder setPhoneNumber(String phoneNumber) {

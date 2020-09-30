@@ -78,7 +78,6 @@ public class UserRepository implements Repository {
             statement.setString(1, login);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                String role = rs.getString(ConstantDB.NAME);
                 user = new User.Builder()
                         .setId(rs.getInt(ConstantDB.ID))
                         .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
@@ -86,7 +85,7 @@ public class UserRepository implements Repository {
                         .setLogin(rs.getString(ConstantDB.LOGIN))
                         .setPassword(rs.getString(ConstantDB.PASSWORD))
                         .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
-                        .setRole(role.equalsIgnoreCase(User.Role.USER.value()) ? User.Role.USER : User.Role.ADMIN)
+                        .setRole(rs.getString(ConstantDB.NAME))
                         .build();
             }
         } catch (SQLException | NamingException e) {

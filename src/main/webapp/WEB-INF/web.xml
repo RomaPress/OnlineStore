@@ -63,4 +63,14 @@
     <servlet-class>com.pres.servlets.servlet.BasketServlet</servlet-class>
   </servlet>
 
+  <!--OrdersCatalog-->
+  <servlet-mapping>
+    <servlet-name>OrdersCatalog</servlet-name>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>OrdersCatalog</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.OrderCatalogServlet</servlet-class>
+  </servlet>
+
 </web-app>

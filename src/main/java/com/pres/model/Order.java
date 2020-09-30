@@ -1,13 +1,32 @@
 package com.pres.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Order {
     private int id;
     private User user;
+    private List<Product> products;
+    private String dateTime;
     private Status status;
     private String invoiceNumber;
-    private double sum;
+    private double total;
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public int getId() {
         return id;
@@ -29,10 +48,15 @@ public class Order {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(String status) {
+        if (status.equalsIgnoreCase(Order.Status.REGISTERED.value())){
+            this.status = Order.Status.REGISTERED;
+        }else if (status.equalsIgnoreCase(Order.Status.PAID.value())){
+            this.status = Order.Status.PAID;
+        }else if (status.equalsIgnoreCase(Order.Status.CANCELED.value())){
+            this.status = Order.Status.CANCELED;
+        }
     }
-
 
     public String getInvoiceNumber() {
         return invoiceNumber;
@@ -42,12 +66,12 @@ public class Order {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public double getSum() {
-        return sum;
+    public double getTotal() {
+        return total;
     }
 
-    public void setSum(double sum) {
-        this.sum = sum;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public enum Status {
