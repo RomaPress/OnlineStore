@@ -25,22 +25,20 @@ public class AuthorizationServlet extends HttpServlet {
 
         if (req.getParameterMap().containsKey("loggingIn") && isExist) {
             User user = UserRepository.getInstance().getUserByLogin(login);
-            moveToPage(req,resp, resp, user);
+            moveToPage(req,resp, user);
         } else {
             doGet(req, resp);
         }
     }
 
-    private void moveToPage(HttpServletRequest req,HttpServletResponse resp, HttpServletResponse res, User user) throws ServletException, IOException {
+    private void moveToPage(HttpServletRequest req,HttpServletResponse resp, User user) throws IOException {
         HttpSession session = req.getSession();
         session.setAttribute("currentUser", user);
         User user2 = (User) session.getAttribute("currentUser");
         if (user.getRole().equals(User.Role.ADMIN)) {
             resp.sendRedirect(req.getContextPath() + "/order");
-//            req.getRequestDispatcher("/WEB-INF/view/admin_menu.jsp").forward(req, res);
         }else if (user.getRole().equals(User.Role.USER)) {
             resp.sendRedirect(req.getContextPath() + "/catalog");
-//            req.getRequestDispatcher("/WEB-INF/view/catalog.jsp").forward(req, res);
         }
     }
 }

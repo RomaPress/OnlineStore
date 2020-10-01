@@ -1,4 +1,4 @@
-package com.pres.servlets.servlet;
+package com.pres.servlets.servlet.admin;
 
 import com.pres.database.repository.impl.OrderRepository;
 
@@ -12,7 +12,7 @@ public class OrderCatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("orders", OrderRepository.getInstance().findAllOrders());
-        req.getRequestDispatcher("/WEB-INF/view/admin_menu.jsp").forward(req, resp);
+        req.setAttribute("orders" ,OrderRepository.getInstance().findAllOrders());
+        req.getRequestDispatcher("/WEB-INF/view/admin/admin_menu.jsp").forward(req, resp);
     }
 }

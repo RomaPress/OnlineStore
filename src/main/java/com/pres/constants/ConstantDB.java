@@ -32,6 +32,16 @@ public class ConstantDB {
             "LEFT JOIN product p on p.id = op.product_id " +
             "LEFT JOIN user u on u.id = o.user_id ORDER BY o.id ";
 
+    public static final String SQL_FIND_ORDER_BY_ID = "SELECT  o.id as id, s.name as status, o.date_time,\n" +
+            "    u.first_name, u.last_name, u.phone_number,\n" +
+            "    p.name as product, op.amount,p.price, o.total\n" +
+            "    FROM order_product op\n" +
+            "    LEFT JOIN `order` o on o.id = op.order_id\n" +
+            "    LEFT JOIN status s on s.id = o.status_id\n" +
+            "    LEFT JOIN product p on p.id = op.product_id\n" +
+            "    LEFT JOIN user u on u.id = o.user_id\n" +
+            "    WHERE o.id = ?;";
+
     // This table names product
     public static final String ID = "id";
     public static final String NAME = "name";

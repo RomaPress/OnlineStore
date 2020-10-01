@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
 <head>
@@ -56,15 +56,15 @@
             </td>
             <td><c:out value="${i.total}"/></td>
             <td>
-                <form method="post" action="">
-                    <input type="number" hidden name="delete" value="${i.id}" />
-                    <input type="submit" name="delete" value="delete"/>
+                <form method="get" action="${pageContext.request.contextPath}/changeOrder">
+                    <input type="text" hidden name="update"/>
+                    <button type="submit" value="${i.id}" name="id">Update</button>
                 </form>
 
-                <form method="get" action="">
-                    <input type="number" hidden name="order_id" value="${i.id}" />
-                    <input type="submit"  name="update" value="update"/>
-                </form>
+<%--                <form method="get"action="${pageContext.request.contextPath}/catalog">--%>
+<%--                    <input type="number" hidden name="order_id" value="${i.id}" />--%>
+<%--                    <input type="submit"  name="update" value="update"/>--%>
+<%--                </form>--%>
 
             </td>
         </tr>

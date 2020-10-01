@@ -1,4 +1,4 @@
-package com.pres.servlets.servlet;
+package com.pres.servlets.servlet.user;
 
 import com.pres.database.repository.impl.OrderRepository;
 import com.pres.model.Product;
@@ -23,7 +23,7 @@ public class BasketServlet extends HttpServlet {
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
 
         req.setAttribute("selectedProduct", new ArrayList<>(map.values()));
-        req.getRequestDispatcher("/WEB-INF/view/basket.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/view/user/basket.jsp").forward(req, resp);
     }
 
     @Override

@@ -89,55 +89,71 @@ public class OrderRepository implements Repository {
     }
 
     public List<Order> findAllOrders() {
-        List<Order> orders = new ArrayList<>();
-        Set<Integer> set = new HashSet<>();
+        List<Order> orders = null;
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_ORDER)) {
-            int id = 0;
-            Order order = null;
-            List<Product> products = null;
-            while (rs.next()) {
-                id = rs.getInt(ConstantDB.ID);
+            orders = buildOrders(rs);
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
 
-                //если заказа с currentId еще не было
-                if (!set.contains(id)) {
-                    set.add(id);
-
-                    //если заказ был создан и больше его товаров нет --> добавляем его в список
-                    if (order != null) {
-                        order.setProducts(products);
-                        orders.add(order);
-                    }
-
-                    //инициализируем ресурсы, для следующего заказа
-                    products = new ArrayList<>();
-                    order = new Order();
-
-                    //добавляю инф заказа
-                    order.setId(id);
-                    order.setDateTime(rs.getString(ConstantDB.DATE_TIME));
-                    order.setTotal(rs.getDouble(ConstantDB.TOTAL));
-                    order.setStatus(rs.getString(ConstantDB.STATUS));
-                    order.setUser(new User.Builder()
-                            .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
-                            .setLastName(rs.getString(ConstantDB.LAST_NAME))
-                            .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
-                            .build());
-                }
-                //добавляю информацию о продукте
-                products.add(new Product.Builder()
-                        .setName(rs.getString(ConstantDB.PRODUCT))
-                        .setAmount(rs.getInt(ConstantDB.AMOUNT))
-                        .setPrice(rs.getDouble(ConstantDB.PRICE))
-                        .build());
-            }
-            if (order != null) {
-                order.setProducts(products);
-                orders.add(order);
+    public Order findOrderById(int id) {
+        Order order = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_ID)) {
+            statement.setInt(1,id);
+            try (ResultSet rs = statement.executeQuery()) {
+                order = buildOrders(rs).get(0);
             }
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
+        }
+        return order;
+    }
+
+    private List<Order> buildOrders(ResultSet rs) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+
+        int id = 0;
+        Order order = null;
+        List<Product> products = null;
+        while (rs.next()) {
+            id = rs.getInt(ConstantDB.ID);
+
+            if (!set.contains(id)) {
+                set.add(id);
+
+                if (order != null) {
+                    order.setProducts(products);
+                    orders.add(order);
+                }
+
+                products = new ArrayList<>();
+                order = new Order();
+
+                order.setId(id);
+                order.setDateTime(rs.getString(ConstantDB.DATE_TIME));
+                order.setTotal(rs.getDouble(ConstantDB.TOTAL));
+                order.setStatus(rs.getString(ConstantDB.STATUS));
+                order.setUser(new User.Builder()
+                        .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
+                        .setLastName(rs.getString(ConstantDB.LAST_NAME))
+                        .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
+                        .build());
+            }
+            products.add(new Product.Builder()
+                    .setName(rs.getString(ConstantDB.PRODUCT))
+                    .setAmount(rs.getInt(ConstantDB.AMOUNT))
+                    .setPrice(rs.getDouble(ConstantDB.PRICE))
+                    .build());
+        }
+        if (order != null) {
+            order.setProducts(products);
+            orders.add(order);
         }
         return orders;
     }

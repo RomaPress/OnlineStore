@@ -63,7 +63,7 @@
 
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../js/popUp.js"%>
+    <%@include file="../../js/popUp.js"%>
 </script>
 
 

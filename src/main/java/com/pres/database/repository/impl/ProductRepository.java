@@ -43,7 +43,7 @@ public class ProductRepository implements Repository {
         return products;
     }
 
-    public Product findProductByIdWithOwnAmount(int id, int amount) {
+    public Product findProductByIdWithCurrentAmount(int id, int amount) {
         Product product = null;
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_PRODUCT_BY_ID)) {

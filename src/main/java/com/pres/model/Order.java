@@ -1,9 +1,12 @@
 package com.pres.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 74645L;
+
     private int id;
     private User user;
     private List<Product> products;

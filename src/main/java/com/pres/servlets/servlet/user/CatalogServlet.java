@@ -1,4 +1,4 @@
-package com.pres.servlets.servlet;
+package com.pres.servlets.servlet.user;
 
 import com.pres.database.repository.impl.ProductRepository;
 import com.pres.model.Product;
@@ -17,7 +17,7 @@ public class CatalogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("/WEB-INF/view/catalog.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/view/user/catalog.jsp").forward(req, resp);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CatalogServlet extends HttpServlet {
 
 
         Product product = ProductRepository.getInstance()
-                .findProductByIdWithOwnAmount(id, amount);
+                .findProductByIdWithCurrentAmount(id, amount);
 
         @SuppressWarnings("unchecked")
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");

@@ -40,13 +40,13 @@
 </table>
 
 <br>
-<form method="post" action="${pageContext.request.contextPath}/basket">
+<form method="post" action="${pageContext.request.contextPath}/catalog">
     <button type="submit" name="order">Delete</button>
 </form>
 
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../js/popUp.js"%>
+    <%@include file="../../js/popUp.js"%>
 </script>
 </body>
 </html>

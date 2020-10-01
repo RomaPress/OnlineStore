@@ -50,7 +50,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Catalog</servlet-name>
-    <servlet-class>com.pres.servlets.servlet.CatalogServlet</servlet-class>
+    <servlet-class>com.pres.servlets.servlet.user.CatalogServlet</servlet-class>
   </servlet>
 
   <!--Basket-->
@@ -60,7 +60,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Basket</servlet-name>
-    <servlet-class>com.pres.servlets.servlet.BasketServlet</servlet-class>
+    <servlet-class>com.pres.servlets.servlet.user.BasketServlet</servlet-class>
   </servlet>
 
   <!--OrdersCatalog-->
@@ -70,7 +70,18 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>OrdersCatalog</servlet-name>
-    <servlet-class>com.pres.servlets.servlet.OrderCatalogServlet</servlet-class>
+    <servlet-class>com.pres.servlets.servlet.admin.OrderCatalogServlet</servlet-class>
+  </servlet>
+
+
+  <!--ChangeOrder-->
+  <servlet-mapping>
+    <servlet-name>ChangeOrder</servlet-name>
+    <url-pattern>/changeOrder</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ChangeOrder</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.admin.ChangeOrderServlet</servlet-class>
   </servlet>
 
 </web-app>
