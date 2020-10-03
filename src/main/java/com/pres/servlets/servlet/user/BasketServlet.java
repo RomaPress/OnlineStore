@@ -28,6 +28,8 @@ public class BasketServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //todo --------------> bug!
         HttpSession session = req.getSession();
         @SuppressWarnings("unchecked")
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
@@ -41,6 +43,7 @@ public class BasketServlet extends HttpServlet {
         } else if (req.getParameterMap().containsKey("order")) {
             User user = (User) session.getAttribute("currentUser");
             OrderRepository.getInstance().doOrder(map, user);
+            resp.sendRedirect(req.getContextPath() + "/catalog");
         }
     }
 }

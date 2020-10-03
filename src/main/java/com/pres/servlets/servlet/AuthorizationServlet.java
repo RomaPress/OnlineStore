@@ -21,7 +21,7 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String login = req.getParameter("login");
         final String password = req.getParameter("password");
-        final boolean isExist = UserRepository.getInstance().isUserAuthorization(login, password);
+        final boolean isExist = UserRepository.getInstance().isUserAuthorized(login, password);
 
         if (req.getParameterMap().containsKey("loggingIn") && isExist) {
             User user = UserRepository.getInstance().getUserByLogin(login);
@@ -34,7 +34,7 @@ public class AuthorizationServlet extends HttpServlet {
     private void moveToPage(HttpServletRequest req,HttpServletResponse resp, User user) throws IOException {
         HttpSession session = req.getSession();
         session.setAttribute("currentUser", user);
-        User user2 = (User) session.getAttribute("currentUser");
+
         if (user.getRole().equals(User.Role.ADMIN)) {
             resp.sendRedirect(req.getContextPath() + "/order");
         }else if (user.getRole().equals(User.Role.USER)) {

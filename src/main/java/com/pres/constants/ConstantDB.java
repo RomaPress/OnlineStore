@@ -3,12 +3,18 @@ package com.pres.constants;
 import com.pres.model.Order;
 import com.pres.model.User;
 
-public class ConstantDB {
-    public static final String SQL_FIND_ALL_PRODUCT = "SELECT id, name, price, amount, description FROM product;";
+public final class ConstantDB {
+    //Product
 
-    public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT name, price, amount, description FROM product WHERE id = ?;";
 
-    public static final String SQL_FIND_ROLE_BY_LOGIN_AND_PASSWORD = "SELECT r.name FROM role r, user u WHERE r.id = u.role_id AND login = ? AND password = ?;";
+
+    public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
+            "WHERE type_id = t.id GROUP BY p.id";
+
+    public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
+            "WHERE  type_id = t.id AND p.id = ?;";
+
+
 
     public static final String SQL_FIND_USER_BY_LOGIN = "SELECT u.id, r.name , first_name, last_name, login, password, phone_number FROM user u, role r  WHERE login = ? AND u.role_id = r.id;";
 
@@ -32,7 +38,7 @@ public class ConstantDB {
             "LEFT JOIN product p on p.id = op.product_id " +
             "LEFT JOIN user u on u.id = o.user_id ORDER BY o.id ";
 
-    public static final String SQL_FIND_ORDER_BY_ID = "SELECT  o.id as id, s.name as status, o.date_time,\n" +
+    public static final String SQL_FIND_ORDER_BY_ID = "SELECT  o.id as id, s.name as status, o.date_time, " +
             "    u.first_name, u.last_name, u.phone_number,\n" +
             "    p.name as product, op.amount,p.price, o.total\n" +
             "    FROM order_product op\n" +
@@ -48,6 +54,11 @@ public class ConstantDB {
     public static final String PRICE = "price";
     public static final String AMOUNT = "amount";
     public static final String DESCRIPTION = "description";
+
+    // This table names type
+    public static final String TYPE_ID = "type_id";
+    public static final String TYPE_NAME = "type_name";
+
 
     // This table names user
     public static final String FIRST_NAME = "first_name";
@@ -69,7 +80,4 @@ public class ConstantDB {
 
     public static final String COUNT = "count";
 
-
-    private ConstantDB() {
-    }
 }

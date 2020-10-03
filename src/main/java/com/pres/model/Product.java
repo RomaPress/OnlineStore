@@ -11,6 +11,7 @@ public class Product implements Serializable {
     private double price;
     private int amount;
     private String description;
+    private Type type;
 
     private Product(){}
 
@@ -20,6 +21,11 @@ public class Product implements Serializable {
         this.price = builder.price;
         this.amount = builder.amount;
         this.description = builder.description;
+        this.type = builder.type;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public int getId() {
@@ -48,6 +54,7 @@ public class Product implements Serializable {
         private double price;
         private int amount;
         private String description;
+        private Type type;
 
         public Product build(){
             return new Product(this);
@@ -55,6 +62,11 @@ public class Product implements Serializable {
 
         public Builder setId(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder setType(Type type) {
+            this.type = type;
             return this;
         }
 

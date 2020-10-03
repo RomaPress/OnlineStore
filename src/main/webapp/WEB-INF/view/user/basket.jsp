@@ -20,19 +20,16 @@
     <tbody>
     <c:forEach var="i" items="${selectedProduct}">
         <tr>
-
             <td><p><c:out value="${i.id}"/></p></td>
             <td><p><c:out value="${i.name}"/></p></td>
             <td><p><c:out value="${i.price}"/></p></td>
             <td><p><c:out value="${i.amount}"/></p></td>
-
             <td>
                 <form method="post" action="${pageContext.request.contextPath}/basket">
                     <input type="text" hidden name="delete"/>
                     <button type="submit" value="${i.id}" name="deleteId">Delete</button>
                 </form>
             </td>
-
         </tr>
     </c:forEach>
     </tbody>
@@ -40,13 +37,13 @@
 </table>
 
 <br>
-<form method="post" action="${pageContext.request.contextPath}/catalog">
-    <button type="submit" name="order">Delete</button>
+<form method="post" action="${pageContext.request.contextPath}/basket">
+    <button type="submit" name="order">Order</button>
 </form>
 
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../../js/popUp.js"%>
+    <%@include file="../../../js/ajax.js"%>
 </script>
 </body>
 </html>

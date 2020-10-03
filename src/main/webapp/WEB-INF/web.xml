@@ -14,6 +14,12 @@
     <url-pattern>/</url-pattern>
   </filter-mapping>
 
+  <!--  Img.  -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/img/*</url-pattern>
+  </servlet-mapping>
+
   <!--  DB  -->
   <resource-ref>
     <res-ref-name>jdbc/onlinestore</res-ref-name>
@@ -84,4 +90,13 @@
     <servlet-class>com.pres.servlets.servlet.admin.ChangeOrderServlet</servlet-class>
   </servlet>
 
+  <!--Log out-->
+  <servlet-mapping>
+    <servlet-name>Log out</servlet-name>
+    <url-pattern>/exit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Log out</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.LogOutServlet</servlet-class>
+  </servlet>
 </web-app>

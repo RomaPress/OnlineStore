@@ -8,66 +8,67 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"
             type="text/javascript"></script>
 
-
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style type="text/css">
+        <%@include file="../../../css/style.css"%>
+    </style>
 </head>
 <body>
 
 
-<h1>Catalog products</h1>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="${pageContext.request.contextPath}/basket">Корзина</a>
+    <a href="#">Каталог</a>
+    <a href="#">Мой профиль</a>
+    <a href="${pageContext.request.contextPath}/exit">Выйти</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()"> <b>☰ Меню</b></span>
 
 
+<div id="main">
+    <div class="container ">
+        <div class="row">
+            <h1>Catalog products</h1>
+        </div>
+    </div>
+    <div class="container my__container">
+        <div class="row">
+            <c:forEach var="i" items="${products}">
+                <div class="col-3 my__col product">
+                    <div class="catalog__img">
+                        <img src="${pageContext.request.contextPath}/img/${i.id}.jpg" alt="img" width="175px"
+                             height="175px">
+                    </div>
+                    <p class="name__product"><b><c:out value="${i.name}"/></b><br> <c:out value="${i.price}"/>грн.</p>
+                    <p><c:out value="${i.amount}"/> на складе</p>
 
-
-<form method="get" action="${pageContext.request.contextPath}/basket">
-    <input type="submit" value="Корзина" >
-</form>
-<br>
-<%-------------------------------ТОВАР-------------------------------%>
-<table border="1" >
-    <thead>
-    <tr>
-        <th scope="col"><p>Id</p></th>
-        <th scope="col"><p>Name</p></th>
-        <th scope="col"><p>Цена</p></th>
-        <th scope="col"><p>Amount</p></th>
-        <th scope="col"><p>Description</p></th>
-        <th scope="col"><p></p></th>
-    </tr>
-    <tbody>
-    <c:forEach var="i" items="${products}">
-        <tr>
-
-            <td><p><c:out value="${i.id}"/></p></td>
-            <td><p><c:out value="${i.name}"/></p></td>
-            <td><p><c:out value="${i.price}"/></p></td>
-            <td><p><c:out value="${i.amount}"/></p></td>
-            <td><p><c:out value="${i.description}"/></p></td>
-            <td>
-                <input type="number" id="amount<c:out value="${i.id}"/>" min="1" max="${i.amount}"/>
-                <button type="button" id="btn" value="${i.id}" onclick=addProduct(this)>Add</button>
-            </td>
-
-        </tr>
-    </c:forEach>
-    </tbody>
-    </thead>
-</table>
-<%-------------------------------ТОВАР-------------------------------%>
-
-<%-------------------------------POPUP-------------------------------%>
-
-
-<%-------------------------------POPUP-------------------------------%>
-
+                    <div class="form_input_number">
+                        <button class="my__catalogBtn minus" type="button" onclick="this.nextElementSibling.stepDown()">
+                            <b>-</b></button>
+                        <input class="my__inputN" type="number" readonly id="amount<c:out value="${i.id}"/>" min="1"
+                               max="${i.amount}"/>
+                        <button class="my__catalogBtn plus" type="button"
+                                onclick="this.previousElementSibling.stepUp()"><b>+</b></button>
+                        <br>
+                        <button class="my__catalogBtn" type="button" id="btn" value="${i.id}" onclick=addProduct(this)>В
+                            корзину
+                        </button>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../../js/popUp.js"%>
+    <%@include file="../../../js/ajax.js"%>
+    <%@include file="../../../js/side.js"%>
 </script>
-
-
-
-
 </body>
 </html>

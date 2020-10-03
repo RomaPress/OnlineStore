@@ -89,8 +89,8 @@ public class Order implements Serializable {
         public String value() {
             return value;
         }
-
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

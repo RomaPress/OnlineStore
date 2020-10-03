@@ -1,14 +1,16 @@
 package com.pres.database.repository.impl;
 
-import com.pres.constants.ConstantDB;
+import com.pres.database.dao.impl.OrderDAO;
 import com.pres.database.repository.Repository;
 import com.pres.model.Order;
 import com.pres.model.Product;
 import com.pres.model.User;
 
 import javax.naming.NamingException;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 public class OrderRepository implements Repository {
     private static OrderRepository orderRepository;
@@ -22,139 +24,64 @@ public class OrderRepository implements Repository {
         return orderRepository;
     }
 
-    public Order createOrder(User user) {
-        Order order = new Order();
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, user.getId());
-            statement.executeUpdate();
-            try (ResultSet rs = statement.getGeneratedKeys()) {
-                int key = rs.next() ? rs.getInt(1) : 0;
-                if (key != 0) {
-                    order.setId(key);
-                }
-            }
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
-        return order;
-    }
-
-    public boolean addProductInOrder(Product product, Order order) {
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_ORDER_PRODUCT)) {
-            statement.setInt(1, order.getId());
-            statement.setInt(2, product.getId());
-            statement.setInt(3, product.getAmount());
-            statement.execute();
-            return true;
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
-    public boolean doOrder(Map<Integer, Product> products, User user) {
+    public void doOrder(Map<Integer, Product> products, User user) {
         Connection connection = null;
         try {
-            connection = getConnection();
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-
-            Order order = OrderRepository.getInstance().createOrder(user);
-            for (Map.Entry<Integer, Product> i : products.entrySet()) {
-                addProductInOrder(i.getValue(), order);
-            }
+            connection = setTransaction();
+            new OrderDAO().insertOrderInfo(connection, products,  user);
             connection.commit();
         } catch (SQLException | NamingException e) {
-            try {
-                if (connection != null) {
-                    connection.rollback();
-                }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            tryRollback(connection);
             e.printStackTrace();
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            tryClose(connection);
         }
-        return true;
     }
 
-    public List<Order> findAllOrders() {
+    public List<Order> findAllOrders(){
         List<Order> orders = null;
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_ORDER)) {
-            orders = buildOrders(rs);
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
+        try(Connection connection = getConnection()) {
+            orders = new OrderDAO().select(connection);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
         }
         return orders;
     }
 
-    public Order findOrderById(int id) {
+    public Order findOrderById(int id){
         Order order = null;
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_ID)) {
-            statement.setInt(1,id);
-            try (ResultSet rs = statement.executeQuery()) {
-                order = buildOrders(rs).get(0);
-            }
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
+        try(Connection connection = getConnection()) {
+            order = new OrderDAO().selectById(connection, id);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
         }
         return order;
     }
 
-    private List<Order> buildOrders(ResultSet rs) throws SQLException {
-        List<Order> orders = new ArrayList<>();
-        Set<Integer> set = new HashSet<>();
-
-        int id = 0;
-        Order order = null;
-        List<Product> products = null;
-        while (rs.next()) {
-            id = rs.getInt(ConstantDB.ID);
-
-            if (!set.contains(id)) {
-                set.add(id);
-
-                if (order != null) {
-                    order.setProducts(products);
-                    orders.add(order);
-                }
-
-                products = new ArrayList<>();
-                order = new Order();
-
-                order.setId(id);
-                order.setDateTime(rs.getString(ConstantDB.DATE_TIME));
-                order.setTotal(rs.getDouble(ConstantDB.TOTAL));
-                order.setStatus(rs.getString(ConstantDB.STATUS));
-                order.setUser(new User.Builder()
-                        .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
-                        .setLastName(rs.getString(ConstantDB.LAST_NAME))
-                        .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
-                        .build());
+    private void tryRollback(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
-            products.add(new Product.Builder()
-                    .setName(rs.getString(ConstantDB.PRODUCT))
-                    .setAmount(rs.getInt(ConstantDB.AMOUNT))
-                    .setPrice(rs.getDouble(ConstantDB.PRICE))
-                    .build());
         }
-        if (order != null) {
-            order.setProducts(products);
-            orders.add(order);
+    }
+
+    private void tryClose(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         }
-        return orders;
+    }
+
+    private Connection setTransaction() throws SQLException, NamingException{
+        Connection connection = getConnection();
+        connection.setAutoCommit(false);
+        connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        return connection;
     }
 }
