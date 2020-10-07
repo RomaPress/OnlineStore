@@ -14,6 +14,24 @@ public class Order implements Serializable {
     private Status status;
     private String invoiceNumber;
     private double total;
+    private String city;
+    private int postOffice;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getPostOffice() {
+        return postOffice;
+    }
+
+    public void setPostOffice(int postOffice) {
+        this.postOffice = postOffice;
+    }
 
     public String getDateTime() {
         return dateTime;

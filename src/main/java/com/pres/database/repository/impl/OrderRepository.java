@@ -48,6 +48,16 @@ public class OrderRepository implements Repository {
         return orders;
     }
 
+    public List<Order> findOrderByUser(User user){
+        List<Order> orders = null;
+        try(Connection connection = getConnection()) {
+            orders = new OrderDAO().selectByUser(connection, user);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
+        return orders;
+    }
+
     public Order findOrderById(int id){
         Order order = null;
         try(Connection connection = getConnection()) {
@@ -56,6 +66,14 @@ public class OrderRepository implements Repository {
             throwables.printStackTrace();
         }
         return order;
+    }
+
+    public void deleteProductFromOrder(Order order, int productId){
+        try(Connection connection = getConnection()){
+            new OrderDAO().deleteProductFromOrder(connection, order, productId);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private void tryRollback(Connection connection) {

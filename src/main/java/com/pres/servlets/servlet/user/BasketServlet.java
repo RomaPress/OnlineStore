@@ -23,13 +23,13 @@ public class BasketServlet extends HttpServlet {
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
 
         req.setAttribute("selectedProduct", new ArrayList<>(map.values()));
-        req.getRequestDispatcher("/WEB-INF/view/user/basket.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/user/basket.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //todo --------------> bug!
+        //todo --------------> implement filter which check this map.size() !=0 !
         HttpSession session = req.getSession();
         @SuppressWarnings("unchecked")
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
@@ -40,10 +40,14 @@ public class BasketServlet extends HttpServlet {
             map.remove(id);
             session.setAttribute("selectedProduct", map);
             doGet(req, resp);
-        } else if (req.getParameterMap().containsKey("order")) {
+        } else if (req.getParameterMap().containsKey("order") && map.size() != 0) {
+
             User user = (User) session.getAttribute("currentUser");
             OrderRepository.getInstance().doOrder(map, user);
             resp.sendRedirect(req.getContextPath() + "/catalog");
+
         }
     }
+
+
 }

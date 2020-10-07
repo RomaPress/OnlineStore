@@ -12,7 +12,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <style type="text/css">
-        <%@include file="../../../css/style.css"%>
+        <%@include file="../../css/style.css"%>
     </style>
 </head>
 <body>
@@ -20,18 +20,24 @@
 
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="${pageContext.request.contextPath}/basket">Корзина</a>
-    <a href="#">Каталог</a>
-    <a href="#">Мой профиль</a>
+    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
+    <c:if test="${currentUser.role != UNKNOW}">
+        <a href="${pageContext.request.contextPath}/basket">Корзина</a>
+        <a href="${pageContext.request.contextPath}/profile">Мой профиль</a>
+    </c:if>
     <a href="${pageContext.request.contextPath}/exit">Выйти</a>
 </div>
 
 <!-- Use any element to open the sidenav -->
-<span onclick="openNav()"> <b>☰ Меню</b></span>
+<span onclick="openNav()">
+    <div class="menu">
+        <b>☰</b>
+    </div>
+</span>
 
 
 <div id="main">
-    <div class="container ">
+    <div class="container">
         <div class="row">
             <h1>Catalog products</h1>
         </div>
@@ -55,8 +61,8 @@
                         <button class="my__catalogBtn plus" type="button"
                                 onclick="this.previousElementSibling.stepUp()"><b>+</b></button>
                         <br>
-                        <button class="my__catalogBtn" type="button" id="btn" value="${i.id}" onclick=addProduct(this)>В
-                            корзину
+                        <button class="my__catalogBtn btn" type="button" value="${i.id}" onclick=addProduct(this)>
+                            В корзину
                         </button>
                     </div>
                 </div>
@@ -67,8 +73,8 @@
 
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../../../js/ajax.js"%>
-    <%@include file="../../../js/side.js"%>
+    <%@include file="../../js/ajax.js"%>
+    <%@include file="../../js/side.js"%>
 </script>
 </body>
 </html>

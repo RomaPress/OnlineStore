@@ -1,28 +1,40 @@
+
 body {
     font-family: "Lato", sans-serif;
 }
 
 .sidenav {
     height: 100%;
-    width: 0;
+    width: 220px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background: linear-gradient(45deg, #6e535b, #0d1435);
-    /*background-color: #0d1435;*/
+    transition: .2s ;
     overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 20px;
+    background: linear-gradient(45deg, #6e535b, #0d1435);
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #6e7272;
+    color: #818181;
     display: block;
-    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+#main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
 }
 
 .sidenav a:hover {
@@ -58,7 +70,7 @@ body {
 }
 
 
-#btn{
+.btn{
     text-decoration: none;
     outline: none;
     display: inline-block;
@@ -72,7 +84,7 @@ body {
     color: #0d1435;
     transition: .2s ease-in-out;
 }
-#btn:before {
+.btn:before {
     content: "";
     background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.5));
     height: 50px;
@@ -82,11 +94,11 @@ body {
     left: -75px;
     transform: skewX(-45deg);
 }
-#btn:hover {
+.btn:hover {
     background: #0d1435;
     color: #fff;
 }
-#btn:hover:before {
+.btn:hover:before {
     left: 150px;
     transition: .5s ease-in-out;
 }
@@ -121,3 +133,39 @@ body {
     width: auto;
     height: 55px;
 }
+.menu{
+    padding-left: 3px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background: #0d1435;
+    color: white;
+    width: 21px;
+    height: 23px;
+    zoom: 2;
+}
+.basket__text{
+    margin-top: 45px;
+    margin-bottom: 0;
+    margin-right: 15px;
+}
+.basket__btn{
+    margin-top: 55px;
+}
+
+/*-------------Табл------------*/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+/*--------------------------------*/

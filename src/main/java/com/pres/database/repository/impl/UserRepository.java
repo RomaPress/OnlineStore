@@ -21,6 +21,15 @@ public class UserRepository implements Repository {
         return userRepository;
     }
 
+    public boolean updateUserInfo(User user, int id){
+        try (Connection connection = getConnection()){
+            return new UserDAO().update(connection, user, id);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean isUserAuthorized(final String login, final String password) {
         try (Connection connection = getConnection()) {
             return new UserDAO().isAuthorized(connection, login, password);

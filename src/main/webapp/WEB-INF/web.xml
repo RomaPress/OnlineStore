@@ -99,4 +99,14 @@
     <servlet-name>Log out</servlet-name>
     <servlet-class>com.pres.servlets.servlet.LogOutServlet</servlet-class>
   </servlet>
+
+  <!--Personal Profile-->
+  <servlet-mapping>
+    <servlet-name>PersonalProfile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PersonalProfile</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.user.ProfileServlet</servlet-class>
+  </servlet>
 </web-app>

@@ -11,10 +11,6 @@ import java.io.IOException;
 
 public class RegistrationServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,12 +22,12 @@ public class RegistrationServlet extends HttpServlet {
                 .setPhoneNumber(req.getParameter("phoneNumber"))
                 .setLogin(req.getParameter("login"))
                 .setPassword(req.getParameter("password"))
+                .setPostOffice(Integer.parseInt(req.getParameter("postOffice")))
+                .setCity(req.getParameter("city"))
                 .build();
 
-        if (UserRepository.getInstance().createUser(user)) {
-            req.getRequestDispatcher("/WEB-INF/view/authorization.jsp").forward(req, resp);
-        } else {
-            doGet(req, resp);
-        }
+        UserRepository.getInstance().createUser(user);
+        req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
+
     }
 }

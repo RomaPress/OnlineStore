@@ -4,7 +4,6 @@ import com.pres.constants.ConstantDB;
 import com.pres.database.dao.SUID;
 import com.pres.model.User;
 
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +17,18 @@ public class UserDAO implements SUID<User> {
     }
 
     @Override
-    public boolean update(Connection connection, User user, int id) {
+    public boolean update(Connection connection, User user, int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_USER_INFO, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getPhoneNumber());
+            statement.setString(4, user.getCity());
+            statement.setInt(5, user.getPostOffice());
+            statement.setInt(6, id);
+            if (1 == statement.executeUpdate()){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -30,6 +40,8 @@ public class UserDAO implements SUID<User> {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getPhoneNumber());
+            statement.setString(6, user.getCity());
+            statement.setInt(7, user.getPostOffice());
             statement.execute();
         }
         return user;
@@ -41,7 +53,7 @@ public class UserDAO implements SUID<User> {
     }
 
     public User selectByLogin(Connection connection, String login) throws SQLException {
-        User user = null;
+        User user;
         try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, login);
             try (ResultSet rs = statement.executeQuery()) {
@@ -71,6 +83,8 @@ public class UserDAO implements SUID<User> {
                 .setPassword(rs.getString(ConstantDB.PASSWORD))
                 .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
                 .setRole(rs.getString(ConstantDB.NAME))
+                .setCity(rs.getString(ConstantDB.CITY))
+                .setPostOffice(rs.getInt(ConstantDB.POST_OFFICE))
                 .build();
     }
 }

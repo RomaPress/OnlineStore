@@ -13,6 +13,8 @@ public class User implements Serializable {
     private String phoneNumber;
     private String login;
     private String password;
+    private String city;
+    private int postOffice;
 
     private User(){
     }
@@ -25,6 +27,16 @@ public class User implements Serializable {
         this.phoneNumber = builder.phoneNumber;
         this.login = builder.login;
         this.password = builder.password;
+        this.city = builder.city;
+        this.postOffice = builder.postOffice;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getPostOffice() {
+        return postOffice;
     }
 
     public int getId() {
@@ -63,14 +75,26 @@ public class User implements Serializable {
         private String phoneNumber;
         private String login;
         private String password;
+         private String city;
+         private int postOffice;
 
-        public Builder setId(int id) {
+         public User build(){
+             return new User(this);
+         }
+
+         public Builder setCity(String city) {
+             this.city = city;
+             return this;
+         }
+
+         public Builder setPostOffice(int postOffice) {
+             this.postOffice = postOffice;
+             return this;
+         }
+
+         public Builder setId(int id) {
             this.id = id;
             return this;
-        }
-
-        public User build(){
-            return new User(this);
         }
 
         public Builder setFirstName(String firstName) {
