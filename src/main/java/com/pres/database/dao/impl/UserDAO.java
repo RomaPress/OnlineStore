@@ -18,7 +18,7 @@ public class UserDAO implements SUID<User> {
 
     @Override
     public boolean update(Connection connection, User user, int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_USER_INFO, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_USER_INFO)) {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getPhoneNumber());

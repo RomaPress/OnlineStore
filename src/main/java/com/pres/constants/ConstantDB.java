@@ -11,20 +11,26 @@ public final class ConstantDB {
     public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE  type_id = t.id AND p.id = ?;";
 
-    public  static  final  String SQL_DELETE_PRODUCT_FROM_ORDER = "DELETE FROM order_product WHERE product_id = ? AND order_id = ?";
+    public static final String SQL_DELETE_PRODUCT_FROM_ORDER = "DELETE FROM order_product WHERE product_id = ? AND order_id = ?";
 
     public static final String SQL_FIND_USER_BY_LOGIN = "SELECT u.id, r.name , first_name, last_name, login, password, phone_number, city, post_office FROM user u, role r  WHERE login = ? AND u.role_id = r.id;";
 
     public static final String SQL_IF_USER_AUTHORIZATION = "SELECT count(*) as count FROM role r, user u WHERE  u.role_id = r.id AND login = ? AND password = ? GROUP BY u.id;";
 
     public static final String SQL_INSERT_USER = "INSERT INTO user (role_id, first_name, last_name, login, password, phone_number, city, post_office) " +
-            "VALUES ((SELECT role.id FROM role WHERE name = '"+ User.Role.USER.value() +"'),?,?,?,?,?,?,?);";
+            "VALUES ((SELECT role.id FROM role WHERE name = '" + User.Role.USER.value() + "'),?,?,?,?,?,?,?);";
 
-    public  static final String SQL_UPDATE_USER_INFO = "UPDATE user SET first_name = ?, last_name = ?, phone_number = ?, city = ?, post_office =? " +
+    public static final String SQL_UPDATE_USER_INFO = "UPDATE user SET first_name = ?, last_name = ?, phone_number = ?, city = ?, post_office =? " +
             "WHERE id = ?";
 
+    public static final String SQL_SELECT_ALL_STATUS = "SELECT name FROM status";
+
+    public static final String SQL_UPDATE_ORDER_STATUS = "UPDATE `order` SET status_id = (SELECT id FROM status WHERE name = ?) WHERE id = ?";
+
+    public static final String SQL_UPDATE_ORDER_INVOICE_NUMBER = "UPDATE `order` SET invoice_number = ? WHERE id = ?";
+
     public static final String SQL_INSERT_ORDER = "INSERT INTO `order` (user_id, city, post_office, status_id) " +
-            "VALUES (?,?,?,(SELECT s.id FROM status s WHERE name = '"+ Order.Status.REGISTERED.value() +"'));";
+            "VALUES (?,?,?,(SELECT s.id FROM status s WHERE name = '" + Order.Status.REGISTERED.value() + "'));";
 
     public static final String SQL_INSERT_ORDER_PRODUCT = "INSERT INTO order_product (order_id, product_id, amount) " +
             "VALUES (?,?,?)";
@@ -44,7 +50,7 @@ public final class ConstantDB {
             "u.first_name, u.last_name, u.phone_number," +
             "s.name as status, " +
             "op.amount, op.price," +
-            "p.id as product_id, p.name as product "+
+            "p.id as product_id, p.name as product " +
             "FROM order_product op " +
             "LEFT JOIN `order` o on o.id = op.order_id " +
             "LEFT JOIN status s on s.id = o.status_id " +
@@ -100,4 +106,5 @@ public final class ConstantDB {
 
     public static final String COUNT = "count";
 
+    private ConstantDB(){}
 }

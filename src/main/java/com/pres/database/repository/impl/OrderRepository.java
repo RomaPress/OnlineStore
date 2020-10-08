@@ -9,6 +9,7 @@ import com.pres.model.User;
 import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,12 +69,40 @@ public class OrderRepository implements Repository {
         return order;
     }
 
+    public List<String> selectAllStatus(){
+        List<String> orders = null;
+        try(Connection connection = getConnection()){
+            orders = new OrderDAO().selectStatus(connection);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
+        return orders;
+    }
+
     public void deleteProductFromOrder(Order order, int productId){
         try(Connection connection = getConnection()){
             new OrderDAO().deleteProductFromOrder(connection, order, productId);
         } catch (SQLException | NamingException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public boolean updateStatus(Order order){
+        try(Connection connection = getConnection()){
+            return new OrderDAO().updateStatus(connection, order);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateInvoiceNumber(Order order){
+        try(Connection connection = getConnection()){
+            return new OrderDAO().updateInvoiceNumber(connection, order);
+        } catch (SQLException | NamingException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 
     private void tryRollback(Connection connection) {

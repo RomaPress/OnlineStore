@@ -13,7 +13,7 @@ public class OrderDAO implements SUID<Order> {
 
     @Override
     public List<Order> select(Connection connection) throws SQLException {
-        List<Order> orders ;
+        List<Order> orders;
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_ORDER)) {
             orders = extractOrders(rs);
@@ -51,8 +51,8 @@ public class OrderDAO implements SUID<Order> {
         return false;
     }
 
-    public void  deleteProductFromOrder(Connection connection, Order order, int productId) throws SQLException {
-        try(PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_DELETE_PRODUCT_FROM_ORDER)){
+    public void deleteProductFromOrder(Connection connection, Order order, int productId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_DELETE_PRODUCT_FROM_ORDER)) {
             statement.setInt(1, productId);
             statement.setInt(2, order.getId());
             statement.execute();
@@ -70,7 +70,7 @@ public class OrderDAO implements SUID<Order> {
 
     public List<Order> selectByUser(Connection connection, User user) throws SQLException {
         List<Order> orders;
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_USER)){
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_USER)) {
             statement.setInt(1, user.getId());
             try (ResultSet rs = statement.executeQuery()) {
                 orders = extractOrders(rs);
@@ -104,6 +104,39 @@ public class OrderDAO implements SUID<Order> {
             insertProduct(connection, i.getValue(), order);
         }
         connection.commit();
+    }
+
+    public List<String> selectStatus(Connection connection) throws SQLException {
+        List<String> statuses = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(ConstantDB.SQL_SELECT_ALL_STATUS)) {
+            while (rs.next()) {
+                statuses.add(rs.getString(ConstantDB.NAME));
+            }
+        }
+        return statuses;
+    }
+
+    public boolean updateStatus(Connection connection, Order order) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_ORDER_STATUS)) {
+            statement.setString(1, order.getStatus().value());
+            statement.setInt(2, order.getId());
+            if (1 == statement.executeUpdate()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean updateInvoiceNumber(Connection connection, Order order) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_ORDER_INVOICE_NUMBER)) {
+            statement.setString(1, order.getInvoiceNumber());
+            statement.setInt(2, order.getId());
+            if (1 == statement.executeUpdate()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<Order> extractOrders(ResultSet rs) throws SQLException {

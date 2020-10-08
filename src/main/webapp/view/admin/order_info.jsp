@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-1">
@@ -22,15 +23,39 @@
         </div>
         <div class="col">
             <div id="main">
-                <p>№ <c:out value="${order.id}"/></p>
-                <p>Статус <c:out value="${order.status}"/></p>
-                <p>Дата регистрации <c:out value="${order.dateTime}"/></p>
-                <p>Заказчик <c:out value="${order.user.firstName}"/> <c:out value="${order.user.lastName}"/></p>
-                <p>Номер телефона <c:out value="${order.user.phoneNumber}"/></p>
-                <p>Город <c:out value="${order.city}"/></p>
-                <p>Отделение НП <c:out value="${order.postOffice}"/></p>
-                <p>Стоимость заказа <c:out value="${order.total}"/></p>
-
+                <form method="post" action="${pageContext.request.contextPath}/changeOrder">
+                    <p>№ <c:out value="${order.id}"/></p>
+                    <c:if test="${order.status == 'CANCELED'}">
+                        <p>Статус CANCELED</p>
+                    </c:if>
+                    <c:if test="${order.status == 'PAID'}">
+                        <p>Статус PAID</p>
+                    </c:if>
+                    <c:if test="${order.status == 'REGISTERED'}">
+                        <p>Статус
+                            <select name="status">
+                                <c:forEach var="i" items="${status}">
+                                    <option><c:out value="${i}"/></option>
+                                </c:forEach>
+                            </select>
+                        </p>
+                    </c:if>
+                    <p>Дата регистрации <c:out value="${order.dateTime}"/></p>
+                    <p>Заказчик <c:out value="${order.user.firstName}"/> <c:out value="${order.user.lastName}"/></p>
+                    <p>Номер телефона <c:out value="${order.user.phoneNumber}"/></p>
+                    <p>Город <c:out value="${order.city}"/></p>
+                    <p>Отделение НП <c:out value="${order.postOffice}"/></p>
+                    <p>Стоимость заказа <c:out value="${order.total}"/></p>
+                    <c:if test="${empty order.invoiceNumber}">
+                        Номер накладной ${ order.invoiceNumber}
+                        <input type="text" name="invoiceNumber"/>
+                    </c:if>
+                    <c:if test="${!empty order.invoiceNumber}">
+                        <p>Номер накладной ${ order.invoiceNumber}</p>
+                    </c:if>
+                    <br><br>
+                    <button type="submit" name="update">Изменить</button>
+                </form>
                 <br>
                 <table border="0">
                     <thead>
@@ -71,7 +96,7 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-    <%@include file="../../js/side.js"%>
+    <%@include file="../../js/side.js" %>
 </script>
 </body>
 </html>
