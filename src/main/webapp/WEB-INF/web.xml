@@ -109,4 +109,9 @@
     <servlet-name>PersonalProfile</servlet-name>
     <servlet-class>com.pres.servlets.servlet.user.ProfileServlet</servlet-class>
   </servlet>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/view/error.jsp</location>
+  </error-page>
 </web-app>

@@ -1,6 +1,6 @@
 package com.pres.database.dao.impl;
 
-import com.pres.constants.ConstantDB;
+import com.pres.constants.ConstantSQL;
 import com.pres.database.dao.SUID;
 import com.pres.model.Product;
 import com.pres.model.Type;
@@ -14,17 +14,17 @@ public class ProductDAO implements SUID<Product> {
     public List<Product> select(Connection connection) throws SQLException {
         List<Product> products = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_PRODUCT)) {
+             ResultSet rs = statement.executeQuery(ConstantSQL.SQL_FIND_ALL_PRODUCT)) {
             while (rs.next()) {
                 Product product = new Product.Builder()
-                        .setId(rs.getInt(ConstantDB.ID))
-                        .setName(rs.getString(ConstantDB.NAME))
-                        .setPrice(rs.getDouble(ConstantDB.PRICE))
-                        .setAmount(rs.getInt(ConstantDB.AMOUNT))
-                        .setDescription(rs.getString(ConstantDB.DESCRIPTION))
+                        .setId(rs.getInt(ConstantSQL.ID))
+                        .setName(rs.getString(ConstantSQL.NAME))
+                        .setPrice(rs.getDouble(ConstantSQL.PRICE))
+                        .setAmount(rs.getInt(ConstantSQL.AMOUNT))
+                        .setDescription(rs.getString(ConstantSQL.DESCRIPTION))
                         .setType(new Type.Builder()
-                                .setId(rs.getInt(ConstantDB.TYPE_ID))
-                                .setName(rs.getString(ConstantDB.TYPE_NAME))
+                                .setId(rs.getInt(ConstantSQL.TYPE_ID))
+                                .setName(rs.getString(ConstantSQL.TYPE_NAME))
                                 .build())
                         .build();
                 products.add(product);
@@ -50,20 +50,20 @@ public class ProductDAO implements SUID<Product> {
 
     public Product selectByIdWithCurrentAmount(Connection connection, int id, int amount) throws SQLException {
         Product product = null;
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_PRODUCT_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_PRODUCT_BY_ID)) {
             statement.setInt(1, id);
             statement.execute();
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
                 product = new Product.Builder()
                         .setId(id)
-                        .setName(rs.getString(ConstantDB.NAME))
-                        .setPrice(rs.getDouble(ConstantDB.PRICE))
+                        .setName(rs.getString(ConstantSQL.NAME))
+                        .setPrice(rs.getDouble(ConstantSQL.PRICE))
                         .setAmount(amount)
-                        .setDescription(rs.getString(ConstantDB.DESCRIPTION))
+                        .setDescription(rs.getString(ConstantSQL.DESCRIPTION))
                         .setType(new Type.Builder()
-                                .setId(rs.getInt(ConstantDB.TYPE_ID))
-                                .setName(rs.getString(ConstantDB.TYPE_NAME))
+                                .setId(rs.getInt(ConstantSQL.TYPE_ID))
+                                .setName(rs.getString(ConstantSQL.TYPE_NAME))
                                 .build())
                         .build();
             }

@@ -1,8 +1,11 @@
 package com.pres.servlets.servlet.user;
 
 import com.pres.database.repository.impl.OrderRepository;
+import com.pres.exeption.DBException;
 import com.pres.model.Product;
 import com.pres.model.User;
+import com.pres.servlets.ErrorCatchable;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,14 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class BasketServlet extends HttpServlet {
-
+public class BasketServlet extends HttpServlet implements ErrorCatchable {
+    private static final Logger LOG = Logger.getLogger(BasketServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        @SuppressWarnings("unchecked")
-        Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
+        Map<Integer, Product> map = getSelectedProduct(session);
 
         req.setAttribute("selectedProduct", new ArrayList<>(map.values()));
         req.getRequestDispatcher("/view/user/basket.jsp").forward(req, resp);
@@ -28,26 +30,38 @@ public class BasketServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        //todo --------------> implement filter which check this map.size() !=0 !
         HttpSession session = req.getSession();
-        @SuppressWarnings("unchecked")
-        Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
+        Map<Integer, Product> selectedProduct = getSelectedProduct(session);
 
         if (req.getParameterMap().containsKey("delete")) {
             final int id = Integer.parseInt(req.getParameter("deleteId"));
-
-            map.remove(id);
-            session.setAttribute("selectedProduct", map);
+            selectedProduct.remove(id);
+            setSelectedProduct(session, selectedProduct);
             doGet(req, resp);
-        } else if (req.getParameterMap().containsKey("order") && map.size() != 0) {
-
+        } else if (req.getParameterMap().containsKey("order") && selectedProduct.size() != 0) {
             User user = (User) session.getAttribute("currentUser");
-            OrderRepository.getInstance().doOrder(map, user);
+            doOrder(req, resp, selectedProduct, user);
             resp.sendRedirect(req.getContextPath() + "/catalog");
-
         }
     }
 
+    private Map<Integer, Product> getSelectedProduct(HttpSession session) {
+        @SuppressWarnings("unchecked")
+        Map<Integer, Product> answer = (Map<Integer, Product>) session.getAttribute("selectedProduct");
+        return answer;
+    }
 
+    private void setSelectedProduct(HttpSession session, Map<Integer, Product> map) {
+        session.setAttribute("selectedProduct", map);
+    }
+
+    private void doOrder(HttpServletRequest req, HttpServletResponse resp,
+                         Map<Integer, Product> selectedProduct, User user) throws ServletException, IOException {
+        try {
+            OrderRepository.getInstance().doOrder(selectedProduct, user);
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+            handling(req, resp, e.getMessage());
+        }
+    }
 }

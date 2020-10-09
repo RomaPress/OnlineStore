@@ -2,14 +2,16 @@ package com.pres.database.repository.impl;
 
 import com.pres.database.dao.impl.UserDAO;
 import com.pres.database.repository.Repository;
+import com.pres.exeption.DBException;
+import com.pres.constants.ErrorMessage;
 import com.pres.model.User;
+import org.apache.log4j.Logger;
 
-import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class UserRepository implements Repository {
-
+    private static final Logger LOG = Logger.getLogger(UserRepository.class);
     private static UserRepository userRepository;
 
     private UserRepository() {
@@ -21,39 +23,41 @@ public class UserRepository implements Repository {
         return userRepository;
     }
 
-    public boolean updateUserInfo(User user, int id){
+    public boolean updateUserInfo(User user, int id) throws DBException {
         try (Connection connection = getConnection()){
             return new UserDAO().update(connection, user, id);
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_USER, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_UPDATE_USER, e);
         }
-        return false;
     }
 
-    public boolean isUserAuthorized(final String login, final String password) {
+    public boolean isUserAuthorized(final String login, final String password) throws DBException {
         try (Connection connection = getConnection()) {
             return new UserDAO().isAuthorized(connection, login, password);
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_CHECK_IF_USER_AUTHORIZED, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_CHECK_IF_USER_AUTHORIZED, e);
         }
-        return false;
     }
 
-    public boolean createUser(User user) {
+    public boolean createUser(User user) throws DBException {
         try (Connection connection = getConnection()) {
             new UserDAO().insert(connection, user);
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_CREATE_USER, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_CREATE_USER, e);
         }
         return true;
     }
 
-    public User getUserByLogin(String login) {
-        User user = null;
+    public User getUserByLogin(String login) throws DBException {
+        User user;
         try (Connection connection = getConnection()) {
             user = new UserDAO().selectByLogin(connection, login);
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_USER_BY_LOGIN, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_OBTAIN_USER_BY_LOGIN, e);
         }
         return user;
     }

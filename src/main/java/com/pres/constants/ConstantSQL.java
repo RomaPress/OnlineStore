@@ -3,7 +3,7 @@ package com.pres.constants;
 import com.pres.model.Order;
 import com.pres.model.User;
 
-public final class ConstantDB {
+public final class ConstantSQL {
 
     public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE type_id = t.id GROUP BY p.id";
@@ -106,5 +106,5 @@ public final class ConstantDB {
 
     public static final String COUNT = "count";
 
-    private ConstantDB(){}
+    private ConstantSQL(){}
 }

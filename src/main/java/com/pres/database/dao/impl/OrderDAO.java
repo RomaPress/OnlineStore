@@ -1,6 +1,6 @@
 package com.pres.database.dao.impl;
 
-import com.pres.constants.ConstantDB;
+import com.pres.constants.ConstantSQL;
 import com.pres.database.dao.SUID;
 import com.pres.model.Order;
 import com.pres.model.Product;
@@ -15,7 +15,7 @@ public class OrderDAO implements SUID<Order> {
     public List<Order> select(Connection connection) throws SQLException {
         List<Order> orders;
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(ConstantDB.SQL_FIND_ALL_ORDER)) {
+             ResultSet rs = statement.executeQuery(ConstantSQL.SQL_FIND_ALL_ORDER)) {
             orders = extractOrders(rs);
         }
         return orders;
@@ -29,7 +29,7 @@ public class OrderDAO implements SUID<Order> {
     @Override
     public Order insert(Connection connection, Order order) throws SQLException {
         Order newOrder = new Order();
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getUser().getId());
             //todo-->bag
             statement.setString(2, order.getCity());
@@ -52,7 +52,7 @@ public class OrderDAO implements SUID<Order> {
     }
 
     public void deleteProductFromOrder(Connection connection, Order order, int productId) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_DELETE_PRODUCT_FROM_ORDER)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_DELETE_PRODUCT_FROM_ORDER)) {
             statement.setInt(1, productId);
             statement.setInt(2, order.getId());
             statement.execute();
@@ -60,7 +60,7 @@ public class OrderDAO implements SUID<Order> {
     }
 
     public void insertProduct(Connection connection, Product product, Order order) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_ORDER_PRODUCT)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_ORDER_PRODUCT)) {
             statement.setInt(1, order.getId());
             statement.setInt(2, product.getId());
             statement.setInt(3, product.getAmount());
@@ -70,7 +70,7 @@ public class OrderDAO implements SUID<Order> {
 
     public List<Order> selectByUser(Connection connection, User user) throws SQLException {
         List<Order> orders;
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_USER)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_ORDER_BY_USER)) {
             statement.setInt(1, user.getId());
             try (ResultSet rs = statement.executeQuery()) {
                 orders = extractOrders(rs);
@@ -81,7 +81,7 @@ public class OrderDAO implements SUID<Order> {
 
     public Order selectById(Connection connection, int id) throws SQLException {
         Order order;
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_ORDER_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_ORDER_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()) {
                 order = extractOrders(rs).get(0);
@@ -109,16 +109,16 @@ public class OrderDAO implements SUID<Order> {
     public List<String> selectStatus(Connection connection) throws SQLException {
         List<String> statuses = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(ConstantDB.SQL_SELECT_ALL_STATUS)) {
+             ResultSet rs = statement.executeQuery(ConstantSQL.SQL_SELECT_ALL_STATUS)) {
             while (rs.next()) {
-                statuses.add(rs.getString(ConstantDB.NAME));
+                statuses.add(rs.getString(ConstantSQL.NAME));
             }
         }
         return statuses;
     }
 
     public boolean updateStatus(Connection connection, Order order) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_ORDER_STATUS)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_STATUS)) {
             statement.setString(1, order.getStatus().value());
             statement.setInt(2, order.getId());
             if (1 == statement.executeUpdate()){
@@ -129,7 +129,7 @@ public class OrderDAO implements SUID<Order> {
     }
 
     public boolean updateInvoiceNumber(Connection connection, Order order) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_ORDER_INVOICE_NUMBER)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_INVOICE_NUMBER)) {
             statement.setString(1, order.getInvoiceNumber());
             statement.setInt(2, order.getId());
             if (1 == statement.executeUpdate()){
@@ -147,7 +147,7 @@ public class OrderDAO implements SUID<Order> {
         Order order = null;
         List<Product> products = null;
         while (rs.next()) {
-            id = rs.getInt(ConstantDB.ID);
+            id = rs.getInt(ConstantSQL.ID);
 
             if (!set.contains(id)) {
                 set.add(id);
@@ -161,23 +161,23 @@ public class OrderDAO implements SUID<Order> {
                 order = new Order();
 
                 order.setId(id);
-                order.setDateTime(rs.getString(ConstantDB.DATE_TIME));
-                order.setTotal(rs.getDouble(ConstantDB.TOTAL));
-                order.setStatus(rs.getString(ConstantDB.STATUS));
-                order.setCity(rs.getString(ConstantDB.CITY));
-                order.setPostOffice(rs.getInt(ConstantDB.POST_OFFICE));
-                order.setInvoiceNumber(rs.getString(ConstantDB.INVOICE_NUMBER));
+                order.setDateTime(rs.getString(ConstantSQL.DATE_TIME));
+                order.setTotal(rs.getDouble(ConstantSQL.TOTAL));
+                order.setStatus(rs.getString(ConstantSQL.STATUS));
+                order.setCity(rs.getString(ConstantSQL.CITY));
+                order.setPostOffice(rs.getInt(ConstantSQL.POST_OFFICE));
+                order.setInvoiceNumber(rs.getString(ConstantSQL.INVOICE_NUMBER));
                 order.setUser(new User.Builder()
-                        .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
-                        .setLastName(rs.getString(ConstantDB.LAST_NAME))
-                        .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
+                        .setFirstName(rs.getString(ConstantSQL.FIRST_NAME))
+                        .setLastName(rs.getString(ConstantSQL.LAST_NAME))
+                        .setPhoneNumber(rs.getString(ConstantSQL.PHONE_NUMBER))
                         .build());
             }
             products.add(new Product.Builder()
-                    .setId(rs.getInt(ConstantDB.PRODUCT_ID))
-                    .setName(rs.getString(ConstantDB.PRODUCT))
-                    .setAmount(rs.getInt(ConstantDB.AMOUNT))
-                    .setPrice(rs.getDouble(ConstantDB.PRICE))
+                    .setId(rs.getInt(ConstantSQL.PRODUCT_ID))
+                    .setName(rs.getString(ConstantSQL.PRODUCT))
+                    .setAmount(rs.getInt(ConstantSQL.AMOUNT))
+                    .setPrice(rs.getDouble(ConstantSQL.PRICE))
                     .build());
         }
         if (order != null) {

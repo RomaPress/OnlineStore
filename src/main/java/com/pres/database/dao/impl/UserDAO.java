@@ -1,6 +1,6 @@
 package com.pres.database.dao.impl;
 
-import com.pres.constants.ConstantDB;
+import com.pres.constants.ConstantSQL;
 import com.pres.database.dao.SUID;
 import com.pres.model.User;
 
@@ -18,7 +18,7 @@ public class UserDAO implements SUID<User> {
 
     @Override
     public boolean update(Connection connection, User user, int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_UPDATE_USER_INFO)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_USER_INFO)) {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getPhoneNumber());
@@ -34,7 +34,7 @@ public class UserDAO implements SUID<User> {
 
     @Override
     public User insert(Connection connection, User user) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_INSERT_USER)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_USER)) {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getLogin());
@@ -54,7 +54,7 @@ public class UserDAO implements SUID<User> {
 
     public User selectByLogin(Connection connection, String login) throws SQLException {
         User user;
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_FIND_USER_BY_LOGIN)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_USER_BY_LOGIN)) {
             statement.setString(1, login);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
@@ -65,7 +65,7 @@ public class UserDAO implements SUID<User> {
     }
 
     public boolean isAuthorized(Connection connection, String login, String password) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(ConstantDB.SQL_IF_USER_AUTHORIZATION)) {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_IF_USER_AUTHORIZATION)) {
             statement.setString(1, login);
             statement.setString(2, password);
             try (ResultSet rs = statement.executeQuery()) {
@@ -76,15 +76,15 @@ public class UserDAO implements SUID<User> {
 
     private User extractUser(ResultSet rs) throws SQLException {
         return new User.Builder()
-                .setId(rs.getInt(ConstantDB.ID))
-                .setFirstName(rs.getString(ConstantDB.FIRST_NAME))
-                .setLastName(rs.getString(ConstantDB.LAST_NAME))
-                .setLogin(rs.getString(ConstantDB.LOGIN))
-                .setPassword(rs.getString(ConstantDB.PASSWORD))
-                .setPhoneNumber(rs.getString(ConstantDB.PHONE_NUMBER))
-                .setRole(rs.getString(ConstantDB.NAME))
-                .setCity(rs.getString(ConstantDB.CITY))
-                .setPostOffice(rs.getInt(ConstantDB.POST_OFFICE))
+                .setId(rs.getInt(ConstantSQL.ID))
+                .setFirstName(rs.getString(ConstantSQL.FIRST_NAME))
+                .setLastName(rs.getString(ConstantSQL.LAST_NAME))
+                .setLogin(rs.getString(ConstantSQL.LOGIN))
+                .setPassword(rs.getString(ConstantSQL.PASSWORD))
+                .setPhoneNumber(rs.getString(ConstantSQL.PHONE_NUMBER))
+                .setRole(rs.getString(ConstantSQL.NAME))
+                .setCity(rs.getString(ConstantSQL.CITY))
+                .setPostOffice(rs.getInt(ConstantSQL.POST_OFFICE))
                 .build();
     }
 }

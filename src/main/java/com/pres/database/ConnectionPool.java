@@ -1,5 +1,9 @@
 package com.pres.database;
 
+import com.pres.exeption.DBException;
+import com.pres.constants.ErrorMessage;
+import org.apache.log4j.Logger;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -8,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
+    private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
 
     private ConnectionPool() {
@@ -19,9 +24,21 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection getConnection() throws SQLException, NamingException {
-        Context context = new InitialContext();
-        DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/onlinestore");
-        return ds.getConnection();
+    public Connection getConnection() throws DBException {
+        Context context = null;
+        DataSource ds=null;
+        try {
+            context = new InitialContext();
+            ds = (DataSource) context.lookup("java:comp/env/jdbc/onlinestore");
+        } catch (NamingException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_DATA_SOURCE, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_OBTAIN_DATA_SOURCE, e);
+        }
+        try {
+            return ds.getConnection();
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_CONNECTION, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_OBTAIN_CONNECTION, e);
+        }
     }
 }

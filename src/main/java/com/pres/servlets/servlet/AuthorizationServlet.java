@@ -1,7 +1,10 @@
 package com.pres.servlets.servlet;
 
 import com.pres.database.repository.impl.UserRepository;
+import com.pres.exeption.DBException;
 import com.pres.model.User;
+import com.pres.servlets.ErrorCatchable;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AuthorizationServlet extends HttpServlet {
+public class AuthorizationServlet extends HttpServlet implements ErrorCatchable {
+    private static final Logger LOG = Logger.getLogger(AuthorizationServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
     }
 
@@ -21,24 +25,47 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String login = req.getParameter("login");
         final String password = req.getParameter("password");
-        final boolean isExist = UserRepository.getInstance().isUserAuthorized(login, password);
+        final boolean isExist = isUserAuthorized(req, resp, login, password);
 
         if (req.getParameterMap().containsKey("loggingIn") && isExist) {
-            User user = UserRepository.getInstance().getUserByLogin(login);
-            moveToPage(req,resp, user);
+            User user = getUserByLogin(req, resp, login);
+            moveToPage(req, resp, user);
         } else {
             doGet(req, resp);
         }
     }
 
-    private void moveToPage(HttpServletRequest req,HttpServletResponse resp, User user) throws IOException {
+    private void moveToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws IOException {
         HttpSession session = req.getSession();
         session.setAttribute("currentUser", user);
 
         if (user.getRole().equals(User.Role.ADMIN)) {
             resp.sendRedirect(req.getContextPath() + "/order");
-        }else if (user.getRole().equals(User.Role.USER)) {
+        } else if (user.getRole().equals(User.Role.USER)) {
             resp.sendRedirect(req.getContextPath() + "/catalog");
         }
+    }
+
+    private boolean isUserAuthorized(HttpServletRequest req, HttpServletResponse resp,
+                                     String login, String password) throws ServletException, IOException {
+        boolean answer = false;
+        try {
+            answer = UserRepository.getInstance().isUserAuthorized(login, password);
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+            handling(req, resp, e.getMessage());
+        }
+        return answer;
+    }
+
+    public User getUserByLogin(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
+        User user = null;
+        try {
+            user = UserRepository.getInstance().getUserByLogin(login);
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+            handling(req, resp, e.getMessage());
+        }
+        return user;
     }
 }
