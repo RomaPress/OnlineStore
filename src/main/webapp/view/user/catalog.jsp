@@ -14,6 +14,10 @@
     <style type="text/css">
         <%@include file="../../css/style.css"%>
     </style>
+<%--    <script type="text/javascript">--%>
+<%--        var quantity = 0;--%>
+<%--        var products = ${products};--%>
+<%--    </script>--%>
 </head>
 <body>
 
@@ -21,6 +25,7 @@
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
+
     <c:if test="${currentUser.role != UNKNOW}">
         <a href="${pageContext.request.contextPath}/basket">Корзина</a>
         <a href="${pageContext.request.contextPath}/profile">Мой профиль</a>
@@ -72,9 +77,10 @@
 </div>
 
 
-<script type="text/javascript" charset="utf-8">
-    <%@include file="../../js/ajax.js"%>
-    <%@include file="../../js/side.js"%>
-</script>
+    <script type="text/javascript" charset="utf-8">
+        <%@include file="../../js/ajax.js"%>
+        <%@include file="../../js/side.js"%>
+    </script>
 </body>
+
 </html>

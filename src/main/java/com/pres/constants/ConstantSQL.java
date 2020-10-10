@@ -6,7 +6,7 @@ import com.pres.model.User;
 public final class ConstantSQL {
 
     public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
-            "WHERE type_id = t.id GROUP BY p.id";
+            "WHERE type_id = t.id GROUP BY p.id limit 1,12";
 
     public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE  type_id = t.id AND p.id = ?;";

@@ -151,8 +151,6 @@ body {
 .basket__btn{
     margin-top: 55px;
 }
-
-/*-------------Табл------------*/
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -168,4 +166,3 @@ th, td {
 tr:nth-child(even) {
     background-color: #f2f2f2
 }
-/*--------------------------------*/

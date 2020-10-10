@@ -26,12 +26,12 @@
         </div>
 
         <div class="inputBox">
-            <input type="text" hidden name="loggingIn" value="loggingIn"/>
-            <input type="submit" value="Ввойти">
+            <input type="text" hidden name="logIn" value="loggingIn"/>
+            <input type="submit" value="Войти">
         </div>
 
         <div class="inputBox">
-            <a href="${pageContext.request.contextPath}/catalog">Ввойти без авторизации</a>
+            <a href="${pageContext.request.contextPath}/catalog">Войти без авторизации</a>
         </div>
 
         <div class="inputBox">

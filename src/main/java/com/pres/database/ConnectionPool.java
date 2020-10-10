@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class ConnectionPool {
     private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
+    private DataSource ds;
 
     private ConnectionPool() {
     }
@@ -25,11 +26,12 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws DBException {
-        Context context = null;
-        DataSource ds=null;
+        Context context;
         try {
-            context = new InitialContext();
-            ds = (DataSource) context.lookup("java:comp/env/jdbc/onlinestore");
+            if(ds == null){
+                context = new InitialContext();
+                ds = (DataSource) context.lookup("java:comp/env/jdbc/onlinestore");
+            }
         } catch (NamingException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_DATA_SOURCE, e);
             throw new DBException(ErrorMessage.ERR_CANNOT_OBTAIN_DATA_SOURCE, e);

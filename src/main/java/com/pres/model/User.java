@@ -137,7 +137,7 @@ public class User implements Serializable {
     }
 
     public enum Role {
-        UNKNOWN("UNKNOWN"), ADMIN("ADMIN"), USER("USER");
+        UNKNOWN("UNKNOWN"), ADMIN("ADMIN"), USER("USER"), BLOCK("BLOCK");
 
         private final String value;
 

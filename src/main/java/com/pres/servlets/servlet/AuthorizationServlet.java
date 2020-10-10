@@ -27,7 +27,7 @@ public class AuthorizationServlet extends HttpServlet implements ErrorCatchable 
         final String password = req.getParameter("password");
         final boolean isExist = isUserAuthorized(req, resp, login, password);
 
-        if (req.getParameterMap().containsKey("loggingIn") && isExist) {
+        if (req.getParameterMap().containsKey("logIn") && isExist) {
             User user = getUserByLogin(req, resp, login);
             moveToPage(req, resp, user);
         } else {
