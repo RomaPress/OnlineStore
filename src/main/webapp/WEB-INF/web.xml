@@ -23,6 +23,7 @@
     <filter-name>CheckAdmin</filter-name>
     <url-pattern>/order</url-pattern>
     <url-pattern>/changeOrder</url-pattern>
+    <url-pattern>/controlUser</url-pattern>
   </filter-mapping>
 
   <!--  Check User  -->
@@ -131,6 +132,17 @@
     <servlet-name>PersonalProfile</servlet-name>
     <servlet-class>com.pres.servlets.servlet.user.ProfileServlet</servlet-class>
   </servlet>
+
+  <!--Control User-->
+  <servlet-mapping>
+    <servlet-name>ControlUser</servlet-name>
+    <url-pattern>/controlUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ControlUser</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.admin.ControlUserServlet</servlet-class>
+  </servlet>
+
 
   <error-page>
     <error-code>404</error-code>

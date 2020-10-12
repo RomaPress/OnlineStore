@@ -16,10 +16,10 @@ public class User implements Serializable {
     private String city;
     private int postOffice;
 
-    private User(){
+    private User() {
     }
 
-    private User(Builder builder){
+    private User(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -67,7 +67,7 @@ public class User implements Serializable {
         return password;
     }
 
-     public static class Builder{
+    public static class Builder {
         private int id;
         private String firstName;
         private String lastName;
@@ -75,24 +75,24 @@ public class User implements Serializable {
         private String phoneNumber;
         private String login;
         private String password;
-         private String city;
-         private int postOffice;
+        private String city;
+        private int postOffice;
 
-         public User build(){
-             return new User(this);
-         }
+        public User build() {
+            return new User(this);
+        }
 
-         public Builder setCity(String city) {
-             this.city = city;
-             return this;
-         }
+        public Builder setCity(String city) {
+            this.city = city;
+            return this;
+        }
 
-         public Builder setPostOffice(int postOffice) {
-             this.postOffice = postOffice;
-             return this;
-         }
+        public Builder setPostOffice(int postOffice) {
+            this.postOffice = postOffice;
+            return this;
+        }
 
-         public Builder setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
@@ -108,13 +108,16 @@ public class User implements Serializable {
         }
 
         public Builder setRole(String role) {
-            if (role.equalsIgnoreCase(Role.ADMIN.value())){
+            if (role.equalsIgnoreCase(Role.ADMIN.value())) {
                 this.role = Role.ADMIN;
                 return this;
-            }else if (role.equalsIgnoreCase(Role.USER.value())){
+            } else if (role.equalsIgnoreCase(Role.USER.value())) {
                 this.role = Role.USER;
                 return this;
-            }else{
+            } else if (role.equalsIgnoreCase(Role.BLOCK.value())) {
+                this.role = Role.BLOCK;
+                return this;
+            } else {
                 this.role = Role.UNKNOWN;
                 return this;
             }
@@ -141,7 +144,7 @@ public class User implements Serializable {
 
         private final String value;
 
-        Role(String value){
+        Role(String value) {
             this.value = value;
         }
 

@@ -8,6 +8,8 @@ public final class ConstantSQL {
     public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE type_id = t.id GROUP BY p.id limit 1,12";
 
+    public static final String SQL_FIND_ALL_USER = "SELECT u.id, r.name, first_name, last_name, login, password, phone_number, city, post_office FROM user u, role r WHERE r.id = role_id;";
+
     public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE  type_id = t.id AND p.id = ?;";
 
@@ -22,6 +24,8 @@ public final class ConstantSQL {
 
     public static final String SQL_UPDATE_USER_INFO = "UPDATE user SET first_name = ?, last_name = ?, phone_number = ?, city = ?, post_office =? " +
             "WHERE id = ?";
+
+    public static final String SQL_UPDATE_USER_ROLE = "UPDATE user SET role_id = (SELECT id FROM role WHERE name = ?) WHERE id = ?";
 
     public static final String SQL_SELECT_ALL_STATUS = "SELECT name FROM status";
 

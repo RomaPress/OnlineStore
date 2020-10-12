@@ -4,16 +4,23 @@ import com.pres.constants.ConstantSQL;
 import com.pres.database.dao.SUID;
 import com.pres.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements SUID<User> {
     @Override
-    public List<User> select(Connection connection) {
-        return null;
+    public List<User> select(Connection connection) throws SQLException {
+        List<User> users = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(ConstantSQL.SQL_FIND_ALL_USER)) {
+            User user;
+           while (rs.next()){
+               user = extractUser(rs);
+               users.add(user);
+           }
+        }
+        return users;
     }
 
     @Override
@@ -49,6 +56,17 @@ public class UserDAO implements SUID<User> {
 
     @Override
     public boolean delete(Connection connection, User user) {
+        return false;
+    }
+
+    public boolean updateRole(Connection connection, int id, String newRole) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_USER_ROLE)) {
+            statement.setString(1, newRole);
+            statement.setInt(2, id);
+            if (1 == statement.executeUpdate()){
+                return true;
+            }
+        }
         return false;
     }
 

@@ -63,6 +63,7 @@
                         <th><p>Товар</p></th>
                         <th><p>шт</p></th>
                         <th><p>Цена шт.</p></th>
+                        <th></th>
                     </tr>
                     <tbody>
                     <c:forEach var="j" items="${order.products}">
@@ -90,7 +91,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <br>
     <a href="${pageContext.request.contextPath}/order">Заказы</a>
-    <a href="#">Пользователи</a>
+    <a href="${pageContext.request.contextPath}/controlUser">Пользователи</a>
     <a href="#">Товары</a>
     <a href="${pageContext.request.contextPath}/exit">Выйти</a>
 </div>

@@ -6,6 +6,8 @@ public final class ErrorMessage {
 
     public static final String ERR_CANNOT_OBTAIN_ORDERS = "Cannot obtain orders!";
 
+    public static final String ERR_CANNOT_OBTAIN_USERS = "Cannot obtain users!";
+
     public static final String ERR_CANNOT_OBTAIN_USER_ORDERS = "Cannot obtain user orders!";
 
     public static final String ERR_CANNOT_OBTAIN_ORDER_BY_ID = "Cannot obtain order by id!";
@@ -29,6 +31,8 @@ public final class ErrorMessage {
     public static final String ERR_CANNOT_OBTAIN_PRODUCT_BY_ID_WITH_NEW_AMOUNT = "Cannot obtain the product by id with new amount!";
 
     public static final String ERR_CANNOT_UPDATE_USER = "Cannot update user!";
+
+    public static final String ERR_CANNOT_UPDATE_USER_ROLE = "Cannot update user role!";
 
     public static final String ERR_CANNOT_CHECK_IF_USER_AUTHORIZED = "Cannot check if user authorized!";
 

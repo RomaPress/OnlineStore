@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository implements Repository {
     private static final Logger LOG = Logger.getLogger(UserRepository.class);
@@ -23,8 +25,29 @@ public class UserRepository implements Repository {
         return userRepository;
     }
 
+    public List<User> findAllUser() throws DBException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            users = new UserDAO().select(connection);
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_USERS, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_OBTAIN_USERS, e);
+        }
+        return users;
+    }
+
+
+    public boolean updateUserRole(int id, String newRole) throws DBException {
+        try (Connection connection = getConnection()) {
+            return new UserDAO().updateRole(connection, id, newRole);
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_USER_ROLE, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_UPDATE_USER_ROLE, e);
+        }
+    }
+
     public boolean updateUserInfo(User user, int id) throws DBException {
-        try (Connection connection = getConnection()){
+        try (Connection connection = getConnection()) {
             return new UserDAO().update(connection, user, id);
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_USER, e);

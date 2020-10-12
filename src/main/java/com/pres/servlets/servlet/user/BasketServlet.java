@@ -24,6 +24,7 @@ public class BasketServlet extends HttpServlet implements ErrorCatchable {
         HttpSession session = req.getSession();
         Map<Integer, Product> map = getSelectedProduct(session);
 
+        //todo
 //        if(map.isEmpty()){
 //            req.setAttribute("selectedProduct", new ArrayList<>());
 //        }

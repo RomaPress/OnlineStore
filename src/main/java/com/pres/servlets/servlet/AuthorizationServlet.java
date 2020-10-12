@@ -41,7 +41,7 @@ public class AuthorizationServlet extends HttpServlet implements ErrorCatchable 
 
         if (user.getRole().equals(User.Role.ADMIN)) {
             resp.sendRedirect(req.getContextPath() + "/order");
-        } else if (user.getRole().equals(User.Role.USER)) {
+        } else {
             resp.sendRedirect(req.getContextPath() + "/catalog");
         }
     }

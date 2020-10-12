@@ -33,7 +33,7 @@
         <th>шт</th>
         <th>Цена</th>
         <th>Сумма</th>
-        <th></th>
+        <th> </th>
     </tr>
 
     <c:forEach var="i" items="${orders}">
@@ -80,7 +80,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <br>
     <a href="${pageContext.request.contextPath}/order">Заказы</a>
-    <a href="#">Пользователи</a>
+    <a href="${pageContext.request.contextPath}/controlUser">Пользователи</a>
     <a href="#">Товары</a>
     <a href="${pageContext.request.contextPath}/exit">Выйти</a>
 </div>
