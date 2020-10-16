@@ -11,5 +11,5 @@ public interface SUID<M> {
 
     M insert(Connection connection, M m) throws SQLException;
 
-    boolean delete(Connection connection, M m);
+    boolean delete(Connection connection, M m) throws SQLException;
 }

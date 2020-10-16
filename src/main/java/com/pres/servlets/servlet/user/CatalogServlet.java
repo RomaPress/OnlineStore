@@ -6,6 +6,9 @@ import com.pres.model.Product;
 import com.pres.servlets.ErrorCatchable;
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +24,10 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = getProduct(req, resp);
-        req.setAttribute("products", products);
-        req.getRequestDispatcher("/view/user/catalog.jsp").forward(req, resp);
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        setProduct(req, resp);
+        req.getRequestDispatcher("/jsp/user/catalog.jsp").forward(req, resp);
     }
 
     @Override
@@ -38,17 +42,6 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable {
         session.setAttribute("selectedProduct", selectedProduct);
     }
 
-    private List<Product> getProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = null;
-        try {
-            products = ProductRepository.getInstance().findAllProduct();
-        } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
-        }
-        return products;
-    }
-
     private Product findProductByIdWithNewAmount(HttpServletRequest req, HttpServletResponse resp, int id, int amount) throws ServletException, IOException {
         Product product = null;
         try {
@@ -60,12 +53,40 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable {
         return product;
     }
 
-    private  Map<Integer, Product> getSelectedProduct(HttpSession session){
+    private Map<Integer, Product> getSelectedProduct(HttpSession session) {
         @SuppressWarnings("unchecked")
         Map<Integer, Product> map = (Map<Integer, Product>) session.getAttribute("selectedProduct");
         if (map == null) {
             map = new HashMap<>();
         }
         return map;
+    }
+
+    private void setProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Product> products = null;
+        try {
+            products = ProductRepository.getInstance().findAllProduct();
+            if (!products.isEmpty()){
+                JsonObject container = convertToJson(products);
+                resp.getWriter().write(container.toString());
+            }
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+            handling(req, resp, e.getMessage());
+        }
+    }
+
+    private JsonObject convertToJson( List<Product> products){
+        JsonObject container = new JsonObject();
+        JsonArray array = new JsonArray();
+        JsonObject object;
+
+        for (Product i : products) {
+            object = new JsonObject();
+            object.addProperty("product", String.valueOf(i));
+            array.add(object);
+        }
+        container.addProperty("products", String.valueOf(array));
+        return container;
     }
 }

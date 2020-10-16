@@ -1,6 +1,7 @@
 package com.pres.database.repository.impl;
 
 import com.pres.database.dao.impl.OrderDAO;
+import com.pres.database.repository.Process;
 import com.pres.database.repository.Repository;
 import com.pres.exeption.DBException;
 import com.pres.constants.ErrorMessage;
@@ -30,15 +31,16 @@ public class OrderRepository implements Repository {
     public void doOrder(Map<Integer, Product> products, User user) throws DBException {
         Connection connection = null;
         try {
-            connection = setTransaction();
+            connection = getConnection();
+            Process.setTransaction(connection);
             new OrderDAO().insertOrderInfo(connection, products,  user);
-            connection.commit();
+            Process.commit(connection);
         } catch (SQLException e) {
-            tryRollback(connection);
+            Process.tryRollback(connection);
             LOG.error(ErrorMessage.ERR_CANNOT_DO_ORDER, e);
             throw new DBException(ErrorMessage.ERR_CANNOT_DO_ORDER, e);
         } finally {
-            tryClose(connection);
+            Process.tryClose(connection);
         }
     }
 
@@ -111,39 +113,5 @@ public class OrderRepository implements Repository {
             LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_ORDER_INVOICE_NUMBER, e);
             throw new DBException(ErrorMessage.ERR_CANNOT_UPDATE_ORDER_INVOICE_NUMBER, e);
         }
-    }
-
-    private void tryRollback(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                LOG.error(ErrorMessage.ERR_CANNOT_ROLLBACK_TRANSACTION, e);
-            }
-        }
-    }
-
-    private void tryClose(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOG.error(ErrorMessage.ERR_CANNOT_CLOSE_CONNECTION, e);
-            }
-        }
-    }
-
-    private Connection setTransaction() throws DBException {
-        Connection connection;
-        try {
-            connection = getConnection();
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            LOG.info("Set transaction!");
-        } catch (SQLException e) {
-            LOG.error(ErrorMessage.ERR_CANNOT_SET_TRANSACTION, e);
-            throw new DBException(ErrorMessage.ERR_CANNOT_SET_TRANSACTION, e);
-        }
-        return connection;
     }
 }

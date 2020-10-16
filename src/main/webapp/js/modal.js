@@ -7,3 +7,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+function dropPopUp(){
+    document.getElementById('popUp').style.display='none';
+}

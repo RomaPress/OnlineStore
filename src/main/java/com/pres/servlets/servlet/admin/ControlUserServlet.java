@@ -22,7 +22,7 @@ public class ControlUserServlet extends HttpServlet implements ErrorCatchable {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = getUser(req, resp);
         req.setAttribute("users", users);
-        req.getRequestDispatcher("/view/admin/control_user.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/admin/control_user.jsp").forward(req, resp);
     }
 
     @Override

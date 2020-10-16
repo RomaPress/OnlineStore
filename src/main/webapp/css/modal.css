@@ -7,6 +7,7 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: visible;
+    /*background: linear-gradient(45deg, #6e535b, #0d1435);*/
     background-image: url("https://checkthechords.ru/img/top.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,10 +21,7 @@
     background-color: #fefefe;
     margin: 2% auto 2% auto;
     width: 390px; /* Could be more or less, depending on screen size */
-
-
 }
-
 /* The Close Button (x) */
 .close {
     position: absolute;
@@ -33,7 +31,6 @@
     font-weight: bold;
     color: #a9a2a2;
 }
-
 .close:hover,
 .close:focus {
     color: #fff8f8;
@@ -52,4 +49,9 @@
     .cancelbtn, .signupbtn {
         width: 100%;
     }
+}
+#passwordError{
+    color: #d00000;
+    font-weight: bold;
+    text-align: center;
 }

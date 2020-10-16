@@ -24,7 +24,7 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable {
         User user = getUser(req);
         List<Order> orders = getOrderByUser(req, resp, user);
         req.setAttribute("userOrder", orders);
-        req.getRequestDispatcher("view/user/profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("jsp/user/profile.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,11 +32,14 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable {
         req.setCharacterEncoding("UTF-8");
         String oldPassword = req.getParameter("password");
 
-        if (checkPassword(oldPassword, req)) {
+        boolean isCorrect = checkPassword(oldPassword, req);
+        if (isCorrect) {
             User user = extractUser(req);
             saveUser(req, resp, user);
+            resp.sendRedirect(req.getContextPath() + "/profile");
         }
-        resp.sendRedirect(req.getContextPath() + "/profile");
+        resp.getWriter().write(String.valueOf(isCorrect));
+
     }
 
     private boolean checkPassword(String password, HttpServletRequest req) {
@@ -78,6 +81,7 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable {
     }
 
     private User extractUser(HttpServletRequest req) {
+
         return new User.Builder()
                 .setFirstName(req.getParameter("firstName"))
                 .setLastName(req.getParameter("lastName"))

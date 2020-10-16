@@ -28,7 +28,7 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable {
             handling(req, resp, e.getMessage());
         }
         req.setAttribute("status", list);
-        req.getRequestDispatcher("/view/admin/order_info.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/admin/order_info.jsp").forward(req, resp);
     }
 
     @Override

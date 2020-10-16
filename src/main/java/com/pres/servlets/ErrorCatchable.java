@@ -11,6 +11,6 @@ public interface ErrorCatchable {
         if (!message.isEmpty()) {
             req.setAttribute("errorMessage", message);
         }
-        req.getRequestDispatcher("/view/error.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/error.jsp").forward(req, resp);
     }
 }

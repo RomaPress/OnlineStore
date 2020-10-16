@@ -13,6 +13,4 @@ function openPopUp() {
         .addEventListener('click', function (e) {
         modal.show();
     });
-
-
 }

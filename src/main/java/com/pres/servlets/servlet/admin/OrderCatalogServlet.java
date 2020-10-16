@@ -19,7 +19,7 @@ public class OrderCatalogServlet extends HttpServlet implements ErrorCatchable {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("orders", getOrder(req, resp));
-        req.getRequestDispatcher("/view/admin/admin_menu.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/admin/admin_menu.jsp").forward(req, resp);
     }
 
     @Override

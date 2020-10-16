@@ -11,16 +11,14 @@ import java.io.IOException;
 public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse resp = (HttpServletResponse) servletResponse;
-
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("currentUser");
-        String role = user.getRole().value();
 
-        if (!role.equals(User.Role.ADMIN.value())) {
-            req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
+        if (user == null || !(user.getRole().value()).equals(User.Role.ADMIN.value())) {
+            session.invalidate();
+            req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
         }
         chain.doFilter(req, resp);
     }

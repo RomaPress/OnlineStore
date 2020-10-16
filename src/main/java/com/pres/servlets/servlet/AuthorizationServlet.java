@@ -18,7 +18,7 @@ public class AuthorizationServlet extends HttpServlet implements ErrorCatchable 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
     }
 
     @Override

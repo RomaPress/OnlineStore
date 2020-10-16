@@ -18,10 +18,9 @@ public class RegistrationServlet extends HttpServlet implements ErrorCatchable {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
         User user = extractUser(req);
         createUser(req, resp, user);
-        req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
     }
 
     private User extractUser(HttpServletRequest req) {

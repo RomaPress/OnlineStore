@@ -15,21 +15,18 @@ public class UserFilter implements Filter {
         final HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("currentUser");
-        String role = user.getRole().value();
-
-        if (!role.equals(User.Role.USER.value())) {
-            req.getRequestDispatcher("/view/authorization.jsp").forward(req, resp);
+        if (user == null || !(user.getRole().value()).equals(User.Role.USER.value())) {
+            session.invalidate();
+            req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
         }
         chain.doFilter(req, resp);
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
     public void destroy() {
-
     }
 }

@@ -6,14 +6,19 @@ import com.pres.model.User;
 public final class ConstantSQL {
 
     public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
-            "WHERE type_id = t.id GROUP BY p.id limit 1,12";
+            "WHERE type_id = t.id GROUP BY p.id";
 
     public static final String SQL_FIND_ALL_USER = "SELECT u.id, r.name, first_name, last_name, login, password, phone_number, city, post_office FROM user u, role r WHERE r.id = role_id;";
 
     public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
             "WHERE  type_id = t.id AND p.id = ?;";
 
+    public static final String SQL_FIND_PRODUCT_BY_ID_WITH_CURRENT_AMOUNT = "SELECT p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +
+            "WHERE  type_id = t.id AND p.id = ?;";
+
     public static final String SQL_DELETE_PRODUCT_FROM_ORDER = "DELETE FROM order_product WHERE product_id = ? AND order_id = ?";
+
+    public static final String SQL_DELETE_PRODUCT = "DELETE FROM product WHERE id = ?";
 
     public static final String SQL_FIND_USER_BY_LOGIN = "SELECT u.id, r.name , first_name, last_name, login, password, phone_number, city, post_office FROM user u, role r  WHERE login = ? AND u.role_id = r.id;";
 
@@ -22,8 +27,13 @@ public final class ConstantSQL {
     public static final String SQL_INSERT_USER = "INSERT INTO user (role_id, first_name, last_name, login, password, phone_number, city, post_office) " +
             "VALUES ((SELECT role.id FROM role WHERE name = '" + User.Role.USER.value() + "'),?,?,?,?,?,?,?);";
 
+    public static final String SQL_INSERT_PRODUCT ="INSERT INTO product (name, price, amount, description, type_id) " +
+            "VALUES (?,?,?,?,(SELECT id FROM type WHERE name = ?));";
+
     public static final String SQL_UPDATE_USER_INFO = "UPDATE user SET first_name = ?, last_name = ?, phone_number = ?, city = ?, post_office =? " +
             "WHERE id = ?";
+
+    public static final String SQL_UPDATE_PRODUCT = "UPDATE product SET amount = ?, price = ? WHERE id = ?";
 
     public static final String SQL_UPDATE_USER_ROLE = "UPDATE user SET role_id = (SELECT id FROM role WHERE name = ?) WHERE id = ?";
 

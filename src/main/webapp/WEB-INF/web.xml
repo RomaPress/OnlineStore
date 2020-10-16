@@ -52,7 +52,7 @@
   </resource-ref>
 
 
-  <!--Authorization-->
+  <!--  Authorization  -->
   <servlet-mapping>
     <servlet-name>Authorization</servlet-name>
     <url-pattern>/</url-pattern>
@@ -62,7 +62,7 @@
     <servlet-class>com.pres.servlets.servlet.AuthorizationServlet</servlet-class>
   </servlet>
 
-  <!--Registration-->
+  <!--  Registration  -->
   <servlet-mapping>
     <servlet-name>Registration</servlet-name>
     <url-pattern>/registration</url-pattern>
@@ -72,7 +72,7 @@
     <servlet-class>com.pres.servlets.servlet.RegistrationServlet</servlet-class>
   </servlet>
 
-  <!--Catalog-->
+  <!--  Catalog products -->
   <servlet-mapping>
     <servlet-name>Catalog</servlet-name>
     <url-pattern>/catalog</url-pattern>
@@ -82,7 +82,7 @@
     <servlet-class>com.pres.servlets.servlet.user.CatalogServlet</servlet-class>
   </servlet>
 
-  <!--Basket-->
+  <!--  Basket  -->
   <servlet-mapping>
     <servlet-name>Basket</servlet-name>
     <url-pattern>/basket</url-pattern>
@@ -92,7 +92,7 @@
     <servlet-class>com.pres.servlets.servlet.user.BasketServlet</servlet-class>
   </servlet>
 
-  <!--OrdersCatalog-->
+  <!--  Orders Catalog  -->
   <servlet-mapping>
     <servlet-name>OrdersCatalog</servlet-name>
     <url-pattern>/order</url-pattern>
@@ -103,7 +103,7 @@
   </servlet>
 
 
-  <!--ChangeOrder-->
+  <!--  Change Order  -->
   <servlet-mapping>
     <servlet-name>ChangeOrder</servlet-name>
     <url-pattern>/changeOrder</url-pattern>
@@ -113,7 +113,17 @@
     <servlet-class>com.pres.servlets.servlet.admin.ChangeOrderServlet</servlet-class>
   </servlet>
 
-  <!--Log out-->
+  <!--  Change Product  -->
+  <servlet-mapping>
+    <servlet-name>ChangeProduct</servlet-name>
+    <url-pattern>/changeProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ChangeProduct</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.admin.ChangeProductServlet</servlet-class>
+  </servlet>
+
+  <!--  Log out  -->
   <servlet-mapping>
     <servlet-name>Log out</servlet-name>
     <url-pattern>/exit</url-pattern>
@@ -123,7 +133,7 @@
     <servlet-class>com.pres.servlets.servlet.LogOutServlet</servlet-class>
   </servlet>
 
-  <!--Personal Profile-->
+  <!--  Personal Profile  -->
   <servlet-mapping>
     <servlet-name>PersonalProfile</servlet-name>
     <url-pattern>/profile</url-pattern>
@@ -133,7 +143,7 @@
     <servlet-class>com.pres.servlets.servlet.user.ProfileServlet</servlet-class>
   </servlet>
 
-  <!--Control User-->
+  <!--  Control User  -->
   <servlet-mapping>
     <servlet-name>ControlUser</servlet-name>
     <url-pattern>/controlUser</url-pattern>
@@ -143,9 +153,19 @@
     <servlet-class>com.pres.servlets.servlet.admin.ControlUserServlet</servlet-class>
   </servlet>
 
+  <!--  Control Product  -->
+  <servlet-mapping>
+    <servlet-name>ControlProduct</servlet-name>
+    <url-pattern>/controlProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ControlProduct</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.admin.ControlProductServlet</servlet-class>
+  </servlet>
 
+  <!--  Error  -->
   <error-page>
     <error-code>404</error-code>
-    <location>/view/error.jsp</location>
+    <location>/jsp/error.jsp</location>
   </error-page>
 </web-app>

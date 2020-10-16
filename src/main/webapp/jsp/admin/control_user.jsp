@@ -61,8 +61,6 @@
                     </c:forEach>
                     </tbody>
                 </table>
-
-
             </div>
         </div>
     </div>
@@ -74,7 +72,7 @@
     <br>
     <a href="${pageContext.request.contextPath}/order">Заказы</a>
     <a href="${pageContext.request.contextPath}/controlUser">Пользователи</a>
-    <a href="#">Товары</a>
+    <a href="${pageContext.request.contextPath}/controlProduct">Товары</a>
     <a href="${pageContext.request.contextPath}/exit">Выйти</a>
 </div>
 <script type="text/javascript" charset="utf-8">
