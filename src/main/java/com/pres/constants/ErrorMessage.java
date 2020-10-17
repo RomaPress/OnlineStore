@@ -56,6 +56,7 @@ public final class ErrorMessage {
 
     public static final String ERR_CANNOT_SAVE_PHOTO = "Cannot save photo!";
 
+    public static final String ERR_INCORRECT_DATA = "Incorrectly data entered!";
 
     private ErrorMessage(){}
 }

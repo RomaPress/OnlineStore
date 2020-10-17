@@ -6,7 +6,7 @@ import com.pres.database.repository.Repository;
 import com.pres.exeption.DBException;
 import com.pres.constants.ErrorMessage;
 import com.pres.model.Product;
-import com.pres.util.Photo;
+import com.pres.util.file.Photo;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Part;

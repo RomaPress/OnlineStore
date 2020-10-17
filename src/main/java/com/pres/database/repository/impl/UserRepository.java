@@ -26,7 +26,7 @@ public class UserRepository implements Repository {
     }
 
     public List<User> findAllUser() throws DBException {
-        List<User> users = new ArrayList<>();
+        List<User> users;
         try (Connection connection = getConnection()) {
             users = new UserDAO().select(connection);
         } catch (SQLException e) {

@@ -5,7 +5,7 @@ body {
 
 .sidenav {
     height: 100%;
-    width: 220px;
+    width: 240px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -16,7 +16,8 @@ body {
     background: linear-gradient(45deg, #6e535b, #0d1435);
 }
 
-.sidenav a {
+.sidenav a,
+.sidenav .side_btn{
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -24,17 +25,19 @@ body {
     display: block;
 }
 
-.sidenav a:hover {
+.sidenav a:hover,
+.sidenav .side_btn:hover{
     color: #f1f1f1;
+}
+
+.side_btn{
+    background-color: transparent;
+    border-color: transparent;
+    margin-left: -3px;
 }
 
 #main {
     margin-left: 120px; /* Same as the width of the sidenav */
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
 }
 
 .sidenav a:hover {
@@ -134,6 +137,7 @@ body {
     height: 55px;
 }
 .menu{
+    position: fixed;
     padding-left: 3px;
     margin-top: 20px;
     margin-left: 20px;
@@ -169,4 +173,52 @@ tr:nth-child(even) {
 
 .text_row{
     margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.my_pagination{
+    align-items: center;
+    justify-content: center
+}
+.pagination_arrow{
+    color: white;
+    border-width: 2px;
+}
+
+
+#header-container {
+    display: block;
+    position: absolute;
+}
+section select {
+    margin-top: -20px;
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    width: 200px;
+    cursor: pointer;
+    background: transparent;
+}
+
+section select:hover {
+    background-color: transparent;
+    color: white;
+}
+
+section select option {
+    background-color: white;
+    color: gray;
+    width: 310px;
+    padding: 10px 15px;
+    height: 45px;
+    cursor: pointer;
+}
+
+section select option:hover {
+    padding-left: 20px;
+    width: 270px;
+    color: #0d1435;
 }
