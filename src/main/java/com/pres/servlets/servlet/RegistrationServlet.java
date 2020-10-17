@@ -18,9 +18,31 @@ public class RegistrationServlet extends HttpServlet implements ErrorCatchable {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        User user = extractUser(req);
-        createUser(req, resp, user);
-        req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
+        //todo --> if login exist
+        String login = req.getParameter("login");
+        boolean isExist = isExistLogin(req, resp, login);
+        if (isExist) {
+            resp.getWriter().write(String.valueOf(isExist));
+        }else {
+            User user = extractUser(req);
+            createUser(req, resp, user);
+            resp.sendRedirect(req.getContextPath() + "/authorization");
+
+        }
+
+    }
+
+    private boolean isExistLogin(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
+        boolean isExist = false;
+        try {
+            if (UserRepository.getInstance().isLoginExist(login)) {
+                isExist = true;
+            }
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+            handling(req, resp, e.getMessage());
+        }
+        return isExist;
     }
 
     private User extractUser(HttpServletRequest req) {

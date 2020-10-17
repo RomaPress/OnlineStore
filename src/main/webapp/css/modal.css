@@ -7,13 +7,11 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: visible;
-    /*background: linear-gradient(45deg, #6e535b, #0d1435);*/
     background-image: url("https://checkthechords.ru/img/top.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
-
 /* Modal Content/Box */
 .modal-content {
     border-radius: 20px;
@@ -21,6 +19,7 @@
     background-color: #fefefe;
     margin: 2% auto 2% auto;
     width: 390px; /* Could be more or less, depending on screen size */
+    height: 200px;
 }
 /* The Close Button (x) */
 .close {
@@ -50,7 +49,8 @@
         width: 100%;
     }
 }
-#passwordError{
+#passwordError,
+#loginError {
     color: #d00000;
     font-weight: bold;
     text-align: center;

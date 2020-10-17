@@ -23,7 +23,9 @@
     <filter-name>CheckAdmin</filter-name>
     <url-pattern>/order</url-pattern>
     <url-pattern>/changeOrder</url-pattern>
+    <url-pattern>/changeProduct</url-pattern>
     <url-pattern>/controlUser</url-pattern>
+    <url-pattern>/controlProduct</url-pattern>
   </filter-mapping>
 
   <!--  Check User  -->

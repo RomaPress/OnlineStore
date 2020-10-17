@@ -64,6 +64,15 @@ public class UserRepository implements Repository {
         }
     }
 
+    public boolean isLoginExist(final String login) throws DBException {
+        try (Connection connection = getConnection()) {
+            return new UserDAO().isLoginExist(connection, login);
+        } catch (SQLException e) {
+            LOG.error(ErrorMessage.ERR_CANNOT_CHECK_IF_LOIN_EXIST, e);
+            throw new DBException(ErrorMessage.ERR_CANNOT_CHECK_IF_LOIN_EXIST, e);
+        }
+    }
+
     public boolean createUser(User user) throws DBException {
         try (Connection connection = getConnection()) {
             new UserDAO().insert(connection, user);

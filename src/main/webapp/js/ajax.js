@@ -10,7 +10,7 @@ function addProduct(current) {
     });
 }
 
-function checkPassword(current) {
+function checkPassword() {
     var password = document.getElementById('password').value;
     var firstName = document.getElementById('firstName').value;
     var lastName = document.getElementById('lastName').value;

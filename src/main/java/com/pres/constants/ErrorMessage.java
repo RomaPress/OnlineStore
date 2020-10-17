@@ -46,6 +46,8 @@ public final class ErrorMessage {
 
     public static final String ERR_CANNOT_CHECK_IF_USER_AUTHORIZED = "Cannot check if user authorized!";
 
+    public static final String ERR_CANNOT_CHECK_IF_LOIN_EXIST = "Cannot check if login exist!";
+
     public static final String ERR_CANNOT_CREATE_USER = "Cannot create user!";
 
     public static final String ERR_CANNOT_OBTAIN_USER_BY_LOGIN = "Cannot obtain the user by login!";

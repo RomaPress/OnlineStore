@@ -24,6 +24,8 @@ public final class ConstantSQL {
 
     public static final String SQL_IF_USER_AUTHORIZATION = "SELECT count(*) as count FROM role r, user u WHERE  u.role_id = r.id AND login = ? AND password = ? GROUP BY u.id;";
 
+    public static final String SQL_IF_LOGIN_EXIST = "SELECT count(*) as count FROM role r, user u WHERE  u.role_id = r.id AND login = ? GROUP BY u.id;";
+
     public static final String SQL_INSERT_USER = "INSERT INTO user (role_id, first_name, last_name, login, password, phone_number, city, post_office) " +
             "VALUES ((SELECT role.id FROM role WHERE name = '" + User.Role.USER.value() + "'),?,?,?,?,?,?,?);";
 

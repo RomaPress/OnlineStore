@@ -3,8 +3,10 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
         <%@include file="../css/login.css"%>
+        <%@include file="../css/modal.css"%>
         <%@include file="../css/modal.css"%>
     </style>
 </head>
@@ -44,51 +46,55 @@
 <div id="popUp" class="modal">
     <span onclick="document.getElementById('popUp').style.display='none'" class="close" title="Close Modal">×</span>
     <form class="modal-content" method="post" action="${pageContext.request.contextPath}/registration">
-        <div class="containerAuth">
+        <div class="containerReg">
             <div class="inputBox">
-                <input type="text" name="firstName" required
+                <input type="text" id="firstName" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
                 <span>First fame</span>
             </div>
             <div class="inputBox">
-                <input type="text" name="lastName" required
+                <input type="text" id="lastName" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
                 <span>Last name</span>
             </div>
             <div class="inputBox">
-                <input type="text" name="phoneNumber" required
+                <input type="text" id="phoneNumber" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9+]{2,20}"/>
                 <span>Phone number</span>
             </div>
             <div class="inputBox">
-                <input type="text" name="city" required/>
+                <input type="text" id="city" required/>
                 <span>City</span>
             </div>
             <div class="inputBox">
-                <input type="number" name="postOffice" required
+                <input type="number" id="postOffice" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9+]{2,20}"/>
                 <span>Post office</span>
             </div>
             <div class="inputBox">
-                <input type="text" name="login" required
+                <input type="text" id="login" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
                 <span>Login</span>
             </div>
             <div class="inputBox">
-                <input type="password" name="password" required
+                <input type="password" id="pass" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
                 <span>Password</span>
             </div>
             <div class="inputBox">
-                <input type="text" hidden name="loggingIn" value="loggingIn"/>
-                <input type="submit" value="Registration">
+                <input type="button" value="Зарегистрироваться" onclick="checkLogin()">
+            </div>
+            <div id="loginError" style="display: none"  >
+                <p>This login is already in use!</p>
             </div>
         </div>
+
     </form>
 </div>
 
 
 <script type="text/javascript" charset="utf-8">
+    <%@include file="../js/ajax.js"%>
     <%@include file="../js/modal.js"%>
     <%@include file="../js/password.js"%>
 </script>

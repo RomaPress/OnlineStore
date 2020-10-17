@@ -92,6 +92,15 @@ public class UserDAO implements SUID<User> {
         }
     }
 
+    public boolean isLoginExist(Connection connection, String login) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_IF_LOGIN_EXIST)) {
+            statement.setString(1, login);
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         return new User.Builder()
                 .setId(rs.getInt(ConstantSQL.ID))
