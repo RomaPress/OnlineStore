@@ -6,6 +6,7 @@ import com.pres.exeption.DBException;
 import com.pres.model.Order;
 import com.pres.model.User;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class ProfileServlet extends HttpServlet implements ErrorCatchable {
+public class ProfileServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(ProfileServlet.class);
 
     @Override
@@ -29,17 +30,21 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        String oldPassword = req.getParameter("password");
+        if (req.getParameterMap().containsKey("language")) {
+            interpreter(req);
+            doGet(req, resp);
+        } else {
+            req.setCharacterEncoding("UTF-8");
+            String oldPassword = req.getParameter("password");
 
-        boolean isCorrect = checkPassword(oldPassword, req);
-        if (isCorrect) {
-            User user = extractUser(req);
-            saveUser(req, resp, user);
-            resp.sendRedirect(req.getContextPath() + "/profile");
+            boolean isCorrect = checkPassword(oldPassword, req);
+            if (isCorrect) {
+                User user = extractUser(req);
+                saveUser(req, resp, user);
+                resp.sendRedirect(req.getContextPath() + "/profile");
+            }
+            resp.getWriter().write(String.valueOf(isCorrect));
         }
-        resp.getWriter().write(String.valueOf(isCorrect));
-
     }
 
     private boolean checkPassword(String password, HttpServletRequest req) {

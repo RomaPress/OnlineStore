@@ -4,6 +4,7 @@ import com.pres.database.repository.impl.UserRepository;
 import com.pres.exeption.DBException;
 import com.pres.model.User;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ControlUserServlet extends HttpServlet implements ErrorCatchable {
+public class ControlUserServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlUserServlet.class);
 
     @Override

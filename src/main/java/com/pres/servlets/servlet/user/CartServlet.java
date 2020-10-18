@@ -1,10 +1,11 @@
 package com.pres.servlets.servlet.user;
 
 import com.pres.database.repository.impl.OrderRepository;
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 import com.pres.model.Product;
 import com.pres.model.User;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,11 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
-public class BasketServlet extends HttpServlet implements ErrorCatchable {
-    private static final Logger LOG = Logger.getLogger(BasketServlet.class);
+public class CartServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+    private static final Logger LOG = Logger.getLogger(CartServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class BasketServlet extends HttpServlet implements ErrorCatchable {
         Map<Integer, Product> map = getSelectedProduct(session);
 
         req.setAttribute("selectedProduct", map);
-        req.getRequestDispatcher("/jsp/user/basket.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/user/cart.jsp").forward(req, resp);
     }
 
     @Override
@@ -42,6 +42,9 @@ public class BasketServlet extends HttpServlet implements ErrorCatchable {
             User user = (User) session.getAttribute("currentUser");
             doOrder(req, resp, selectedProduct, user);
             resp.sendRedirect(req.getContextPath() + "/catalog");
+        } else if (req.getParameterMap().containsKey("language")) {
+            interpreter(req);
+            doGet(req, resp);
         }
     }
 

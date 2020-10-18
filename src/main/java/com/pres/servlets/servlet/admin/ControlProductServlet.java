@@ -5,6 +5,8 @@ import com.pres.exeption.DBException;
 import com.pres.model.Product;
 import com.pres.model.Type;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
+import com.pres.util.sort.ProductSort;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,12 +21,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @MultipartConfig
-public class ControlProductServlet extends HttpServlet implements ErrorCatchable {
+public class ControlProductServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlProductServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = getProduct(req, resp);
+        List<Product> products = ProductSort.sort(getProduct(req, resp), ProductSort.SORT_BY_ID) ;
         req.setAttribute("products", products);
 
         List<String> types = getType(products);

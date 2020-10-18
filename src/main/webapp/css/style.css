@@ -222,3 +222,8 @@ section select option:hover {
     width: 270px;
     color: #0d1435;
 }
+.loc{
+    position: fixed;
+    left: 0; bottom: 0;
+    margin-bottom: 10px;
+}

@@ -18,7 +18,7 @@ public class AdminFilter implements Filter {
 
         if (user == null || !(user.getRole().value()).equals(User.Role.ADMIN.value())) {
             session.invalidate();
-            req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
+            req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
         }
         chain.doFilter(req, resp);
     }

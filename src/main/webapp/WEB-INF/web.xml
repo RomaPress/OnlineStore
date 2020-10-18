@@ -35,7 +35,7 @@
   </filter>
   <filter-mapping>
     <filter-name>CheckUser</filter-name>
-    <url-pattern>/basket</url-pattern>
+    <url-pattern>/cart</url-pattern>
     <url-pattern>/profile</url-pattern>
   </filter-mapping>
 
@@ -54,14 +54,14 @@
   </resource-ref>
 
 
-  <!--  Authorization  -->
+  <!--  Authentication  -->
   <servlet-mapping>
-    <servlet-name>Authorization</servlet-name>
+    <servlet-name>Authentication</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Authorization</servlet-name>
-    <servlet-class>com.pres.servlets.servlet.AuthorizationServlet</servlet-class>
+    <servlet-name>Authentication</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.AuthenticationServlet</servlet-class>
   </servlet>
 
   <!--  Registration  -->
@@ -84,14 +84,14 @@
     <servlet-class>com.pres.servlets.servlet.user.CatalogServlet</servlet-class>
   </servlet>
 
-  <!--  Basket  -->
+  <!--  Cart  -->
   <servlet-mapping>
-    <servlet-name>Basket</servlet-name>
-    <url-pattern>/basket</url-pattern>
+    <servlet-name>Cart</servlet-name>
+    <url-pattern>/cart</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Basket</servlet-name>
-    <servlet-class>com.pres.servlets.servlet.user.BasketServlet</servlet-class>
+    <servlet-name>Cart</servlet-name>
+    <servlet-class>com.pres.servlets.servlet.user.CartServlet</servlet-class>
   </servlet>
 
   <!--  Orders Catalog  -->

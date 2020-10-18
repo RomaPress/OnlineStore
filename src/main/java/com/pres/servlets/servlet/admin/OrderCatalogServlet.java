@@ -4,6 +4,7 @@ import com.pres.database.repository.impl.OrderRepository;
 import com.pres.exeption.DBException;
 import com.pres.model.Order;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class OrderCatalogServlet extends HttpServlet implements ErrorCatchable {
+public class OrderCatalogServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(OrderCatalogServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

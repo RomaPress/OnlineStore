@@ -17,7 +17,7 @@ public class UserFilter implements Filter {
         User user = (User) session.getAttribute("currentUser");
         if (user == null || !(user.getRole().value()).equals(User.Role.USER.value())) {
             session.invalidate();
-            req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
+            req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
         }
         chain.doFilter(req, resp);
     }

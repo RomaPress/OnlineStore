@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <html>
 <head>
     <title>Title</title>
@@ -12,13 +14,17 @@
           crossorigin="anonymous">
     <style type="text/css">
         <%@include file="../../css/modal.css"%>
-    </style>
-    <style type="text/css">
         <%@include file="../../css/style.css"%>
+        <%@include file="../../css/login.css"%>
     </style>
 </head>
 <body>
-
+<c:if test="${empty language}">
+    <c:set var="loc" value="${'prop_ru'}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <c:set var="loc" value="${language}"/>
+</c:if>
 
 <!-- Use any element to open the sidenav -->
 <div class="container-fluid">
@@ -30,17 +36,27 @@
                 </div>
             </span>
         </div>
-
-
         <div id="main">
             <div class="col-11">
                 <c:if test="${empty selectedProduct}">
-                    <h1>Корзина пуста</h1>
+                    <h1>
+                        <fmt:bundle basename="${loc}" prefix="cart.">
+                            <fmt:message key="cart_is_empty"></fmt:message>
+                        </fmt:bundle>
+                    </h1>
                     <hr>
-                    <h3>Для оформления заказа добавьте товар в корзину.</h3>
+                    <h3>
+                        <fmt:bundle basename="${loc}" prefix="cart.">
+                            <fmt:message key="message"></fmt:message>
+                        </fmt:bundle>
+                    </h3>
                 </c:if>
                 <c:if test="${!empty selectedProduct}">
-                    <h1>Корзина</h1>
+                    <h1>
+                        <fmt:bundle basename="${loc}" prefix="cart.">
+                            <fmt:message key="cart"></fmt:message>
+                        </fmt:bundle>
+                    </h1>
                     <table border="0">
                         <thead>
                         <tbody>
@@ -54,13 +70,16 @@
                                     </td>
                                     <td><p class="basket__text"><c:out value="${i.value.name}"/></p></td>
                                     <td><p class="basket__text"><c:out value="${i.value.price}грн."/></p></td>
-                                    <td><p class="basket__text"><c:out value="${i.value.amount}шт."/></p></td>
+                                    <td><p class="basket__text"><c:out value="${i.value.amount}"/>
+                                    </p></td>
                                     <td>
                                         <form method="post" action="${pageContext.request.contextPath}/basket">
                                             <input type="text" hidden name="delete"/>
                                             <button class=" basket__btn delete__btn" type="submit" value="${i.value.id}"
                                                     name="deleteId">
-                                                Удалить
+                                                <fmt:bundle basename="${loc}" prefix="cart.">
+                                                    <fmt:message key="delete"></fmt:message>
+                                                </fmt:bundle>
                                             </button>
                                         </form>
                                     </td>
@@ -72,11 +91,15 @@
                         </thead>
                     </table>
                     <br>
-                    Сумма = <c:out value="${total}"/>грн.
+                    <fmt:bundle basename="${loc}" prefix="cart.">
+                        <fmt:message key="total"></fmt:message>
+                    </fmt:bundle> = <c:out value="${total}"/>₴
                     <br>
                     <form method="post" action="${pageContext.request.contextPath}/basket">
                         <button class="btn" type="submit" name="order">
-                            Заказать
+                            <fmt:bundle basename="${loc}" prefix="cart.">
+                                <fmt:message key="order"></fmt:message>
+                            </fmt:bundle>
                         </button>
                     </form>
                 </c:if>
@@ -88,12 +111,35 @@
 
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
+    <a href="${pageContext.request.contextPath}/catalog">
+        <fmt:bundle basename="${loc}" prefix="side.">
+            <fmt:message key="catalog"></fmt:message>
+        </fmt:bundle>
+    </a>
+
     <c:if test="${currentUser.role != UNKNOW}">
-        <a href="${pageContext.request.contextPath}/basket">Корзина</a>
-        <a href="${pageContext.request.contextPath}/profile">Мой профиль</a>
+        <a href="${pageContext.request.contextPath}/cart">
+            <fmt:bundle basename="${loc}" prefix="side.">
+                <fmt:message key="cart"></fmt:message>
+            </fmt:bundle>
+        </a>
+        <a href="${pageContext.request.contextPath}/profile">
+            <fmt:bundle basename="${loc}" prefix="side.">
+                <fmt:message key="my_profile"></fmt:message>
+            </fmt:bundle>
+        </a>
     </c:if>
-    <a href="${pageContext.request.contextPath}/exit">Выйти</a>
+    <a href="${pageContext.request.contextPath}/exit">
+        <fmt:bundle basename="${loc}" prefix="side.">
+            <fmt:message key="log_out"></fmt:message>
+        </fmt:bundle>
+    </a>
+    <div class="loc">
+        <form id="sortProduct" method="post" action="${pageContext.request.contextPath}/cart">
+            <button class="side_btn" type="submit" name="language" value="prop_en">EN</button>
+            <button class="side_btn" type="submit" name="language" value="prop_ru">RU</button>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -16,7 +17,12 @@
 
 </head>
 <body>
-
+<c:if test="${empty language}">
+    <c:set var="loc" value="${'prop_ru'}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <c:set var="loc" value="${language}"/>
+</c:if>
 <div class="container-fluid">
     <div class="row">
         <div class="col-1">
@@ -29,23 +35,61 @@
         <div id="main">
             <div>
                 <a id="openPopUp" onclick="document.getElementById('popUp').style.display='block'">
-                    Изменить данные профиля
+                    <fmt:bundle basename="${loc}" prefix="profile.">
+                        <fmt:message key="change_profile_information."></fmt:message>
+                    </fmt:bundle>
                 </a>
             </div>
             <div class="col-11">
-                <h2>Мои заказы</h2>
+                <h2>
+                    <fmt:bundle basename="${loc}" prefix="profile.">
+                        <fmt:message key="my_orders"></fmt:message>
+                    </fmt:bundle>
+                </h2>
                 <p></p>
 
                 <table>
                     <tr>
-                        <th>Статус</th>
-                        <th>Город</th>
-                        <th>Отделение НП</th>
-                        <th>Номер накладной</th>
-                        <th>Сумма</th>
-                        <th>Товар</th>
-                        <th>Цена за шт.</th>
-                        <th>Количество</th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="status"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="city"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="post_office"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="invoice_number"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="total"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="product"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="unit_price"></fmt:message>
+                            </fmt:bundle>
+                        </th>
+                        <th>
+                            <fmt:bundle basename="${loc}" prefix="profile.">
+                                <fmt:message key="amount"></fmt:message>
+                            </fmt:bundle>
+                        </th>
                     </tr>
                     <c:forEach var="i" items="${userOrder}">
                         <tr>
@@ -79,40 +123,74 @@
 <div id="popUp" class="modal">
             <span onclick="dropPopUp()" class="close"
                   title="Close Modal">×</span>
+    <c:if test="${empty language}">
+        <c:set var="loc" value="${'prop_ru'}"/>
+    </c:if>
+    <c:if test="${!empty language}">
+        <c:set var="loc" value="${language}"/>
+    </c:if>
     <form class="modal-content" method="post" action="${pageContext.request.contextPath}/profile">
         <div class="containerAuth">
             <div class="inputBox">
                 <input type="text" id="firstName" required value="${currentUser.firstName}"
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
-                <span>First fame</span>
+                <span>
+                    <fmt:bundle basename="${loc}" prefix="registration.">
+                        <fmt:message key="first_name"></fmt:message>
+                    </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
                 <input type="text" id="lastName" required value="${currentUser.lastName}"
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
-                <span>Last name</span>
+                <span>
+                     <fmt:bundle basename="${loc}" prefix="registration.">
+                         <fmt:message key="last_name"></fmt:message>
+                     </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
                 <input type="text" id="phoneNumber" required value="${currentUser.phoneNumber}"
                        pattern="[0-9+]{2,20}"/>
-                <span>Phone number</span>
+                <span>
+                     <fmt:bundle basename="${loc}" prefix="registration.">
+                         <fmt:message key="phone_number"></fmt:message>
+                     </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
                 <input type="text" id="city" required value="${currentUser.city}"
                        pattern="[\sА-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9+]{2,20}"/>
-                <span>City</span>
+                <span>
+                     <fmt:bundle basename="${loc}" prefix="registration.">
+                         <fmt:message key="city"></fmt:message>
+                     </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
                 <input type="number" id="postOffice" required value="${currentUser.postOffice}"
-                       pattern="[0-9+]{,3}" min="1"  />
-                <span>Post office</span>
+                       pattern="[0-9+]{,3}" min="1"/>
+                <span>
+                     <fmt:bundle basename="${loc}" prefix="registration.">
+                         <fmt:message key="post_office"></fmt:message>
+                     </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
                 <input type="password" id="password" required
                        pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
-                <span>Current password</span>
+                <span>
+                     <fmt:bundle basename="${loc}" prefix="profile.">
+                         <fmt:message key="current_password"></fmt:message>
+                     </fmt:bundle>
+                </span>
             </div>
             <div class="inputBox">
-                <input  type="button" value="Изменить" onclick="checkPassword()">
+                <button type="button" onclick="checkPassword()">
+                    <fmt:bundle basename="${loc}" prefix="profile.">
+                        <fmt:message key="change"></fmt:message>
+                    </fmt:bundle>
+                </button>
             </div>
 
             <div id="passwordError" style="display: none">
@@ -125,12 +203,35 @@
 
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
+    <a href="${pageContext.request.contextPath}/catalog">
+        <fmt:bundle basename="${loc}" prefix="side.">
+            <fmt:message key="catalog"></fmt:message>
+        </fmt:bundle>
+    </a>
+
     <c:if test="${currentUser.role != UNKNOW}">
-        <a href="${pageContext.request.contextPath}/basket">Корзина</a>
-        <a href="${pageContext.request.contextPath}/profile">Мой профиль</a>
+        <a href="${pageContext.request.contextPath}/cart">
+            <fmt:bundle basename="${loc}" prefix="side.">
+                <fmt:message key="cart"></fmt:message>
+            </fmt:bundle>
+        </a>
+        <a href="${pageContext.request.contextPath}/profile">
+            <fmt:bundle basename="${loc}" prefix="side.">
+                <fmt:message key="my_profile"></fmt:message>
+            </fmt:bundle>
+        </a>
     </c:if>
-    <a href="${pageContext.request.contextPath}/exit">Выйти</a>
+    <a href="${pageContext.request.contextPath}/exit">
+        <fmt:bundle basename="${loc}" prefix="side.">
+            <fmt:message key="log_out"></fmt:message>
+        </fmt:bundle>
+    </a>
+    <div class="loc">
+        <form id="sortProduct" method="post" action="${pageContext.request.contextPath}/profile">
+            <button class="side_btn" type="submit" name="language" value="prop_en">EN</button>
+            <button class="side_btn" type="submit" name="language" value="prop_ru">RU</button>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">

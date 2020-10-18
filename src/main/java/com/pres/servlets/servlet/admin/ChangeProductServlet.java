@@ -4,6 +4,7 @@ import com.pres.database.repository.impl.ProductRepository;
 import com.pres.exeption.DBException;
 import com.pres.model.Product;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeProductServlet extends HttpServlet implements ErrorCatchable {
+public class ChangeProductServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(ChangeProductServlet.class);
 
     @Override

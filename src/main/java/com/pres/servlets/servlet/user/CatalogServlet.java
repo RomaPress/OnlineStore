@@ -4,6 +4,7 @@ import com.pres.database.repository.impl.ProductRepository;
 import com.pres.exeption.DBException;
 import com.pres.model.Product;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import com.pres.util.Process;
 import com.pres.util.sort.ProductSort;
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CatalogServlet extends HttpServlet implements ErrorCatchable {
+public class CatalogServlet extends HttpServlet implements ErrorCatchable, Internationalize {
     private static final Logger LOG = Logger.getLogger(CatalogServlet.class);
     private static final int COUNT_PRODUCT_IN_PAGE = 12;
 
@@ -58,6 +59,9 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable {
             int sort = Integer.parseInt(req.getParameter("sort"));
             setAttribute(req, "sort", sort);
             setAttribute(req, "page", 1);
+            doGet(req, resp);
+        } else if (req.getParameterMap().containsKey("language")) {
+            interpreter(req);
             doGet(req, resp);
         } else {
             HttpSession session = req.getSession();

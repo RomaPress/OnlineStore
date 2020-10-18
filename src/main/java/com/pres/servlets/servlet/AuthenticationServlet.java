@@ -4,6 +4,7 @@ import com.pres.database.repository.impl.UserRepository;
 import com.pres.exeption.DBException;
 import com.pres.model.User;
 import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AuthorizationServlet extends HttpServlet implements ErrorCatchable {
-    private static final Logger LOG = Logger.getLogger(AuthorizationServlet.class);
+public class AuthenticationServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+    private static final Logger LOG = Logger.getLogger(AuthenticationServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
     }
 
     @Override

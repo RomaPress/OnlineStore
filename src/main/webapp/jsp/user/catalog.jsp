@@ -1,12 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Title</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"
-            type="text/javascript"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -15,13 +14,19 @@
 
     <style type="text/css">
         <%@include file="../../css/style.css"%>
+        <%@include file="../../css/login.css"%>
     </style>
     <script type="text/javascript">
         <%--var products = ${products};--%>
     </script>
 </head>
 <body>
-
+<c:if test="${empty language}">
+    <c:set var="loc" value="${'prop_ru'}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <c:set var="loc" value="${language}"/>
+</c:if>
 
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -46,7 +51,11 @@
 
         <div class="col-11">
             <div id="main">
-                <h1>Catalog products</h1>
+                <h1>
+                    <fmt:bundle basename="${loc}" prefix="catalog.">
+                        <fmt:message key="catalog_products"></fmt:message>
+                    </fmt:bundle>
+                </h1>
                 <div class="container my__container">
                     <div class="row">
                         <%--                        <c:forEach var="i" items="${products}">--%>

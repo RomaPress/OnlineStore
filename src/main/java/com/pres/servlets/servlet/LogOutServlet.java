@@ -12,6 +12,6 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
         session.invalidate();
-        req.getRequestDispatcher("/jsp/authorization.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
     }
 }

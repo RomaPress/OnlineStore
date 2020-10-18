@@ -40,7 +40,7 @@ public class ProductRepository implements Repository {
     }
 
     public Product createProduct(Product product, Part part) throws DBException {
-        Product newProduct = new Product.Builder().build();
+        Product newProduct;
         Connection connection = null;
         try {
             connection = getConnection();
