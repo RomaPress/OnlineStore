@@ -41,7 +41,7 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
             int productId = Integer.parseInt(req.getParameter("product_id"));
 
             deleteProduct(req, resp, order, productId);
-            refreshOrder(req, resp, session, order);
+            refreshOrder(req, resp, session, productId);
         }
         if (req.getParameterMap().containsKey("update")) {
             String status = req.getParameter("status");
@@ -54,7 +54,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
                 order.setInvoiceNumber(invoiceNumber);
                 refreshInvoiceNumber(req, resp, order);
             }
-            refreshOrder(req, resp, session, order);
+            int order_id = order.getId();
+            refreshOrder(req, resp, session, order_id);
         }
         doGet(req, resp);
     }
@@ -72,9 +73,10 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
         }
     }
 
-    private void refreshOrder(HttpServletRequest req, HttpServletResponse resp, HttpSession session, Order order) throws ServletException, IOException {
+    private void refreshOrder(HttpServletRequest req, HttpServletResponse resp, HttpSession session, int order_id) throws ServletException, IOException {
+        Order order = new Order();
         try {
-            order = OrderRepository.getInstance().findOrderById(order.getId());
+            order = OrderRepository.getInstance().findOrderById(order_id);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             handling(req, resp, e.getMessage());

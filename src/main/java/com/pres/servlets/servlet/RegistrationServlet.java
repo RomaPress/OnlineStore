@@ -25,7 +25,7 @@ public class RegistrationServlet extends HttpServlet implements ErrorCatchable, 
             resp.getWriter().write(String.valueOf(true));
         } else if (req.getParameterMap().containsKey("language")) {
             interpreter(req);
-            doGet(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/authentication");
         } else {
             User user = extractUser(req);
             createUser(req, resp, user);

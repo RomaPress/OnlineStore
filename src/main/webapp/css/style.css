@@ -181,11 +181,6 @@ tr:nth-child(even) {
     align-items: center;
     justify-content: center
 }
-.pagination_arrow{
-    color: white;
-    border-width: 2px;
-}
-
 
 #header-container {
     display: block;
@@ -225,5 +220,8 @@ section select option:hover {
 .loc{
     position: fixed;
     left: 0; bottom: 0;
+    margin-bottom: 10px;
+}
+.arrow{
     margin-bottom: 10px;
 }

@@ -26,8 +26,6 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable, Inter
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         HttpSession session = req.getSession();
         int page = 1;
         if (session.getAttribute("page") != null) {
@@ -111,8 +109,6 @@ public class CatalogServlet extends HttpServlet implements ErrorCatchable, Inter
 
         HttpSession session = req.getSession();
         session.getAttribute("sort");
-
-
         return products;
     }
 }
