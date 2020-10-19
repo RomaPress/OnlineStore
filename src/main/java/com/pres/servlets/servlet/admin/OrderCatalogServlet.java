@@ -1,7 +1,7 @@
 package com.pres.servlets.servlet.admin;
 
 import com.pres.database.repository.impl.OrderRepository;
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 import com.pres.model.Order;
 import com.pres.servlets.ErrorCatchable;
 import com.pres.servlets.Internationalize;

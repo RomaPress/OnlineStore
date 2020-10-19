@@ -1,11 +1,9 @@
 package com.pres.database.repository;
 
 import com.pres.database.ConnectionPool;
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 
-import javax.naming.NamingException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public interface Repository {
 

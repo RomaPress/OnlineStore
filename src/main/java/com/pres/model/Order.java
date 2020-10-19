@@ -3,10 +3,13 @@ package com.pres.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Represents an order in DB. To create an instance of this class use Builder.
+ *
+ * @author Pres Roman
+ **/
 public class Order implements Serializable {
     private static final long serialVersionUID = 74645L;
-
     private int id;
     private User user;
     private List<Product> products;

@@ -1,7 +1,7 @@
 package com.pres.servlets.servlet;
 
 import com.pres.database.repository.impl.UserRepository;
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 import com.pres.model.User;
 import com.pres.servlets.ErrorCatchable;
 import com.pres.servlets.Internationalize;

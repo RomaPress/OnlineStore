@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Class used for performing operations on images
+ *
+ * @author Pres Roman
+ **/
 public class Photo {
     private static final Logger LOG = Logger.getLogger(Photo.class);
 

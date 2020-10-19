@@ -1,4 +1,4 @@
-package com.pres.exeption;
+package com.pres.exception;
 
 
 public class DBException extends Exception {

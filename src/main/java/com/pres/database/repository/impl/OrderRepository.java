@@ -3,7 +3,7 @@ package com.pres.database.repository.impl;
 import com.pres.database.dao.impl.OrderDAO;
 import com.pres.database.repository.Process;
 import com.pres.database.repository.Repository;
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 import com.pres.constants.ErrorMessage;
 import com.pres.model.Order;
 import com.pres.model.Product;

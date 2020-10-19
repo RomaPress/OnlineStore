@@ -1,6 +1,6 @@
 package com.pres.database;
 
-import com.pres.exeption.DBException;
+import com.pres.exception.DBException;
 import com.pres.constants.ErrorMessage;
 import org.apache.log4j.Logger;
 
