@@ -25,8 +25,8 @@
         </div>
         <div class="col">
             <div id="main">
-                <a id="openPopUp" onclick="document.getElementById('popUp').style.display='block'">Добавить продукт</a>
-
+                <h3><a id="openPopUp" onclick="document.getElementById('popUp').style.display='block'">Добавить продукт</a></h3>
+                <br>
                 <table border="0">
                     <thead>
                     <th>id</th>

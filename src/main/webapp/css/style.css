@@ -186,7 +186,7 @@ tr:nth-child(even) {
     display: block;
     position: absolute;
 }
-section select {
+section .my_select {
     margin-top: -20px;
     padding: 6px 6px 6px 32px;
     text-decoration: none;
@@ -198,12 +198,12 @@ section select {
     background: transparent;
 }
 
-section select:hover {
+section .my_select :hover {
     background-color: transparent;
     color: white;
 }
 
-section select option {
+section select .my_options {
     background-color: white;
     color: gray;
     width: 310px;
@@ -212,7 +212,7 @@ section select option {
     cursor: pointer;
 }
 
-section select option:hover {
+section select .my_options:hover {
     padding-left: 20px;
     width: 270px;
     color: #0d1435;

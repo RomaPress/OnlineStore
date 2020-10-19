@@ -73,7 +73,7 @@
                                     <td><p class="basket__text"><c:out value="${i.value.amount}"/>
                                     </p></td>
                                     <td>
-                                        <form method="post" action="${pageContext.request.contextPath}/basket">
+                                        <form method="post" action="${pageContext.request.contextPath}/cart">
                                             <input type="text" hidden name="delete"/>
                                             <button class=" basket__btn delete__btn" type="submit" value="${i.value.id}"
                                                     name="deleteId">

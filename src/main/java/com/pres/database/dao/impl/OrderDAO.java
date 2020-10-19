@@ -9,8 +9,21 @@ import com.pres.model.User;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * This class allows an OrderDAO object to have low-level
+ * Data Base communication. It realizes manipulations wits Order
+ *
+ * @see Order
+ *
+ * @author Pres Roman
+ */
 public class OrderDAO implements SUID<Order> {
 
+    /**
+     * @param connection - connection to DB
+     * @return list of all orders
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public List<Order> select(Connection connection) throws SQLException {
         List<Order> orders;
@@ -26,15 +39,19 @@ public class OrderDAO implements SUID<Order> {
         return false;
     }
 
+    /**
+     * @param connection - connection to DB
+     * @param order Order object that must be inserted into DB
+     * @return created order
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public Order insert(Connection connection, Order order) throws SQLException {
         Order newOrder = new Order();
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getUser().getId());
-            //todo-->bag
             statement.setString(2, order.getCity());
             statement.setInt(3, order.getPostOffice());
-
             statement.executeUpdate();
             try (ResultSet rs = statement.getGeneratedKeys()) {
                 int key = rs.next() ? rs.getInt(1) : 0;
@@ -51,6 +68,12 @@ public class OrderDAO implements SUID<Order> {
         return false;
     }
 
+    /**
+     * @param connection - connection to DB
+     * @param order Order object that must be deleted from DB
+     * @param productId identifies an order
+     * @throws SQLException if something went wrong on DB level
+     */
     public void deleteProductFromOrder(Connection connection, Order order, int productId) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_DELETE_PRODUCT_FROM_ORDER)) {
             statement.setInt(1, productId);
@@ -59,6 +82,14 @@ public class OrderDAO implements SUID<Order> {
         }
     }
 
+    /**
+     * This method adds product in existed order into DB
+     *
+     * @param connection - connection to DB
+     * @param product Product object that must be inserted into order
+     * @param order identifies an order
+     * @throws SQLException if something went wrong on DB level
+     */
     public void insertProduct(Connection connection, Product product, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_ORDER_PRODUCT)) {
             statement.setInt(1, order.getId());
@@ -68,6 +99,14 @@ public class OrderDAO implements SUID<Order> {
         }
     }
 
+    /**
+     * This method looks for orders that belong to the current user in DB
+     *
+     * @param connection - connection to DB
+     * @param user identifies orders
+     * @return list of the current user`s orders
+     * @throws SQLException if something went wrong on DB level
+     */
     public List<Order> selectByUser(Connection connection, User user) throws SQLException {
         List<Order> orders;
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_ORDER_BY_USER)) {
@@ -79,6 +118,14 @@ public class OrderDAO implements SUID<Order> {
         return orders;
     }
 
+    /**
+     * This method looks for order in DB that have current id.
+     *
+     * @param connection - connection to DB
+     * @param id identifies orders
+     * @return order with this id
+     * @throws SQLException if something went wrong on DB level
+     */
     public Order selectById(Connection connection, int id) throws SQLException {
         Order order;
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_ORDER_BY_ID)) {
@@ -90,22 +137,33 @@ public class OrderDAO implements SUID<Order> {
         return order;
     }
 
+    /**
+     * This method inserts all order details into DB.
+     *
+     * @param connection - connection to DB
+     * @param products - list of the unique products
+     * @param user - user that makes the order
+     * @throws SQLException if something went wrong on DB level
+     */
     public void insertOrderInfo(Connection connection, Map<Integer, Product> products, User user) throws SQLException {
         Order order = new Order();
         order.setUser(user);
         order.setCity(user.getCity());
         order.setPostOffice(user.getPostOffice());
 
-        connection.setAutoCommit(false);
-        connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-
         order = insert(connection, order);
         for (Map.Entry<Integer, Product> i : products.entrySet()) {
             insertProduct(connection, i.getValue(), order);
         }
-        connection.commit();
     }
 
+    /**
+     * This method selects all unique order statuses from DB
+     *
+     * @param connection - connection to DB
+     * @return list of all unique order statuses
+     * @throws SQLException if something went wrong on DB level
+     */
     public List<String> selectStatus(Connection connection) throws SQLException {
         List<String> statuses = new ArrayList<>();
         try (Statement statement = connection.createStatement();
@@ -117,6 +175,14 @@ public class OrderDAO implements SUID<Order> {
         return statuses;
     }
 
+    /**
+     * This method changes order status in DB
+     *
+     * @param connection - connection to DB
+     * @param order identifies an order which status needs to be changed
+     * @return true if success; else false
+     * @throws SQLException if something went wrong on DB level
+     */
     public boolean updateStatus(Connection connection, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_STATUS)) {
             statement.setString(1, order.getStatus().value());
@@ -128,6 +194,14 @@ public class OrderDAO implements SUID<Order> {
         return false;
     }
 
+    /**
+     * This method changes order invoice number in DB
+     *
+     * @param connection - connection to DB
+     * @param order object which invoice number needs to be changed
+     * @return true if success; else false
+     * @throws SQLException if something went wrong on DB level
+     */
     public boolean updateInvoiceNumber(Connection connection, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_INVOICE_NUMBER)) {
             statement.setString(1, order.getInvoiceNumber());

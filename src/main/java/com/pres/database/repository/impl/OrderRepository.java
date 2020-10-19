@@ -15,6 +15,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class allows an OrderRepository object to have
+ * business level communication
+ *
+ * @see Order
+ * @see OrderDAO
+ *
+ * @author Pres Roman
+ */
 public class OrderRepository implements Repository {
     private static final Logger LOG = Logger.getLogger(OrderRepository.class);
     private static OrderRepository orderRepository;
@@ -28,6 +37,13 @@ public class OrderRepository implements Repository {
         return orderRepository;
     }
 
+    /**
+     * This method realizes transaction that saves all order details
+     *
+     * @param products - list of the unique products
+     * @param user -  user that makes the order
+     * @throws DBException if any problem occurs with connection
+     */
     public void doOrder(Map<Integer, Product> products, User user) throws DBException {
         Connection connection = null;
         try {

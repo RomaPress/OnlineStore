@@ -2,14 +2,24 @@ package com.pres.database.repository;
 
 import com.pres.constants.ErrorMessage;
 import com.pres.exception.DBException;
+import com.pres.model.User;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class realizes utils methods for interaction with DB
+ *
+ * @author Pres Roman
+ * @see User
+ */
 public class Process {
     private static final Logger LOG = Logger.getLogger(Process.class);
 
+    /**
+     * @param connection Connection
+     */
     public static void tryRollback(Connection connection) {
         if (connection != null) {
             try {
@@ -20,6 +30,9 @@ public class Process {
         }
     }
 
+    /**
+     * @param connection Connection
+     */
     public static void tryClose(Connection connection) {
         if (connection != null) {
             try {
@@ -30,6 +43,10 @@ public class Process {
         }
     }
 
+    /**
+     * @param connection Connection
+     * @throws DBException if something went wrong with setting transaction
+     */
     public static void setTransaction(Connection connection) throws DBException {
         try {
             connection.setAutoCommit(false);
@@ -41,6 +58,10 @@ public class Process {
         }
     }
 
+    /**
+     * @param connection Connection
+     * @throws DBException if something went wrong with committing
+     */
     public static void commit(Connection connection) throws DBException {
         try {
             connection.commit();

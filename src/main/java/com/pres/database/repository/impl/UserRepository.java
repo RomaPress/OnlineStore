@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements Repository {
@@ -57,7 +56,7 @@ public class UserRepository implements Repository {
 
     public boolean isUserAuthorized(final String login, final String password) throws DBException {
         try (Connection connection = getConnection()) {
-            return new UserDAO().isAuthorized(connection, login, password);
+            return new UserDAO().isAuthentication(connection, login, password);
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_CHECK_IF_USER_AUTHORIZED, e);
             throw new DBException(ErrorMessage.ERR_CANNOT_CHECK_IF_USER_AUTHORIZED, e);

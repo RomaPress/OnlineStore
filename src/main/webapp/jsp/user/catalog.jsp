@@ -99,6 +99,7 @@
 <script type="text/javascript" charset="utf-8">
     <%@include file="../../js/ajax.js"%>
     <%@include file="../../js/side.js"%>
+    <%@include file="../../js/side_select.js"%>
 </script>
 </body>
 

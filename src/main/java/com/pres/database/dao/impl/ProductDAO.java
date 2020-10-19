@@ -9,7 +9,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class allows an ProductDAO object to have low-level
+ * Data Base communication. It realizes manipulations wits Product
+ *
+ * @see Product
+ *
+ * @author Pres Roman
+ */
 public class ProductDAO implements SUID<Product> {
+
+    /**
+     * @param connection - connection to DB
+     * @return list of all products
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public List<Product> select(Connection connection) throws SQLException {
         List<Product> products = new ArrayList<>();
@@ -33,6 +47,13 @@ public class ProductDAO implements SUID<Product> {
         return products;
     }
 
+    /**
+     * @param connection - connection to DB
+     * @param product new product
+     * @param id - id of object that is being updated
+     * @return true if success; else false
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public boolean update(Connection connection, Product product, int id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_PRODUCT)) {
@@ -46,6 +67,12 @@ public class ProductDAO implements SUID<Product> {
         return false;
     }
 
+    /**
+     * @param connection - connection to DB
+     * @param product Product object that must be inserted into DB
+     * @return created product
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public Product insert(Connection connection, Product product) throws SQLException {
         Product newProduct = new Product.Builder().build();
@@ -73,6 +100,12 @@ public class ProductDAO implements SUID<Product> {
         return newProduct;
     }
 
+    /**
+     * @param connection - connection to DB
+     * @param product product that must be deleted
+     * @return true if success; else false
+     * @throws SQLException if something went wrong on DB level
+     */
     @Override
     public boolean delete(Connection connection, Product product) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_DELETE_PRODUCT)) {
@@ -84,8 +117,16 @@ public class ProductDAO implements SUID<Product> {
         return false;
     }
 
+    /**
+     * This method selects product by id from DB
+     *
+     * @param connection - connection to DB
+     * @param id identifies product
+     * @return product with this id
+     * @throws SQLException if something went wrong on DB level
+     */
     public Product selectById(Connection connection, int id) throws SQLException {
-        Product product = null;
+        Product product;
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_PRODUCT_BY_ID)) {
             statement.setInt(1, id);
             statement.execute();
@@ -107,8 +148,18 @@ public class ProductDAO implements SUID<Product> {
         return product;
     }
 
+    /**
+     * This method selects product by id from DB and sets amount
+     * to amount that the user wants to buy.
+     *
+     * @param connection - connection to DB
+     * @param id identifies product
+     * @param amount new product amount
+     * @return product that have new amount
+     * @throws SQLException if something went wrong on DB level
+     */
     public Product selectByIdWithCurrentAmount(Connection connection, int id, int amount) throws SQLException {
-        Product product = null;
+        Product product;
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_FIND_PRODUCT_BY_ID_WITH_CURRENT_AMOUNT)) {
             statement.setInt(1, id);
             statement.execute();

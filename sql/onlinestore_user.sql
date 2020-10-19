@@ -1,0 +1,4 @@
+insert into onlinestore.user (id, role_id, first_name, last_name, login, password, phone_number, city, post_office) values (1, 3, 'Роман', 'Прес', 'admin', 'admin', +380777777777, 'Харьков', 68);
+insert into onlinestore.user (id, role_id, first_name, last_name, login, password, phone_number, city, post_office) values (2, 2, 'Анастасия', 'Гришаева', 'feminastia', 'feminastia', +309111111111, 'Харьков', 100);
+insert into onlinestore.user (id, role_id, first_name, last_name, login, password, phone_number, city, post_office) values (3, 2, 'Сергей', 'Минаков', 'sergo', 'sergo', +380222222222, 'Харьков', 14);
+insert into onlinestore.user (id, role_id, first_name, last_name, login, password, phone_number, city, post_office) values (7, 2, 'Аркадий', 'Паравозов', 'arkacha', 'arkacha', +380967096994, 'Харьков', 65);

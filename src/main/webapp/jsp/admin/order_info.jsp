@@ -25,6 +25,7 @@
             <div id="main">
                 <form method="post" action="${pageContext.request.contextPath}/changeOrder">
                     <p>№ <c:out value="${order.id}"/></p>
+
                     <c:if test="${order.status == 'CANCELED'}">
                         <p>Статус CANCELED</p>
                     </c:if>

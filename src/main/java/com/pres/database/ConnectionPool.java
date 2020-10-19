@@ -11,6 +11,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class sets connection pull
+ *
+ * @author Pres Roman
+ */
 public class ConnectionPool {
     private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
@@ -25,6 +30,10 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * @return connection
+     * @throws DBException if something went wrong with DB connection
+     */
     public Connection getConnection() throws DBException {
         Context context;
         try {
