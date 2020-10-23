@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.UserRepository;
 import com.pres.exception.DBException;
 import com.pres.model.User;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -16,24 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ControlUserServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class ControlUserServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlUserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = getUser(req, resp);
-        req.setAttribute("users", users);
-        req.getRequestDispatcher("/jsp/admin/control_user.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.USERS, users);
+        req.getRequestDispatcher(Path.PATH_TO_CONTROL_USER_PAGE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        int userId = Integer.parseInt(req.getParameter("user_id"));
+        String action = req.getParameter(ServletContent.ACTION);
+        int userId = Integer.parseInt(req.getParameter(ServletContent.USER_ID));
 
-        if (action.equals("block")) {
+        if (action.equals(ServletContent.BLOCK)) {
             blockUser(req, resp, userId);
-        } else if (action.equals("unlock")) {
+        } else if (action.equals(ServletContent.UNLOCK)) {
             unlockUser(req, resp, userId);
         }
         doGet(req, resp);

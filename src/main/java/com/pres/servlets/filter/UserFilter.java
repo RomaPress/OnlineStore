@@ -1,5 +1,7 @@
 package com.pres.servlets.filter;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.model.User;
 
 import javax.servlet.*;
@@ -14,10 +16,10 @@ public class UserFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("currentUser");
+        User user = (User) session.getAttribute(ServletContent.CURRENT_USER);
         if (user == null || !(user.getRole().value()).equals(User.Role.USER.value())) {
             session.invalidate();
-            req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
+            req.getRequestDispatcher(Path.PATH_TO_AUTHENTICATION_PAGE).forward(req, resp);
         }
         chain.doFilter(req, resp);
     }

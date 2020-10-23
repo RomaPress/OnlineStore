@@ -98,6 +98,9 @@ public class Order implements Serializable {
         this.total = total;
     }
 
+    /**
+     * Represents an order status.
+     */
     public enum Status {
         PAID("PAID"), REGISTERED("REGISTERED"), CANCELED("CANCELED");
 
@@ -112,16 +115,4 @@ public class Order implements Serializable {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return id == order.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

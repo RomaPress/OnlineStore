@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * This class allows an ProductDAO object to have low-level
- * Data Base communication. It realizes manipulations wits Product
+ * Data Base communication. It realizes manipulations wits Product.
  *
  * @see Product
  *
@@ -118,7 +118,7 @@ public class ProductDAO implements SUID<Product> {
     }
 
     /**
-     * This method selects product by id from DB
+     * This method selects product by id from DB.
      *
      * @param connection - connection to DB
      * @param id identifies product

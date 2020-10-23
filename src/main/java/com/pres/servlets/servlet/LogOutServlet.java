@@ -1,5 +1,7 @@
 package com.pres.servlets.servlet;
 
+import com.pres.constants.Path;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,6 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
         session.invalidate();
-        req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
+        req.getRequestDispatcher(Path.PATH_TO_AUTHENTICATION_PAGE).forward(req, resp);
     }
 }

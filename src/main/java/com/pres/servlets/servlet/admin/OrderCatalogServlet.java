@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Order;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -15,20 +17,20 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class OrderCatalogServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class OrderCatalogServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(OrderCatalogServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("orders", getOrder(req, resp));
-        req.getRequestDispatcher("/jsp/admin/admin_menu.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.ORDERS, getOrder(req, resp));
+        req.getRequestDispatcher(Path.PATH_TO_ADMIN_MENU_PAGE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("order_id"));
+        int id = Integer.parseInt(req.getParameter(ServletContent.ORDER_ID));
         HttpSession session = req.getSession();
-        session.setAttribute("order", getOrderById(req, resp, id));
-        resp.sendRedirect(req.getContextPath() + "/changeOrder");
+        session.setAttribute(ServletContent.ORDER, getOrderById(req, resp, id));
+        resp.sendRedirect(req.getContextPath() + Path.URL_TO_CHANGE_ORDER_PAGE);
     }
 
     private List<Order> getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

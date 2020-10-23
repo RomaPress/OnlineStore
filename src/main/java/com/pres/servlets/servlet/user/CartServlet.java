@@ -1,10 +1,12 @@
 package com.pres.servlets.servlet.user;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Product;
 import com.pres.model.User;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -16,46 +18,65 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-public class CartServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+
+/**
+ * This servlet is responsible for cart processing. You can perform next
+ * actions: delete product from cart, make an order and see selected products.
+ *
+ * @see HttpServlet
+ */
+public class CartServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(CartServlet.class);
 
+    /**
+     * @param req contains all selected products, amounts and other information.
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Map<Integer, Product> map = getSelectedProduct(session);
 
-        req.setAttribute("selectedProduct", map);
-        req.getRequestDispatcher("/jsp/user/cart.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.SELECTED_PRODUCT, map);
+        req.getRequestDispatcher(Path.PATH_TO_CART_PAGE).forward(req, resp);
     }
 
+    /**
+     * @param req contains all selected products, amounts and other information.
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Map<Integer, Product> selectedProduct = getSelectedProduct(session);
 
-        if (req.getParameterMap().containsKey("delete")) {
-            final int id = Integer.parseInt(req.getParameter("deleteId"));
+        if (req.getParameterMap().containsKey(ServletContent.DELETE)) {
+            final int id = Integer.parseInt(req.getParameter(ServletContent.DELETE_ID));
             selectedProduct.remove(id);
             setSelectedProduct(session, selectedProduct);
             doGet(req, resp);
-        } else if (req.getParameterMap().containsKey("order") && selectedProduct.size() != 0) {
-            User user = (User) session.getAttribute("currentUser");
+        } else if (req.getParameterMap().containsKey(ServletContent.ORDER) && selectedProduct.size() != 0) {
+            User user = (User) session.getAttribute(ServletContent.CURRENT_USER);
             doOrder(req, resp, selectedProduct, user);
-            resp.sendRedirect(req.getContextPath() + "/catalog");
-        } else if (req.getParameterMap().containsKey("language")) {
-            interpreter(req);
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_CATALOG_PAGE);
+        } else if (req.getParameterMap().containsKey(ServletContent.LANGUAGE)) {
+            interpret(req);
             doGet(req, resp);
         }
     }
 
     private Map<Integer, Product> getSelectedProduct(HttpSession session) {
         @SuppressWarnings("unchecked")
-        Map<Integer, Product> answer = (Map<Integer, Product>) session.getAttribute("selectedProduct");
+        Map<Integer, Product> answer = (Map<Integer, Product>) session.getAttribute(ServletContent.SELECTED_PRODUCT);
         return answer;
     }
 
     private void setSelectedProduct(HttpSession session, Map<Integer, Product> map) {
-        session.setAttribute("selectedProduct", map);
+        session.setAttribute(ServletContent.SELECTED_PRODUCT, map);
     }
 
     private void doOrder(HttpServletRequest req, HttpServletResponse resp,

@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Order;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -16,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ChangeOrderServlet.class);
 
     @Override
@@ -28,8 +30,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
             LOG.error(e.getMessage(), e);
             handling(req, resp, e.getMessage());
         }
-        req.setAttribute("status", list);
-        req.getRequestDispatcher("/jsp/admin/order_info.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.STATUS, list);
+        req.getRequestDispatcher(Path.PATH_TO_ORDER_INFO_PAGE).forward(req, resp);
     }
 
     @Override
@@ -37,15 +39,15 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
         HttpSession session = req.getSession();
         Order order = getOrder(session);
 
-        if (req.getParameterMap().containsKey("delete")) {
-            int productId = Integer.parseInt(req.getParameter("product_id"));
+        if (req.getParameterMap().containsKey(ServletContent.DELETE)) {
+            int productId = Integer.parseInt(req.getParameter(ServletContent.PRODUCT_ID));
 
             deleteProduct(req, resp, order, productId);
             refreshOrder(req, resp, session, productId);
         }
-        if (req.getParameterMap().containsKey("update")) {
-            String status = req.getParameter("status");
-            String invoiceNumber = req.getParameter("invoiceNumber");
+        if (req.getParameterMap().containsKey(ServletContent.UPDATE)) {
+            String status = req.getParameter(ServletContent.STATUS);
+            String invoiceNumber = req.getParameter(ServletContent.INVOICE_NUMBER);
             if (status != null) {
                 order.setStatus(status);
                 refreshStatus(req, resp, order);
@@ -61,7 +63,7 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
     }
 
     private Order getOrder(HttpSession session) {
-        return (Order) session.getAttribute("order");
+        return (Order) session.getAttribute(ServletContent.ORDER);
     }
 
     private void deleteProduct(HttpServletRequest req, HttpServletResponse resp, Order order, int productId) throws ServletException, IOException {
@@ -81,7 +83,7 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorCatchable, I
             LOG.error(e.getMessage(), e);
             handling(req, resp, e.getMessage());
         }
-        session.setAttribute("order", order);
+        session.setAttribute(ServletContent.ORDER, order);
     }
 
     private void refreshInvoiceNumber(HttpServletRequest req, HttpServletResponse resp, Order order) throws ServletException, IOException {

@@ -1,11 +1,13 @@
 package com.pres.servlets.servlet.user;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
 import com.pres.database.repository.impl.UserRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Order;
 import com.pres.model.User;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -17,31 +19,31 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class ProfileServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class ProfileServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ProfileServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = getUser(req);
         List<Order> orders = getOrderByUser(req, resp, user);
-        req.setAttribute("userOrder", orders);
-        req.getRequestDispatcher("jsp/user/profile.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.USER_ORDER, orders);
+        req.getRequestDispatcher(Path.PATH_TO_USER_PROFILE_PAGE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameterMap().containsKey("language")) {
-            interpreter(req);
+        if (req.getParameterMap().containsKey(ServletContent.LANGUAGE)) {
+            interpret(req);
             doGet(req, resp);
         } else {
-            req.setCharacterEncoding("UTF-8");
-            String oldPassword = req.getParameter("password");
+            req.setCharacterEncoding(ServletContent.UTF_8);
+            String oldPassword = req.getParameter(ServletContent.PASSWORD);
 
             boolean isCorrect = checkPassword(oldPassword, req);
             if (isCorrect) {
                 User user = extractUser(req);
                 saveUser(req, resp, user);
-                resp.sendRedirect(req.getContextPath() + "/profile");
+                resp.sendRedirect(req.getContextPath() + Path.URL_TO_USER_PROFILE_PAGE);
             }
             resp.getWriter().write(String.valueOf(isCorrect));
         }
@@ -49,17 +51,17 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable, Inter
 
     private boolean checkPassword(String password, HttpServletRequest req) {
         HttpSession session = req.getSession();
-        User user = (User) (session.getAttribute("currentUser"));
+        User user = (User) (session.getAttribute(ServletContent.CURRENT_USER));
         return password.equals(user.getPassword());
     }
 
     private void saveUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        User oldUserData = (User) (session.getAttribute("currentUser"));
+        User oldUserData = (User) (session.getAttribute(ServletContent.CURRENT_USER));
 
         if (updateUserInfo(req, resp, user, oldUserData.getId())) {
             User newUserData = getUserByLogin(req, resp, oldUserData.getLogin());
-            session.setAttribute("currentUser", newUserData);
+            session.setAttribute(ServletContent.CURRENT_USER, newUserData);
         }
     }
 
@@ -86,19 +88,18 @@ public class ProfileServlet extends HttpServlet implements ErrorCatchable, Inter
     }
 
     private User extractUser(HttpServletRequest req) {
-
         return new User.Builder()
-                .setFirstName(req.getParameter("firstName"))
-                .setLastName(req.getParameter("lastName"))
-                .setPhoneNumber(req.getParameter("phoneNumber"))
-                .setPostOffice(Integer.parseInt(req.getParameter("postOffice")))
-                .setCity(req.getParameter("city"))
+                .setFirstName(req.getParameter(ServletContent.FIRST_NAME))
+                .setLastName(req.getParameter(ServletContent.LAST_NAME))
+                .setPhoneNumber(req.getParameter(ServletContent.PHONE_NUMBER))
+                .setPostOffice(Integer.parseInt(req.getParameter(ServletContent.POST_OFFICE)))
+                .setCity(req.getParameter(ServletContent.CITY))
                 .build();
     }
 
     private User getUser(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        return (User) session.getAttribute("currentUser");
+        return (User) session.getAttribute(ServletContent.CURRENT_USER);
     }
 
     private List<Order> getOrderByUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {

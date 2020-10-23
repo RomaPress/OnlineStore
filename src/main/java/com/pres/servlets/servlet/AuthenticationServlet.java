@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.UserRepository;
 import com.pres.exception.DBException;
 import com.pres.model.User;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -14,36 +16,39 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AuthenticationServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class AuthenticationServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(AuthenticationServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/authentication.jsp").forward(req, resp);
+        req.getRequestDispatcher(Path.PATH_TO_AUTHENTICATION_PAGE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final String login = req.getParameter("login");
-        final String password = req.getParameter("password");
+        final String login = req.getParameter(ServletContent.LOGIN);
+        final String password = req.getParameter(ServletContent.PASSWORD);
         final boolean isExist = isUserAuthorized(req, resp, login, password);
 
-        if (req.getParameterMap().containsKey("logIn") && isExist) {
+        if (req.getParameterMap().containsKey(ServletContent.LOG_IN) && isExist) {
             User user = getUserByLogin(req, resp, login);
             moveToPage(req, resp, user);
-        } else {
+        }else if (req.getParameterMap().containsKey(ServletContent.LANGUAGE)) {
+            interpret(req);
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_AUTHENTICATION_PAGE);
+        }  else {
             doGet(req, resp);
         }
     }
 
     private void moveToPage(HttpServletRequest req, HttpServletResponse resp, User user) throws IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("currentUser", user);
+        session.setAttribute(ServletContent.CURRENT_USER, user);
 
         if (user.getRole().equals(User.Role.ADMIN)) {
-            resp.sendRedirect(req.getContextPath() + "/order");
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_ADMIN_MENU_PAGE);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/catalog");
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_CATALOG_PAGE);
         }
     }
 

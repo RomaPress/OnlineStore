@@ -1,10 +1,12 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.ProductRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Product;
 import com.pres.model.Type;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import com.pres.util.sort.ProductSort;
 import org.apache.log4j.Logger;
@@ -21,25 +23,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @MultipartConfig
-public class ControlProductServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class ControlProductServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlProductServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = ProductSort.sort(getProduct(req, resp), ProductSort.SORT_BY_ID) ;
-        req.setAttribute("products", products);
+        req.setAttribute(ServletContent.PRODUCTS, products);
 
         List<String> types = getType(products);
-        req.setAttribute("types", types);
-        req.getRequestDispatcher("/jsp/admin/control_product.jsp").forward(req, resp);
+        req.setAttribute(ServletContent.TYPES, types);
+        req.getRequestDispatcher(Path.PATH_TO_CONTROL_PRODUCT_PAGE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        if (req.getParameterMap().containsKey("createProduct")) {
+        req.setCharacterEncoding(ServletContent.UTF_8);
+        if (req.getParameterMap().containsKey(ServletContent.CREATE_PRODUCT)) {
             Product product = extractProduct(req);
-            Part file = req.getPart("file");
+            Part file = req.getPart(ServletContent.FILE);
             createProduct(req, resp, product,file);
         }
         doGet(req, resp);
@@ -69,12 +71,12 @@ public class ControlProductServlet extends HttpServlet implements ErrorCatchable
 
     private Product extractProduct(HttpServletRequest req) {
         return new Product.Builder()
-                .setName(req.getParameter("name"))
-                .setPrice(Double.parseDouble(req.getParameter("price")))
-                .setAmount(Integer.parseInt(req.getParameter("amount")))
-                .setDescription(req.getParameter("description"))
+                .setName(req.getParameter(ServletContent.NAME))
+                .setPrice(Double.parseDouble(req.getParameter(ServletContent.PRICE)))
+                .setAmount(Integer.parseInt(req.getParameter(ServletContent.AMOUNT)))
+                .setDescription(req.getParameter(ServletContent.DESCRIPTION))
                 .setType(new Type.Builder()
-                        .setName(req.getParameter("type"))
+                        .setName(req.getParameter(ServletContent.TYPE))
                         .build())
                 .build();
     }

@@ -1,6 +1,7 @@
 package com.pres.util.sort;
 
 import com.pres.constants.ErrorMessage;
+import com.pres.constants.Sort;
 import com.pres.model.Product;
 import org.apache.log4j.Logger;
 
@@ -74,31 +75,31 @@ public class ProductSort {
 
     private static List<Product> sortByAcousticGuitar(List<Product> products) {
         return products.stream()
-                .filter(product -> product.getType().getName().equals("Acoustic guitar"))
+                .filter(product -> product.getType().getName().equals(Sort.SORT_ACOUSTIC_GUITAR))
                 .collect(Collectors.toList());
     }
 
     private static List<Product> sortByBassGuitar(List<Product> products) {
         return products.stream()
-                .filter(product -> product.getType().getName().equals("Bass-guitar"))
+                .filter(product -> product.getType().getName().equals(Sort.BASS_GUITAR))
                 .collect(Collectors.toList());
     }
 
     private static List<Product> sortByElectricGuitar(List<Product> products) {
         return products.stream()
-                .filter(product -> product.getType().getName().equals("Electric guitar"))
+                .filter(product -> product.getType().getName().equals(Sort.ELECTRIC_GUITAR))
                 .collect(Collectors.toList());
     }
 
     private static List<Product> sortByClassicalGuitar(List<Product> products) {
         return products.stream()
-                .filter(product -> product.getType().getName().equals("Classical guitar"))
+                .filter(product -> product.getType().getName().equals(Sort.CLASSICAL_GUITAR))
                 .collect(Collectors.toList());
     }
 
     private static List<Product> sortByElectroAcousticGuitar(List<Product> products) {
         return products.stream()
-                .filter(product -> product.getType().getName().equals("Electro-acoustic guitar"))
+                .filter(product -> product.getType().getName().equals(Sort.ELECTRO_ACOUSTIC_GUITAR))
                 .collect(Collectors.toList());
     }
 }

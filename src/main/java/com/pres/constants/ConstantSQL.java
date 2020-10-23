@@ -3,6 +3,11 @@ package com.pres.constants;
 import com.pres.model.Order;
 import com.pres.model.User;
 
+/**
+ * Constants used for SQL query.
+ *
+ * @author Pres Roman
+ */
 public final class ConstantSQL {
 
     public static final String SQL_FIND_ALL_PRODUCT = "SELECT p.id as id, p.name as name, price, amount, description, t.name as type_name, t.id as type_id FROM product p, type t " +

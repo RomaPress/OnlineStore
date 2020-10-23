@@ -6,7 +6,7 @@ import com.pres.exception.DBException;
 import java.sql.Connection;
 
 /**
- * Implementing this interface allows an object to have connection
+ * Implementing this interface allows a class to have connection
  * from Connection Pool
  *
  * @see ConnectionPool

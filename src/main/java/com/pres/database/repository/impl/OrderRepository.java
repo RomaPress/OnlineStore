@@ -38,7 +38,7 @@ public class OrderRepository implements Repository {
     }
 
     /**
-     * This method realizes transaction that saves all order details
+     * This method performs transaction that saves all order details
      *
      * @param products - list of the unique products
      * @param user -  user that makes the order
@@ -60,6 +60,12 @@ public class OrderRepository implements Repository {
         }
     }
 
+    /**
+     * This method uses a DAO for selecting all orders.
+     *
+     * @return
+     * @throws DBException
+     */
     public List<Order> findAllOrders() throws DBException {
         List<Order> orders;
         try(Connection connection = getConnection()) {

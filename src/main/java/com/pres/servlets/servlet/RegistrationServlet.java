@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.UserRepository;
 import com.pres.exception.DBException;
 import com.pres.model.User;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -13,27 +15,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RegistrationServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class RegistrationServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(RegistrationServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        String login = req.getParameter("login");
-        boolean isExist = isExistLogin(req, resp, login);
+        req.setCharacterEncoding(ServletContent.UTF_8);
+        String login = req.getParameter(ServletContent.LOGIN);
+        boolean isExist = isLoginExists(req, resp, login);
+
         if (isExist) {
-            resp.getWriter().write(String.valueOf(true));
-        } else if (req.getParameterMap().containsKey("language")) {
-            interpreter(req);
-            resp.sendRedirect(req.getContextPath() + "/authentication");
+            resp.getWriter().write(String.valueOf(isExist));
+        } else if (req.getParameterMap().containsKey(ServletContent.LANGUAGE)) {
+            interpret(req);
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_AUTHENTICATION_PAGE);
         } else {
             User user = extractUser(req);
-            createUser(req, resp, user);
-            resp.sendRedirect(req.getContextPath() + "/authentication");
+            if (createUser(req, resp, user)){
+                resp.sendRedirect(req.getContextPath() + Path.URL_TO_AUTHENTICATION_PAGE);
+            }
         }
     }
 
-    private boolean isExistLogin(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
+    private boolean isLoginExists(HttpServletRequest req, HttpServletResponse resp, String login) throws ServletException, IOException {
         boolean isExist = false;
         try {
             if (UserRepository.getInstance().isLoginExist(login)) {
@@ -48,22 +52,24 @@ public class RegistrationServlet extends HttpServlet implements ErrorCatchable, 
 
     private User extractUser(HttpServletRequest req) {
         return new User.Builder()
-                .setFirstName(req.getParameter("firstName"))
-                .setLastName(req.getParameter("lastName"))
-                .setPhoneNumber(req.getParameter("phoneNumber"))
-                .setLogin(req.getParameter("login"))
-                .setPassword(req.getParameter("password"))
-                .setPostOffice(Integer.parseInt(req.getParameter("postOffice")))
-                .setCity(req.getParameter("city"))
+                .setFirstName(req.getParameter(ServletContent.FIRST_NAME))
+                .setLastName(req.getParameter(ServletContent.LAST_NAME))
+                .setPhoneNumber(req.getParameter(ServletContent.PHONE_NUMBER))
+                .setLogin(req.getParameter(ServletContent.LOGIN))
+                .setPassword(req.getParameter(ServletContent.PASSWORD))
+                .setPostOffice(Integer.parseInt(req.getParameter(ServletContent.POST_OFFICE)))
+                .setCity(req.getParameter(ServletContent.CITY))
                 .build();
     }
 
-    private void createUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
+    private boolean createUser(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
         try {
             UserRepository.getInstance().createUser(user);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             handling(req, resp, e.getMessage());
+            return false;
         }
+        return true;
     }
 }

@@ -1,9 +1,11 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.Path;
+import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.ProductRepository;
 import com.pres.exception.DBException;
 import com.pres.model.Product;
-import com.pres.servlets.ErrorCatchable;
+import com.pres.servlets.ErrorMessageHandler;
 import com.pres.servlets.Internationalize;
 import org.apache.log4j.Logger;
 
@@ -13,30 +15,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeProductServlet extends HttpServlet implements ErrorCatchable, Internationalize {
+public class ChangeProductServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ChangeProductServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameterMap().containsKey("update")) {
-            int productId = Integer.parseInt(req.getParameter("product_id"));
+        if (req.getParameterMap().containsKey(ServletContent.UPDATE)) {
+            int productId = Integer.parseInt(req.getParameter(ServletContent.PRODUCT_ID));
             Product product = getProduct(req, resp, productId);
-            req.setAttribute("product", product);
-            req.getRequestDispatcher("/jsp/admin/product_info.jsp").forward(req, resp);
+            req.setAttribute(ServletContent.PRODUCT, product);
+            req.getRequestDispatcher(Path.PATH_TO_PRODUCT_INFO_PAGE).forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int productId = Integer.parseInt(req.getParameter("product_id"));
+        int productId = Integer.parseInt(req.getParameter(ServletContent.PRODUCT_ID));
 
-        if (req.getParameterMap().containsKey("change")) {
+        if (req.getParameterMap().containsKey(ServletContent.CHANGE)) {
             Product product = extractProduct(req);
             updateProduct(req, resp, product);
-            resp.sendRedirect(req.getContextPath() + "/changeProduct?product_id="+productId+"&update=true");
-        } else if (req.getParameterMap().containsKey("delete")) {
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_CHANGE_PRODUCT_PAGE + "?" +
+                    ServletContent.PRODUCT_ID + "=" + productId +
+                    "&" + ServletContent.UPDATE + "=true");
+        } else if (req.getParameterMap().containsKey(ServletContent.DELETE)) {
             deleteProduct(req, resp, productId);
-            resp.sendRedirect(req.getContextPath() + "/controlProduct");
+            resp.sendRedirect(req.getContextPath() + Path.URL_TO_CONTROL_PRODUCT_PAGE);
         }
     }
 
@@ -72,9 +76,9 @@ public class ChangeProductServlet extends HttpServlet implements ErrorCatchable,
 
     private Product extractProduct(HttpServletRequest req) {
         return new Product.Builder()
-                .setId(Integer.parseInt(req.getParameter("product_id")))
-                .setAmount(Integer.parseInt(req.getParameter("amount")))
-                .setPrice(Double.parseDouble(req.getParameter("price")))
+                .setId(Integer.parseInt(req.getParameter(ServletContent.PRODUCT_ID)))
+                .setAmount(Integer.parseInt(req.getParameter(ServletContent.AMOUNT)))
+                .setPrice(Double.parseDouble(req.getParameter(ServletContent.PRICE)))
                 .build();
     }
 }
