@@ -20,9 +20,9 @@ import java.util.List;
 public class ProductDAO implements SUID<Product> {
 
     /**
-     * @param connection - connection to DB
-     * @return list of all products
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @return list of all products.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public List<Product> select(Connection connection) throws SQLException {
@@ -48,11 +48,11 @@ public class ProductDAO implements SUID<Product> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param product new product
-     * @param id - id of object that is being updated
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param product new product.
+     * @param id - id of object that is being updated.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public boolean update(Connection connection, Product product, int id) throws SQLException {
@@ -68,10 +68,10 @@ public class ProductDAO implements SUID<Product> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param product Product object that must be inserted into DB
-     * @return created product
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param product Product object that must be inserted into DB.
+     * @return created product.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public Product insert(Connection connection, Product product) throws SQLException {
@@ -101,10 +101,10 @@ public class ProductDAO implements SUID<Product> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param product product that must be deleted
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param product product that must be deleted.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public boolean delete(Connection connection, Product product) throws SQLException {
@@ -120,10 +120,10 @@ public class ProductDAO implements SUID<Product> {
     /**
      * This method selects product by id from DB.
      *
-     * @param connection - connection to DB
-     * @param id identifies product
-     * @return product with this id
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param id identifies product.
+     * @return product with this id.
+     * @throws SQLException if something went wrong on DB level.
      */
     public Product selectById(Connection connection, int id) throws SQLException {
         Product product;
@@ -152,11 +152,11 @@ public class ProductDAO implements SUID<Product> {
      * This method selects product by id from DB and sets amount
      * to amount that the user wants to buy.
      *
-     * @param connection - connection to DB
-     * @param id identifies product
-     * @param amount new product amount
+     * @param connection - connection to DB.
+     * @param id identifies product.
+     * @param amount new product amount.
      * @return product that have new amount
-     * @throws SQLException if something went wrong on DB level
+     * @throws SQLException if something went wrong on DB level.
      */
     public Product selectByIdWithCurrentAmount(Connection connection, int id, int amount) throws SQLException {
         Product product;

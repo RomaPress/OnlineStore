@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This servlet is responsible for products processing. You can perform next
+ * actions: see products, add new product, redirect for updating product.
+ *
+ * @see HttpServlet
+ */
 @MultipartConfig
 public class ControlProductServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlProductServlet.class);
@@ -46,8 +52,6 @@ public class ControlProductServlet extends HttpServlet implements ErrorMessageHa
         }
         doGet(req, resp);
     }
-
-
 
     private void createProduct(HttpServletRequest req, HttpServletResponse resp, Product product, Part part) throws ServletException, IOException {
         try {

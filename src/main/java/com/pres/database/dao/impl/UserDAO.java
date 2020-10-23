@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * This class allows an UserDAO object to have low-level
- * Data Base communication. It realizes manipulations wits User
+ * Data Base communication. It realizes manipulations wits User.
  *
  * @author Pres Roman
  *
@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class UserDAO implements SUID<User> {
     /**
-     * @param connection - connection to DB
-     * @return list of all user
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @return list of all user.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public List<User> select(Connection connection) throws SQLException {
@@ -37,11 +37,11 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param user       new product
-     * @param id         - id of object that is being updated
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param user       new user.
+     * @param id         id of object that is being updated.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public boolean update(Connection connection, User user, int id) throws SQLException {
@@ -60,10 +60,10 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param user       User object that must be inserted into DB
-     * @return created user
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param user       User object that must be inserted into DB.
+     * @return created user.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public User insert(Connection connection, User user) throws SQLException {
@@ -86,13 +86,13 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * This method changes user role in DB
+     * This method changes user role in DB.
      *
-     * @param connection - connection to DB
-     * @param id         identifies an user which status role to be changed
-     * @param newRole    new role
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param id         identifies an user which status role to be changed.
+     * @param newRole    new role.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     public boolean updateRole(Connection connection, int id, String newRole) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_USER_ROLE)) {
@@ -106,12 +106,12 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * This method selects user by this login from DB
+     * This method selects user by this login from DB.
      *
-     * @param connection - connection to DB
-     * @param login      identifies an user which to be returned
-     * @return user by this login
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param login      identifies an user which to be returned.
+     * @return user by this login.
+     * @throws SQLException if something went wrong on DB level.
      */
     public User selectByLogin(Connection connection, String login) throws SQLException {
         User user;
@@ -126,13 +126,13 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * This method checks if user from DB is authenticated
+     * This method checks if user from DB is authenticated.
      *
-     * @param connection - connection to DB
-     * @param login      entered login to authentication
-     * @param password   entered password to authentication
-     * @return true if authenticated ; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param login      entered login to authentication.
+     * @param password   entered password to authentication.
+     * @return true if authenticated ; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     public boolean isAuthentication(Connection connection, String login, String password) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_IF_USER_AUTHORIZATION)) {
@@ -145,12 +145,12 @@ public class UserDAO implements SUID<User> {
     }
 
     /**
-     * This method checks if login exists in DB
+     * This method checks if login exists in DB.
      *
-     * @param connection - connection to DB
-     * @param login  entered login to be checked
-     * @return true if existed ; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param login  entered login to be checked.
+     * @return true if existed ; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     public boolean isLoginExist(Connection connection, String login) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_IF_LOGIN_EXIST)) {

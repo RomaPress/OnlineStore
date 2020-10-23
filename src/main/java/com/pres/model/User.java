@@ -3,6 +3,12 @@ package com.pres.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents a user in DB.
+ * To create an instance of this class use Builder.
+ *
+ * @author Pres Roman
+ **/
 public class User implements Serializable {
     private static final long serialVersionUID = 4464L;
 
@@ -139,6 +145,9 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * Represents an order role.
+     */
     public enum Role {
         UNKNOWN("UNKNOWN"), ADMIN("ADMIN"), USER("USER"), BLOCK("BLOCK");
 

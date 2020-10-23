@@ -1,8 +1,5 @@
 package com.pres.constants;
 
-import com.pres.model.Order;
-import com.pres.model.User;
-
 /**
  * Constants used for SQL query.
  *
@@ -32,7 +29,7 @@ public final class ConstantSQL {
     public static final String SQL_IF_LOGIN_EXIST = "SELECT count(*) as count FROM role r, user u WHERE  u.role_id = r.id AND login = ? GROUP BY u.id;";
 
     public static final String SQL_INSERT_USER = "INSERT INTO user (role_id, first_name, last_name, login, password, phone_number, city, post_office) " +
-            "VALUES ((SELECT role.id FROM role WHERE name = '" + User.Role.USER.value() + "'),?,?,?,?,?,?,?);";
+            "VALUES ((SELECT role.id FROM role WHERE name = 'USER'),?,?,?,?,?,?,?);";
 
     public static final String SQL_INSERT_PRODUCT ="INSERT INTO product (name, price, amount, description, type_id) " +
             "VALUES (?,?,?,?,(SELECT id FROM type WHERE name = ?));";
@@ -51,7 +48,7 @@ public final class ConstantSQL {
     public static final String SQL_UPDATE_ORDER_INVOICE_NUMBER = "UPDATE `order` SET invoice_number = ? WHERE id = ?";
 
     public static final String SQL_INSERT_ORDER = "INSERT INTO `order` (user_id, city, post_office, status_id) " +
-            "VALUES (?,?,?,(SELECT s.id FROM status s WHERE name = '" + Order.Status.REGISTERED.value() + "'));";
+            "VALUES (?,?,?,(SELECT s.id FROM status s WHERE name = 'REGISTERED'));";
 
     public static final String SQL_INSERT_ORDER_PRODUCT = "INSERT INTO order_product (order_id, product_id, amount) " +
             "VALUES (?,?,?)";
@@ -123,9 +120,6 @@ public final class ConstantSQL {
     public static final String STATUS = "status";
     public static final String PRODUCT = "product";
     public static final String INVOICE_NUMBER = "invoice_number";
-
-
-    public static final String COUNT = "count";
 
     private ConstantSQL(){}
 }

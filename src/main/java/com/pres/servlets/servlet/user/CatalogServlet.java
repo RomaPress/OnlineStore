@@ -22,6 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This servlet is responsible for catalog processing. You can perform next
+ * actions: see products, sort products, add products in cart, lipping product pages
+ * using pagination and change page language.
+ *
+ * @see HttpServlet
+ */
 public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(CatalogServlet.class);
     private static final int COUNT_PRODUCT_IN_PAGE = 12;
@@ -33,6 +40,7 @@ public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, 
         int sortAlg =  getSortAlgorithm(session);
         List<Product> products = ProductSort.sort(getProduct(req, resp), sortAlg);
         List<Product> cutProducts = Process.cutList(products, COUNT_PRODUCT_IN_PAGE, page);
+
         req.setAttribute(ServletContent.PRODUCTS, cutProducts);
         req.setAttribute(ServletContent.SIZE, products.size());
         req.setAttribute(ServletContent.COUNT_PRODUCT, COUNT_PRODUCT_IN_PAGE);

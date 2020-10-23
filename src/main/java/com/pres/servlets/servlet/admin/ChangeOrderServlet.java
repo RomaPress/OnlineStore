@@ -17,7 +17,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
+/**
+ * This servlet is responsible for order processing. You can perform next
+ * actions: see order, delete product from order, change order status and invoice number.
+ *
+ * @see HttpServlet
+ */
 public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ChangeOrderServlet.class);
 
@@ -41,7 +46,6 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandl
 
         if (req.getParameterMap().containsKey(ServletContent.DELETE)) {
             int productId = Integer.parseInt(req.getParameter(ServletContent.PRODUCT_ID));
-
             deleteProduct(req, resp, order, productId);
             refreshOrder(req, resp, session, productId);
         }

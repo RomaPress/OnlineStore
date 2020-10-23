@@ -2,9 +2,9 @@ package com.pres.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
+
 /**
- * Represents an order in DB. To create an instance of this class use Builder.
+ * Represents an order in DB.
  *
  * @author Pres Roman
  **/

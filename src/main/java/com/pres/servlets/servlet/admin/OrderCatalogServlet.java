@@ -17,6 +17,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * This servlet is responsible for orders processing. You can perform next
+ * actions: see order list, redirect for updating order.
+ *
+ * @see HttpServlet
+ */
 public class OrderCatalogServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(OrderCatalogServlet.class);
     @Override

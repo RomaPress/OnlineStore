@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This servlet is responsible for product processing. You can perform next
+ * actions: see product, delete product, change product price and amount.
+ *
+ * @see HttpServlet
+ */
 public class ChangeProductServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ChangeProductServlet.class);
 

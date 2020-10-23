@@ -39,7 +39,7 @@ public final class Path {
 
     public static final String PATH_TO_CATALOG_PAGE = "/jsp/user/catalog.jsp";
 
-    public static final String PATH_TO_USER_PROFILE_PAGE = "jsp/user/profile.jsp";
+    public static final String PATH_TO_USER_PROFILE_PAGE = "/jsp/user/profile.jsp";
 
     public static final String PATH_TO_ERROR_PAGE = "/jsp/error.jsp";
 

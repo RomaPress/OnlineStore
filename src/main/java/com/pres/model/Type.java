@@ -2,6 +2,12 @@ package com.pres.model;
 
 import java.io.Serializable;
 
+/**
+ * Represents a type in DB.
+ * To create an instance of this class use Builder.
+ *
+ * @author Pres Roman
+ **/
 public class Type implements Serializable {
     private static final long serialVersionUID = 63573L;
 

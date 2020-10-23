@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This servlet is responsible for user processing. You can perform next
+ * actions: see users, block users and unlock users.
+ *
+ * @see HttpServlet
+ */
 public class ControlUserServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ControlUserServlet.class);
 

@@ -9,10 +9,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * This class realizes utils methods for interaction with DB
+ * This class realizes utils methods for interaction with DB.
  *
  * @author Pres Roman
- * @see User
  */
 public class Process {
     private static final Logger LOG = Logger.getLogger(Process.class);

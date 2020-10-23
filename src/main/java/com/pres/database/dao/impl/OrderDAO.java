@@ -11,18 +11,17 @@ import java.util.*;
 
 /**
  * This class allows an OrderDAO object to have low-level
- * Data Base communication. It realizes manipulations wits Order
- *
- * @see Order
+ * Data Base communication. It realizes manipulations wits Order.
  *
  * @author Pres Roman
+ * @see Order
  */
 public class OrderDAO implements SUID<Order> {
 
     /**
-     * @param connection - connection to DB
-     * @return list of all orders
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @return list of all orders.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public List<Order> select(Connection connection) throws SQLException {
@@ -40,10 +39,10 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * @param connection - connection to DB
-     * @param order Order object that must be inserted into DB
-     * @return created order
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param order      Order object that must be inserted into DB.
+     * @return created order.
+     * @throws SQLException if something went wrong on DB level.
      */
     @Override
     public Order insert(Connection connection, Order order) throws SQLException {
@@ -70,9 +69,9 @@ public class OrderDAO implements SUID<Order> {
 
     /**
      * @param connection - connection to DB
-     * @param order Order object that must be deleted from DB
-     * @param productId identifies an order
-     * @throws SQLException if something went wrong on DB level
+     * @param order      Order object that product must be deleted from DB.
+     * @param productId  identifies a product.
+     * @throws SQLException if something went wrong on DB level.
      */
     public void deleteProductFromOrder(Connection connection, Order order, int productId) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_DELETE_PRODUCT_FROM_ORDER)) {
@@ -83,12 +82,12 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * This method adds product in existed order into DB
+     * This method adds product in existed order into DB.
      *
-     * @param connection - connection to DB
-     * @param product Product object that must be inserted into order
-     * @param order identifies an order
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param product    Product object that must be inserted into order.
+     * @param order      identifies an order.
+     * @throws SQLException if something went wrong on DB level.
      */
     public void insertProduct(Connection connection, Product product, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_INSERT_ORDER_PRODUCT)) {
@@ -100,12 +99,12 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * This method looks for orders that belong to the current user in DB
+     * This method looks for orders that belong to the current user in DB.
      *
-     * @param connection - connection to DB
-     * @param user identifies orders
-     * @return list of the current user`s orders
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param user       identifies orders.
+     * @return list of the current user`s orders.
+     * @throws SQLException if something went wrong on DB level.
      */
     public List<Order> selectByUser(Connection connection, User user) throws SQLException {
         List<Order> orders;
@@ -121,10 +120,10 @@ public class OrderDAO implements SUID<Order> {
     /**
      * This method looks for order in DB that have current id.
      *
-     * @param connection - connection to DB
-     * @param id identifies orders
-     * @return order with this id
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param id         identifies order.
+     * @return order with this id.
+     * @throws SQLException if something went wrong on DB level.
      */
     public Order selectById(Connection connection, int id) throws SQLException {
         Order order;
@@ -140,10 +139,10 @@ public class OrderDAO implements SUID<Order> {
     /**
      * This method inserts all order details into DB.
      *
-     * @param connection - connection to DB
-     * @param products - list of the unique products
-     * @param user - user that makes the order
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param products   - list of the unique products.
+     * @param user       - user that makes the order.
+     * @throws SQLException if something went wrong on DB level.
      */
     public void insertOrderInfo(Connection connection, Map<Integer, Product> products, User user) throws SQLException {
         Order order = new Order();
@@ -158,11 +157,11 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * This method selects all unique order statuses from DB
+     * This method selects all unique order statuses from DB.
      *
-     * @param connection - connection to DB
-     * @return list of all unique order statuses
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @return list of all unique order statuses.
+     * @throws SQLException if something went wrong on DB level.
      */
     public List<String> selectStatus(Connection connection) throws SQLException {
         List<String> statuses = new ArrayList<>();
@@ -176,18 +175,19 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * This method changes order status in DB
+     * This method changes order status in DB.
      *
-     * @param connection - connection to DB
-     * @param order identifies an order which status needs to be changed
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param order      identifies an order which status needs to be changed.
+     *                   and has new status.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     public boolean updateStatus(Connection connection, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_STATUS)) {
             statement.setString(1, order.getStatus().value());
             statement.setInt(2, order.getId());
-            if (1 == statement.executeUpdate()){
+            if (1 == statement.executeUpdate()) {
                 return true;
             }
         }
@@ -195,18 +195,19 @@ public class OrderDAO implements SUID<Order> {
     }
 
     /**
-     * This method changes order invoice number in DB
+     * This method changes order invoice number in DB.
      *
-     * @param connection - connection to DB
-     * @param order object which invoice number needs to be changed
-     * @return true if success; else false
-     * @throws SQLException if something went wrong on DB level
+     * @param connection - connection to DB.
+     * @param order      identifies an order which invoice number needs to be changed
+     *                   and has new invoice number.
+     * @return true if success; else false.
+     * @throws SQLException if something went wrong on DB level.
      */
     public boolean updateInvoiceNumber(Connection connection, Order order) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(ConstantSQL.SQL_UPDATE_ORDER_INVOICE_NUMBER)) {
             statement.setString(1, order.getInvoiceNumber());
             statement.setInt(2, order.getId());
-            if (1 == statement.executeUpdate()){
+            if (1 == statement.executeUpdate()) {
                 return true;
             }
         }

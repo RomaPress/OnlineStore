@@ -19,6 +19,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This servlet is responsible for user profile processing. You can perform next
+ * actions: see user order, change user data and change page language.
+ *
+ * @see HttpServlet
+ */
 public class ProfileServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(ProfileServlet.class);
 

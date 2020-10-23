@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This servlet is responsible for registration processing.
+ * You can perform registration.
+ *
+ * @see HttpServlet
+ */
 public class RegistrationServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(RegistrationServlet.class);
 

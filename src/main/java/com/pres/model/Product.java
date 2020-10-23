@@ -3,6 +3,12 @@ package com.pres.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents a product in DB.
+ * To create an instance of this class use Builder.
+ *
+ * @author Pres Roman
+ **/
 public class Product implements Serializable {
     private static final long serialVersionUID = 1787867675L;
 

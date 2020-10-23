@@ -21,19 +21,14 @@ import java.util.Map;
 
 /**
  * This servlet is responsible for cart processing. You can perform next
- * actions: delete product from cart, make an order and see selected products.
+ * actions: delete product from cart, make an order, see selected products
+ * and change page language.
  *
  * @see HttpServlet
  */
 public class CartServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(CartServlet.class);
 
-    /**
-     * @param req contains all selected products, amounts and other information.
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -43,12 +38,6 @@ public class CartServlet extends HttpServlet implements ErrorMessageHandler, Int
         req.getRequestDispatcher(Path.PATH_TO_CART_PAGE).forward(req, resp);
     }
 
-    /**
-     * @param req contains all selected products, amounts and other information.
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();

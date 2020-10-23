@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
  * @author Pres Roman
  */
 public interface Internationalize {
+
     default void interpret(HttpServletRequest req){
         String locale = req.getParameter(ServletContent.LANGUAGE);
         HttpSession session = req.getSession();

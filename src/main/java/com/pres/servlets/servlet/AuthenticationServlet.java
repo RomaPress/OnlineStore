@@ -16,6 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+
+/**
+ * This servlet is responsible for authentication processing. You can perform next
+ * actions: log in how admin, log in how user, log in without authentication
+ * and change page language.
+ *
+ * @see HttpServlet
+ */
 public class AuthenticationServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(AuthenticationServlet.class);
 
