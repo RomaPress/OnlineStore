@@ -19,6 +19,6 @@ public class InternationalizeTest {
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
 
         Internationalize changeOrderServlet = new ChangeOrderServlet();
-        changeOrderServlet.interpreter(testRequest);
+        changeOrderServlet.interpret(testRequest);
     }
 }

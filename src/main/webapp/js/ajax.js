@@ -17,6 +17,7 @@ function checkPassword() {
     var phoneNumber = document.getElementById('phoneNumber').value;
     var city = document.getElementById('city').value;
     var postOffice = document.getElementById('postOffice').value;
+    var errorMessage = document.getElementById('errorMessage').value;
     $.ajax({
         type: 'post',
         url: '/onlineStore/profile',
@@ -32,9 +33,7 @@ function checkPassword() {
         scriptCharset: "utf-8",
         success: function (isCorrect) {
             if (!isCorrect) {
-                $("#passwordError").show();
-            } else {
-                $("#passwordError").hide();
+                alert(errorMessage);
             }
         },
         error: function () {
@@ -42,7 +41,6 @@ function checkPassword() {
         }
     });
 }
-
 
 $('#demo').pagination({
 

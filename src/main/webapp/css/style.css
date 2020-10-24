@@ -15,16 +15,29 @@ body {
     padding-top: 20px;
     background: linear-gradient(45deg, #6e535b, #0d1435);
 }
+.sidenavAut{
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    transition: .2s ;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
 
 .sidenav a,
-.sidenav .side_btn{
+.sidenav .side_btn,
+.sidenavAut .side_btn{
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
 }
-
+.sidenavAut .side_btn:hover,
 .sidenav a:hover,
 .sidenav .side_btn:hover{
     color: #f1f1f1;
@@ -39,11 +52,11 @@ body {
 #main {
     margin-left: 120px; /* Same as the width of the sidenav */
 }
-
+.sidenavAut,
 .sidenav a:hover {
     color: #ffffff;
 }
-
+.sidenavAut .closebtn,
 .sidenav .closebtn {
     position: absolute;
     top: 0;

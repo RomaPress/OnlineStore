@@ -4,14 +4,17 @@
 <html>
 <head>
     <title>Title</title>
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
         <%@include file="../css/login.css"%>
         <%@include file="../css/modal.css"%>
-        <%@include file="../css/modal.css"%>
+        <%@include file="../css/style.css"%>
     </style>
 </head>
 <body class="body">
+
+
 <c:if test="${empty language}">
     <c:set var="loc" value="${'prop_ru'}"/>
 </c:if>
@@ -69,6 +72,15 @@
     </form>
 </div>
 
+<div class="sidenavAut">
+    <div class="loc">
+        <form id="sortProduct" method="post" action="${pageContext.request.contextPath}/">
+            <button class="side_btn" type="submit" name="language" value="prop_en">EN</button>
+            <button class="side_btn" type="submit" name="language" value="prop_ru">RU</button>
+        </form>
+    </div>
+</div>
+
 
 <div id="popUp" class="modal">
     <c:if test="${empty language}">
@@ -78,70 +90,106 @@
         <c:set var="loc" value="${language}"/>
     </c:if>
     <span onclick="document.getElementById('popUp').style.display='none'" class="close" title="Close Modal">×</span>
-    <form class="modal-content" method="post" action="${pageContext.request.contextPath}/registration">
+    <form class="modal-content" onsubmit="checkLogin()">
         <div class="containerReg">
             <div class="inputBox">
                 <input type="text" id="firstName" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
+                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z]{2,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="сyrillic_latin_20_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span>
                     <fmt:bundle basename="${loc}" prefix="registration.">
                         <fmt:message key="first_name"></fmt:message>
                     </fmt:bundle>
                 </span>
             </div>
+
             <div class="inputBox">
                 <input type="text" id="lastName" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
+                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z]{2,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="сyrillic_latin_20_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="last_name"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
                 <input type="text" id="phoneNumber" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9+]{2,20}"/>
+                       pattern="[0-9+() ]{5,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="numbers_20_symbol"></fmt:message>
+                    </fmt:bundle> +()"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="phone_number"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
-                <input type="text" id="city" required/>
+                <input type="text" id="city"
+                       required pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z ]{2,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="сyrillic_latin_20_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="city"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
-                <input type="number" id="postOffice" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9+]{2,20}"/>
+                <input type="number" id="postOffice"
+                       required pattern="[0-9+]{,5}" min="1"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="numbers_5_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="post_office"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
                 <input type="text" id="login" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
+                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="сyrillic_latin_numbers_20_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="login"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
                 <input type="password" id="pass" required
-                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"/>
+                       pattern="[А-Яа-яЁёІіїЇєЄэЭыЫъЪA-Za-z0-9]{2,20}"
+                       title="
+                    <fmt:bundle basename="${loc}" prefix="title.">
+                        <fmt:message key="сyrillic_latin_numbers_20_symbol"></fmt:message>
+                    </fmt:bundle>"/>
                 <span><fmt:bundle basename="${loc}" prefix="registration.">
                     <fmt:message key="password"></fmt:message>
                 </fmt:bundle></span>
             </div>
+
             <div class="inputBox">
-                <button type="button" onclick="checkLogin()">
+                <button type="submit" onsubmit="checkLogin()">
                     <fmt:bundle basename="${loc}" prefix="authentication.">
                         <fmt:message key="registration"></fmt:message>
                     </fmt:bundle>
                 </button>
             </div>
-            <div id="loginError" style="display: none">
-                <p><fmt:bundle basename="${loc}" prefix="registration.">
-                    <fmt:message key="error"></fmt:message>
-                </fmt:bundle></p>
-            </div>
+
+            <input id="errorMessage" style="display: none" hidden
+                   value=" <fmt:bundle basename="${loc}" prefix="error.">
+                        <fmt:message key="loginExist"></fmt:message>
+                    </fmt:bundle>">
         </div>
     </form>
 </div>
@@ -150,7 +198,6 @@
 <script type="text/javascript" charset="utf-8">
     <%@include file="../js/ajax.js"%>
     <%@include file="../js/modal.js"%>
-    <%@include file="../js/password.js"%>
 </script>
 </body>
 </html>

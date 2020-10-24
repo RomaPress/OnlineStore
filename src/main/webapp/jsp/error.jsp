@@ -2,11 +2,16 @@
 <%@ page isErrorPage="true" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Error</title>
+    <style type="text/css">
+        <%@include file="../css/style.css"%>
+    </style>
 </head>
 <body>
-<H1>ERROR</H1>
-
-${errorMessage}
+<div style="text-align: center">
+    <H1>ERROR</H1>
+    <hr>
+    <h2> ${errorMessage}</h2>
+</div>
 </body>
 </html>

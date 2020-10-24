@@ -6,16 +6,13 @@
 
 .body {
     background-image: url("https://checkthechords.ru/img/top.jpg");
-    /*background-image: url("/img/top.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 10vh;
-    /*background: linear-gradient(45deg, #6e535b, #0d1435);*/
 }
 
 .containerAuth,

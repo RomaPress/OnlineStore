@@ -112,7 +112,6 @@
 <script type="text/javascript" charset="utf-8">
     <%@include file="../../js/side.js" %>
     <%@include file="../../js/modal.js"%>
-    <%@include file="../../js/password.js"%>
 </script>
 </body>
 </html>

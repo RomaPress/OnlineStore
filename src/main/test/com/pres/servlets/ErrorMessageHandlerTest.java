@@ -10,11 +10,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RunWith(PowerMockRunner.class)
-public class ErrorCatchableTest {
+public class ErrorMessageHandlerTest {
     HttpServletRequest testRequest = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse testResponse = Mockito.mock(HttpServletResponse.class);
     RequestDispatcher testRequestDispatcher = Mockito.mock(RequestDispatcher.class);
@@ -23,7 +22,7 @@ public class ErrorCatchableTest {
     public void testHandling() throws ServletException, IOException {
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
 
-        ErrorCatchable changeOrderServlet = new ChangeOrderServlet();
+        ErrorMessageHandler changeOrderServlet = new ChangeOrderServlet();
         changeOrderServlet.handling(testRequest, testResponse, "MESSAGE");
     }
 }

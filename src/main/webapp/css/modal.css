@@ -50,7 +50,8 @@
     }
 }
 #passwordError,
-#loginError {
+#loginError,
+#empty{
     color: #d00000;
     font-weight: bold;
     text-align: center;

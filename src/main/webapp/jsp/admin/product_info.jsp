@@ -41,13 +41,13 @@
                             <div class="text_row">
                                 <strong>Цена</strong>
                                 <input type="number" name="price" required value="${product.price}"
-                                       pattern="[.0-9+]{,3}" min="1" step="0.01" />
+                                       pattern="[.0-9+]{,3}" min="1" step="0.01"/>
                                 <br>
                             </div>
                             <div class="text_row">
                                 <strong>Количество</strong>
                                 <input type="number" name="amount" required value="${product.amount}"
-                                       pattern="[0-9+]{,4}" min="0" step="1" />
+                                       pattern="[0-9+]{,4}" min="0" step="1"/>
                                 <br>
                             </div>
                             <div class="text_row">
