@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 public class OrderCatalogServlet extends HttpServlet implements ErrorMessageHandler, Internationalize {
     private static final Logger LOG = Logger.getLogger(OrderCatalogServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(ServletContent.ORDERS, getOrder(req, resp));
@@ -45,8 +47,8 @@ public class OrderCatalogServlet extends HttpServlet implements ErrorMessageHand
         try {
             orders = OrderRepository.getInstance().findAllOrders();
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_SHOW_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_SHOW_ORDER);
         }
         return orders;
     }
@@ -56,8 +58,8 @@ public class OrderCatalogServlet extends HttpServlet implements ErrorMessageHand
         try {
             order = OrderRepository.getInstance().findOrderById(id);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UPDATE_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_UPDATE_ORDER);
         }
         return order;
     }

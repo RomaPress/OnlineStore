@@ -24,31 +24,24 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(OrderRepository.class)
-public class OrderCatalogServletTest  {
-
+public class OrderCatalogServletTest {
 
     @Test
     public void testPost() throws DBException, ServletException, IOException {
         OrderCatalogServlet orderCatalogServlet = new OrderCatalogServlet();
-
         HttpServletRequest testRequest = Mockito.mock(HttpServletRequest.class);
         HttpServletResponse testResponse = Mockito.mock(HttpServletResponse.class);
         HttpSession testSession = Mockito.mock(HttpSession.class);
         OrderRepository mock = PowerMockito.mock(OrderRepository.class);
         mockStatic(OrderRepository.class);
-
         PowerMockito.when(OrderRepository.getInstance()).thenReturn(mock);
-
-        String idStr ="5";
+        String idStr = "5";
         int id = Integer.parseInt(idStr);
-
         Mockito.when(testRequest.getParameter("order_id")).thenReturn(idStr);
-
         Order order = new Order();
         order.setId(id);
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.when(mock.findOrderById(id)).thenReturn(order);
-
         orderCatalogServlet.doPost(testRequest, testResponse);
     }
 
@@ -61,13 +54,10 @@ public class OrderCatalogServletTest  {
         RequestDispatcher testRequestDispatcher = Mockito.mock(RequestDispatcher.class);
         mockStatic(OrderRepository.class);
         PowerMockito.when(OrderRepository.getInstance()).thenReturn(mock);
-
-       List<Order> orderList = new ArrayList<>();
-       orderList.add(new Order());
+        List<Order> orderList = new ArrayList<>();
+        orderList.add(new Order());
         Mockito.when(mock.findAllOrders()).thenReturn(orderList);
-
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         orderCatalogServlet.doGet(testRequest, testResponse);
 
     }

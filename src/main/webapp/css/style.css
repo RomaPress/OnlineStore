@@ -1,4 +1,3 @@
-
 body {
     font-family: "Lato", sans-serif;
 }
@@ -10,52 +9,55 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
-    transition: .2s ;
+    transition: .2s;
     overflow-x: hidden;
     padding-top: 20px;
     background: linear-gradient(45deg, #6e535b, #0d1435);
 }
-.sidenavAut{
+
+.sidenavAut {
     height: 100%;
     width: 240px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    transition: .2s ;
+    transition: .2s;
     overflow-x: hidden;
     padding-top: 20px;
 }
 
-
 .sidenav a,
 .sidenav .side_btn,
-.sidenavAut .side_btn{
+.sidenavAut .side_btn {
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
 }
+
 .sidenavAut .side_btn:hover,
 .sidenav a:hover,
-.sidenav .side_btn:hover{
+.sidenav .side_btn:hover {
     color: #f1f1f1;
 }
 
-.side_btn{
+.side_btn {
     background-color: transparent;
     border-color: transparent;
     margin-left: -3px;
 }
 
 #main {
-    margin-left: 120px; /* Same as the width of the sidenav */
+    margin-left: 120px;
 }
+
 .sidenavAut,
 .sidenav a:hover {
     color: #ffffff;
 }
+
 .sidenavAut .closebtn,
 .sidenav .closebtn {
     position: absolute;
@@ -71,8 +73,13 @@ body {
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 .my__inputN {
@@ -81,12 +88,13 @@ body {
     width: 3em;
     text-align: center;
 }
+
 .my__inputN::-webkit-inner-spin-button {
     display: none;
 }
 
 
-.btn{
+.btn {
     text-decoration: none;
     outline: none;
     display: inline-block;
@@ -100,9 +108,10 @@ body {
     color: #0d1435;
     transition: .2s ease-in-out;
 }
+
 .btn:before {
     content: "";
-    background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.5));
+    background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
     height: 50px;
     width: 50px;
     position: absolute;
@@ -110,46 +119,55 @@ body {
     left: -75px;
     transform: skewX(-45deg);
 }
+
 .btn:hover {
     background: #0d1435;
     color: #fff;
 }
+
 .btn:hover:before {
     left: 150px;
     transition: .5s ease-in-out;
 }
 
-.product{
+.product {
     weight: auto;
     height: 460px;
 }
-.catalog__img{
+
+.catalog__img {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
 }
-.my__catalogBtn{
+
+.my__catalogBtn {
     background-color: white;
     border-width: 2px;
     border-color: white;
     border-style: solid;
 }
-.minus{
+
+.minus {
     color: #d00000;
     font-size: 20pt;
 }
-.plus{
+
+.plus {
     color: #0dae16;
     font-size: 20pt;
 }
-.form_input_number{
+
+.form_input_number {
     text-align: center;
 }
-.name__product{
+
+.name__product {
     width: auto;
     height: 55px;
 }
-.menu{
+
+.menu {
     position: fixed;
     padding-left: 3px;
     margin-top: 20px;
@@ -160,14 +178,17 @@ body {
     height: 23px;
     zoom: 2;
 }
-.basket__text{
+
+.basket__text {
     margin-top: 45px;
     margin-bottom: 0;
     margin-right: 15px;
 }
-.basket__btn{
+
+.basket__btn {
     margin-top: 55px;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -184,13 +205,13 @@ tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
-.text_row{
+.text_row {
     margin-bottom: 10px;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-.my_pagination{
+.my_pagination {
     align-items: center;
     justify-content: center
 }
@@ -199,6 +220,7 @@ tr:nth-child(even) {
     display: block;
     position: absolute;
 }
+
 section .my_select {
     margin-top: -20px;
     padding: 6px 6px 6px 32px;
@@ -230,11 +252,14 @@ section select .my_options:hover {
     width: 270px;
     color: #0d1435;
 }
-.loc{
+
+.loc {
     position: fixed;
-    left: 0; bottom: 0;
+    left: 0;
+    bottom: 0;
     margin-bottom: 10px;
 }
-.arrow{
+
+.arrow {
     margin-bottom: 10px;
 }

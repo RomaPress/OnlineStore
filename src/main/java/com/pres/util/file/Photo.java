@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Class used for performing operations on images
+ * Class used for performing operations on images.
  *
  * @author Pres Roman
  **/
@@ -25,7 +25,7 @@ public class Photo {
     }
 
     /**
-     * Saves an image to DB.
+     * Saves an image to application.
      *
      * @throws IOException if file path is not found
      **/
@@ -45,6 +45,11 @@ public class Photo {
         }
     }
 
+    /**
+     * Deletes an image to application.
+     *
+     * @throws IOException if file path is not found.
+     **/
     public static void deleteImage(int id) {
         String path = PATH + ServletContent.PROJECT_NAME + "\\src\\main\\webapp\\img\\" + id + EXPANSION;
         File file = new File(path);

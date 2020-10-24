@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.ProductRepository;
@@ -54,8 +55,8 @@ public class ChangeProductServlet extends HttpServlet implements ErrorMessageHan
         try {
             ProductRepository.getInstance().updateProduct(product);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UPDATE_PRODUCT, e);
+            handling(req, resp, ErrorMessage.ERR_UPDATE_PRODUCT);
         }
     }
 
@@ -64,8 +65,8 @@ public class ChangeProductServlet extends HttpServlet implements ErrorMessageHan
         try {
             ProductRepository.getInstance().deleteProduct(product);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_DELETE_PRODUCT, e);
+            handling(req, resp, ErrorMessage.ERR_DELETE_PRODUCT);
         }
     }
 
@@ -74,8 +75,8 @@ public class ChangeProductServlet extends HttpServlet implements ErrorMessageHan
         try {
             product = ProductRepository.getInstance().findProductById(id);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_ORDER);
         }
         return product;
     }

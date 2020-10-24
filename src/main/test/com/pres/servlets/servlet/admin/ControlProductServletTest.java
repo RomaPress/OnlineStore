@@ -33,7 +33,6 @@ public class ControlProductServletTest  {
         Mockito.when(testRequest.getParameter("price")).thenReturn(numb);
         Mockito.when(testRequest.getParameter("amount")).thenReturn(numb);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         controlProductServlet.doPost(testRequest, testResponse);
     }
 }

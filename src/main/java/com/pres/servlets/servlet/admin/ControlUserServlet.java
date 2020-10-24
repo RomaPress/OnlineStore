@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.UserRepository;
@@ -52,8 +53,8 @@ public class ControlUserServlet extends HttpServlet implements ErrorMessageHandl
         try {
             users = UserRepository.getInstance().findAllUser();
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_SHOW_USER, e);
+            handling(req, resp, ErrorMessage.ERR_SHOW_USER);
         }
         return users.stream()
                 .filter(user -> User.Role.ADMIN != user.getRole())
@@ -64,8 +65,8 @@ public class ControlUserServlet extends HttpServlet implements ErrorMessageHandl
         try {
             UserRepository.getInstance().updateUserRole(userId, User.Role.BLOCK.value());
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_BLOCK_USER, e);
+            handling(req, resp, ErrorMessage.ERR_BLOCK_USER);
         }
     }
 
@@ -73,8 +74,8 @@ public class ControlUserServlet extends HttpServlet implements ErrorMessageHandl
         try {
             UserRepository.getInstance().updateUserRole(userId, User.Role.USER.value());
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UNLOCK_USER, e);
+            handling(req, resp, ErrorMessage.ERR_UNLOCK_USER);
         }
     }
 }

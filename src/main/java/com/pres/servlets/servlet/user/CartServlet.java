@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.user;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
@@ -50,7 +51,7 @@ public class CartServlet extends HttpServlet implements ErrorMessageHandler, Int
             doGet(req, resp);
         } else if (req.getParameterMap().containsKey(ServletContent.ORDER) && selectedProduct.size() != 0) {
             User user = (User) session.getAttribute(ServletContent.CURRENT_USER);
-            doOrder(req, resp, selectedProduct, user);
+            makeOrder(req, resp, selectedProduct, user);
             resp.sendRedirect(req.getContextPath() + Path.URL_TO_CATALOG_PAGE);
         } else if (req.getParameterMap().containsKey(ServletContent.LANGUAGE)) {
             interpret(req);
@@ -68,13 +69,13 @@ public class CartServlet extends HttpServlet implements ErrorMessageHandler, Int
         session.setAttribute(ServletContent.SELECTED_PRODUCT, map);
     }
 
-    private void doOrder(HttpServletRequest req, HttpServletResponse resp,
-                         Map<Integer, Product> selectedProduct, User user) throws ServletException, IOException {
+    private void makeOrder(HttpServletRequest req, HttpServletResponse resp,
+                           Map<Integer, Product> selectedProduct, User user) throws ServletException, IOException {
         try {
             OrderRepository.getInstance().doOrder(selectedProduct, user);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_CREATE_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_CREATE_ORDER);
         }
     }
 }

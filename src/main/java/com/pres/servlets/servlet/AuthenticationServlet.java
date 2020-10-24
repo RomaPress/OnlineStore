@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.UserRepository;
@@ -66,8 +67,8 @@ public class AuthenticationServlet extends HttpServlet implements ErrorMessageHa
         try {
             answer = UserRepository.getInstance().isUserAuthorized(login, password);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_AUTHENTICATION, e);
+            handling(req, resp, ErrorMessage.ERR_AUTHENTICATION);
         }
         return answer;
     }
@@ -77,8 +78,8 @@ public class AuthenticationServlet extends HttpServlet implements ErrorMessageHa
         try {
             user = UserRepository.getInstance().getUserByLogin(login);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_AUTHENTICATION, e);
+            handling(req, resp, ErrorMessage.ERR_AUTHENTICATION);
         }
         return user;
     }

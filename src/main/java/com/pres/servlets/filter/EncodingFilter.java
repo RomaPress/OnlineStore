@@ -5,6 +5,11 @@ import com.pres.constants.ServletContent;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Encoding filter.
+ *
+ * @author Pres Roman
+ */
 public class EncodingFilter implements Filter {
 
     @Override

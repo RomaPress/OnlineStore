@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.user;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.ProductRepository;
@@ -36,9 +37,9 @@ public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        int page =  getPage(session);
-        int sortAlg =  getSortAlgorithm(session);
-        List<Product> products = ProductSort.sort(getProduct(req, resp), sortAlg);
+        int page = getPage(session);
+        int sortAlg = getSortAlgorithm(session);
+        List<Product> products = ProductSort.sort(getAllProducts(req, resp), sortAlg);
         List<Product> cutProducts = Process.cutList(products, COUNT_PRODUCT_IN_PAGE, page);
 
         req.setAttribute(ServletContent.PRODUCTS, cutProducts);
@@ -87,8 +88,8 @@ public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, 
         try {
             product = ProductRepository.getInstance().findProductByIdWithNewAmount(id, amount);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_ADD_PRODUCT_IN_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_ADD_PRODUCT_IN_ORDER);
         }
         return product;
     }
@@ -102,20 +103,20 @@ public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, 
         return map;
     }
 
-    private List<Product> getProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private List<Product> getAllProducts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = new ArrayList<>();
         try {
             products = ProductRepository.getInstance().findAllProduct();
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_CATALOG, e);
+            handling(req, resp, ErrorMessage.ERR_CATALOG);
         }
         HttpSession session = req.getSession();
         session.getAttribute(ServletContent.SORT);
         return products;
     }
 
-    private int getSortAlgorithm(HttpSession session){
+    private int getSortAlgorithm(HttpSession session) {
         int sortAlg = ProductSort.SORT_BY_ID;
         if (session.getAttribute(ServletContent.SORT) != null) {
             sortAlg = (int) session.getAttribute(ServletContent.SORT);
@@ -123,7 +124,7 @@ public class CatalogServlet extends HttpServlet implements ErrorMessageHandler, 
         return sortAlg;
     }
 
-    private int getPage(HttpSession session){
+    private int getPage(HttpSession session) {
         int page = 1;
         if (session.getAttribute(ServletContent.PAGE) != null) {
             page = (int) session.getAttribute(ServletContent.PAGE);

@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(UserRepository.class)
-public class ControlUserServletTest  {
+public class ControlUserServletTest {
     HttpServletRequest testRequest = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse testResponse = Mockito.mock(HttpServletResponse.class);
     HttpSession testSession = Mockito.mock(HttpSession.class);
@@ -30,7 +30,6 @@ public class ControlUserServletTest  {
         Mockito.when(testRequest.getParameter("action")).thenReturn(action);
         Mockito.when(testRequest.getParameter("user_id")).thenReturn(id);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         registrationServlet.doPost(testRequest, testResponse);
     }
 
@@ -41,7 +40,6 @@ public class ControlUserServletTest  {
         Mockito.when(testRequest.getParameter("action")).thenReturn(action);
         Mockito.when(testRequest.getParameter("user_id")).thenReturn(id);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         registrationServlet.doPost(testRequest, testResponse);
     }
 }

@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.user;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
@@ -76,8 +77,8 @@ public class ProfileServlet extends HttpServlet implements ErrorMessageHandler, 
         try {
             user = UserRepository.getInstance().getUserByLogin(login);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_CHANGE_USER_DATA, e);
+            handling(req, resp, ErrorMessage.ERR_CHANGE_USER_DATA);
         }
         return user;
     }
@@ -87,8 +88,8 @@ public class ProfileServlet extends HttpServlet implements ErrorMessageHandler, 
         try {
             answer = UserRepository.getInstance().updateUserInfo(user, id);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_CHANGE_USER_DATA, e);
+            handling(req, resp, ErrorMessage.ERR_CHANGE_USER_DATA);
         }
         return answer;
     }
@@ -113,8 +114,8 @@ public class ProfileServlet extends HttpServlet implements ErrorMessageHandler, 
         try {
             orders = OrderRepository.getInstance().findOrderByUser(user);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_USER_PROFILE, e);
+            handling(req, resp, ErrorMessage.ERR_USER_PROFILE);
         }
         return orders;
     }

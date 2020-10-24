@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.ProductRepository;
@@ -34,7 +35,7 @@ public class ControlProductServlet extends HttpServlet implements ErrorMessageHa
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = ProductSort.sort(getProduct(req, resp), ProductSort.SORT_BY_ID) ;
+        List<Product> products = ProductSort.sort(getProduct(req, resp), ProductSort.SORT_BY_ID);
         req.setAttribute(ServletContent.PRODUCTS, products);
 
         List<String> types = getType(products);
@@ -48,17 +49,17 @@ public class ControlProductServlet extends HttpServlet implements ErrorMessageHa
         if (req.getParameterMap().containsKey(ServletContent.CREATE_PRODUCT)) {
             Product product = extractProduct(req);
             Part file = req.getPart(ServletContent.FILE);
-            createProduct(req, resp, product,file);
+            createProduct(req, resp, product, file);
         }
         doGet(req, resp);
     }
 
     private void createProduct(HttpServletRequest req, HttpServletResponse resp, Product product, Part part) throws ServletException, IOException {
         try {
-           ProductRepository.getInstance().createProduct(product, part);
+            ProductRepository.getInstance().createProduct(product, part);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_CREATE_PRODUCT, e);
+            handling(req, resp, ErrorMessage.ERR_CREATE_PRODUCT);
         }
     }
 
@@ -67,8 +68,8 @@ public class ControlProductServlet extends HttpServlet implements ErrorMessageHa
         try {
             products = ProductRepository.getInstance().findAllProduct();
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_SHOW_PRODUCT, e);
+            handling(req, resp, ErrorMessage.ERR_SHOW_PRODUCT);
         }
         return products;
     }

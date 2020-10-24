@@ -27,43 +27,51 @@ public class ProductSortTest {
         List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_ID);
         Assert.assertEquals(1, sortList.get(0).getId());
     }
+
     @Test
     public void sortByPriceASC() {
         List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_PRICE_ASC);
         Assert.assertEquals(1, sortList.get(0).getId());
     }
+
     @Test
     public void sortByPriceDESC() {
-        List<Product> sortList =  ProductSort.sort(list, ProductSort.SORT_BY_PRICE_DESC);
+        List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_PRICE_DESC);
         Assert.assertEquals(5, sortList.get(0).getId());
     }
+
     @Test
     public void sortByAcoustic() {
-        List<Product> sortList =  ProductSort.sort(list, ProductSort.SORT_BY_ACOUSTIC);
+        List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_ACOUSTIC);
         Assert.assertEquals("Acoustic guitar", sortList.get(0).getType().getName());
     }
+
     @Test
     public void sortByBass() {
-        List<Product> sortList =  ProductSort.sort(list, ProductSort.SORT_BY_BASS);
+        List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_BASS);
         Assert.assertEquals("Bass-guitar", sortList.get(0).getType().getName());
     }
+
     @Test
     public void sortByElectric() {
-        List<Product> sortList =   ProductSort.sort(list, ProductSort.SORT_BY_ELECTRIC);
+        List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_ELECTRIC);
         Assert.assertEquals("Electric guitar", sortList.get(0).getType().getName());
     }
+
     @Test
     public void sortByClassical() {
-        List<Product> sortList =  ProductSort.sort(list, ProductSort.SORT_BY_CLASSIC);
+        List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_CLASSIC);
         Assert.assertEquals("Classical guitar", sortList.get(0).getType().getName());
     }
+
     @Test
     public void sortByElectroAcoustic() {
         List<Product> sortList = ProductSort.sort(list, ProductSort.SORT_BY_ELECTRO_ACOUSTIC);
         Assert.assertEquals("Electro-acoustic guitar", sortList.get(0).getType().getName());
     }
+
     @Test(expected = IllegalArgumentException.class)
-    public void testIllegalArgumentException(){
+    public void testIllegalArgumentException() {
         List<Product> sortList = ProductSort.sort(list, 100);
     }
 }

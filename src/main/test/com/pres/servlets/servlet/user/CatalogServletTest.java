@@ -33,7 +33,6 @@ public class CatalogServletTest {
     @Test
     public void testPostPreviousPage() throws ServletException, IOException {
         CatalogServlet catalogServlet = new CatalogServlet();
-
         Map<String, String[]> map = new HashMap<>();
         map.put("previousPage", new String[]{});
         String pageStr = "5";
@@ -43,7 +42,6 @@ public class CatalogServletTest {
         Mockito.doNothing().when(testSession).setAttribute("page", page);
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         catalogServlet.doPost(testRequest, testResponse);
     }
 
@@ -60,14 +58,12 @@ public class CatalogServletTest {
         Mockito.doNothing().when(testSession).setAttribute("page", page);
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         catalogServlet.doPost(testRequest, testResponse);
     }
 
     @Test
     public void testPostSort() throws ServletException, IOException {
         CatalogServlet catalogServlet = new CatalogServlet();
-
         Map<String, String[]> map = new HashMap<>();
         map.put("sort", new String[]{});
         String sortStr = "5";
@@ -78,24 +74,20 @@ public class CatalogServletTest {
         Mockito.doNothing().when(testSession).setAttribute("sort", sort);
         Mockito.doNothing().when(testSession).setAttribute("page", 1);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         catalogServlet.doPost(testRequest, testResponse);
     }
 
     @Test
     public void testPostLanguage() throws ServletException, IOException {
         CatalogServlet catalogServlet = new CatalogServlet();
-
         Map<String, String[]> map = new HashMap<>();
         map.put("language", new String[]{});
-
         String languageStr = "en";
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
         Mockito.when(testRequest.getParameter("language")).thenReturn(languageStr);
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.doNothing().when(testSession).setAttribute("language", languageStr);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         catalogServlet.doPost(testRequest, testResponse);
     }
 
@@ -109,7 +101,6 @@ public class CatalogServletTest {
         int amount = Integer.parseInt(amountStr);
         Mockito.when(testRequest.getParameter("id")).thenReturn(idStr);
         Mockito.when(testRequest.getParameter("amount")).thenReturn(amountStr);
-
         ProductRepository mock = PowerMockito.mock(ProductRepository.class);
         mockStatic(ProductRepository.class);
         PowerMockito.when(ProductRepository.getInstance()).thenReturn(mock);
@@ -117,9 +108,7 @@ public class CatalogServletTest {
                 .setId(id)
                 .setAmount(amount)
                 .build();
-
         Mockito.when(mock.findProductByIdWithNewAmount(id, amount)).thenReturn(product);
-
         catalogServlet.doPost(testRequest, testResponse);
     }
 }

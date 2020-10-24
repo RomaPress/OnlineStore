@@ -23,7 +23,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(OrderRepository.class)
-public class ChangeOrderServletTest  {
+public class ChangeOrderServletTest {
     HttpServletRequest testRequest = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse testResponse = Mockito.mock(HttpServletResponse.class);
     HttpSession testSession = Mockito.mock(HttpSession.class);
@@ -47,7 +47,6 @@ public class ChangeOrderServletTest  {
         Mockito.when(testRequest.getParameter("status")).thenReturn("status");
         Mockito.when(testRequest.getParameter("invoiceNumber")).thenReturn("invoiceNumber");
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         changeOrderServlet.doPost(testRequest, testResponse);
     }
 
@@ -63,7 +62,6 @@ public class ChangeOrderServletTest  {
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
         Mockito.when(testRequest.getParameter("product_id")).thenReturn("3");
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         changeOrderServlet.doPost(testRequest, testResponse);
     }
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RunWith(PowerMockRunner.class)
-public class LogOutServletTest  {
+public class LogOutServletTest {
     @Test
     public void testPost() throws ServletException, IOException {
         LogOutServlet logOutServlet = new LogOutServlet();

@@ -33,7 +33,6 @@ public class CartServletTest {
     HttpSession testSession = Mockito.mock(HttpSession.class);
     RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
 
-
     @Test
     public void testPostDoOrder() throws DBException, ServletException, IOException {
         CartServlet cartServlet = new CartServlet();
@@ -64,22 +63,21 @@ public class CartServletTest {
         Mockito.doNothing().when(mock).doOrder(map, user);
         cartServlet.doPost(testRequest, testResponse);
     }
+
     @Test
     public void testPostLanguage() throws ServletException, IOException {
         CartServlet cartServlet = new CartServlet();
-
         Map<String, String[]> map = new HashMap<>();
         map.put("language", new String[]{});
-
         String languageStr = "en";
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
         Mockito.when(testRequest.getParameter("language")).thenReturn(languageStr);
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.doNothing().when(testSession).setAttribute("language", languageStr);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         cartServlet.doPost(testRequest, testResponse);
     }
+
     @Test
     public void testPostDelete() throws DBException, ServletException, IOException {
         CartServlet cartServlet = new CartServlet();
@@ -103,7 +101,6 @@ public class CartServletTest {
                 .build();
         Mockito.when(testSession.getAttribute("currentUser")).thenReturn(user);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         cartServlet.doPost(testRequest, testResponse);
     }
 

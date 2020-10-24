@@ -1,5 +1,6 @@
 package com.pres.servlets.servlet.admin;
 
+import com.pres.constants.ErrorMessage;
 import com.pres.constants.Path;
 import com.pres.constants.ServletContent;
 import com.pres.database.repository.impl.OrderRepository;
@@ -74,8 +75,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandl
         try {
             OrderRepository.getInstance().deleteProductFromOrder(order, productId);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_DELETE_PRODUCT, e);
+            handling(req, resp, ErrorMessage.ERR_DELETE_PRODUCT);
         }
     }
 
@@ -84,8 +85,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandl
         try {
             order = OrderRepository.getInstance().findOrderById(order_id);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UPDATE_ORDER, e);
+            handling(req, resp, ErrorMessage.ERR_UPDATE_ORDER);
         }
         session.setAttribute(ServletContent.ORDER, order);
     }
@@ -94,8 +95,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandl
         try {
             OrderRepository.getInstance().updateInvoiceNumber(order);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UPDATE_ORDER_INVOICE_NUMBER, e);
+            handling(req, resp, ErrorMessage.ERR_UPDATE_ORDER_INVOICE_NUMBER);
         }
     }
 
@@ -103,8 +104,8 @@ public class ChangeOrderServlet extends HttpServlet implements ErrorMessageHandl
         try {
             OrderRepository.getInstance().updateStatus(order);
         } catch (DBException e) {
-            LOG.error(e.getMessage(), e);
-            handling(req, resp, e.getMessage());
+            LOG.error(ErrorMessage.ERR_UPDATE_ORDER_STATUS, e);
+            handling(req, resp, ErrorMessage.ERR_UPDATE_ORDER_STATUS);
         }
     }
 }

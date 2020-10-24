@@ -33,7 +33,7 @@ public class ContextListener implements ServletContextListener {
         LOG.debug("Log4j has been initialized");
     }
 
-    private void getServerPath(ServletContext servletContext){
+    private void getServerPath(ServletContext servletContext) {
         String path = String.join("", servletContext
                 .getRealPath("")
                 .split(ServletContent.PROJECT_NAME + ".+", 0));

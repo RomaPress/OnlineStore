@@ -28,7 +28,6 @@ public class ChangeProductServletTest {
     @Test
     public void testPostChange() throws ServletException, IOException {
         Mockito.when(testRequest.getParameter("product_id")).thenReturn("4");
-
         Map<String, String[]> map = new HashMap<>();
         map.put("change", new String[]{});
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
@@ -36,7 +35,6 @@ public class ChangeProductServletTest {
         Mockito.when(testRequest.getParameter("amount")).thenReturn("4");
         Mockito.when(testRequest.getParameter("price")).thenReturn("4");
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         changeProductServlet.doPost(testRequest, testResponse);
     }
 
@@ -47,7 +45,6 @@ public class ChangeProductServletTest {
         map.put("delete", new String[]{});
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         changeProductServlet.doPost(testRequest, testResponse);
     }
 
@@ -58,7 +55,6 @@ public class ChangeProductServletTest {
         Mockito.when(testRequest.getParameterMap()).thenReturn(map);
         Mockito.when(testRequest.getParameter("product_id")).thenReturn("4");
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(testRequestDispatcher);
-
         changeProductServlet.doGet(testRequest, testResponse);
     }
 }

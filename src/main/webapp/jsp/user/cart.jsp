@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Online Shop</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"
             type="text/javascript"></script>
@@ -26,7 +26,7 @@
     <c:set var="loc" value="${language}"/>
 </c:if>
 
-<!-- Use any element to open the sidenav -->
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-1">

@@ -29,7 +29,8 @@ public class ProfileServletTest {
     HttpServletResponse testResponse = Mockito.mock(HttpServletResponse.class);
     HttpSession testSession = Mockito.mock(HttpSession.class);
     RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
-    PrintWriter testPrintWriter =  Mockito.mock(PrintWriter.class);
+    PrintWriter testPrintWriter = Mockito.mock(PrintWriter.class);
+
     @Test
     public void testPost() throws ServletException, IOException, DBException {
         ProfileServlet profileServlet = new ProfileServlet();
@@ -52,13 +53,9 @@ public class ProfileServletTest {
                 .setPassword(str)
                 .build();
         Mockito.when(testSession.getAttribute("currentUser")).thenReturn(user1);
-
         Mockito.when(mock.updateUserInfo(user1, 1)).thenReturn(true);
-
-
         Mockito.when(testRequest.getParameter("postOffice")).thenReturn(postOfficeStr);
         Mockito.when(testResponse.getWriter()).thenReturn(testPrintWriter);
-
         profileServlet.doPost(testRequest, testResponse);
     }
 
@@ -73,7 +70,6 @@ public class ProfileServletTest {
         Mockito.when(testRequest.getSession()).thenReturn(testSession);
         Mockito.doNothing().when(testSession).setAttribute("language", languageStr);
         Mockito.when(testRequest.getRequestDispatcher(Mockito.anyString())).thenReturn(requestDispatcher);
-
         profileServlet.doPost(testRequest, testResponse);
     }
 }

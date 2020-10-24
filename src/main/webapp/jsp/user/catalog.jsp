@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Online Shop</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -41,7 +41,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-1">
-            <!-- Use any element to open the sidenav -->
             <span onclick="openNav()">
                  <div class="menu">
                       <b>☰</b>

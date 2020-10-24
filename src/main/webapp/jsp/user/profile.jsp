@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Online Shop</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -129,7 +129,8 @@
     <c:if test="${!empty language}">
         <c:set var="loc" value="${language}"/>
     </c:if>
-    <form class="modal-content" method="get" action="${pageContext.request.contextPath}/profile" onsubmit="checkPassword()">
+    <form class="modal-content" method="get" action="${pageContext.request.contextPath}/profile"
+          onsubmit="checkPassword()">
         <div class="containerAuth">
             <div class="inputBox">
                 <input type="text" id="firstName" required value="${currentUser.firstName}"
@@ -165,7 +166,7 @@
                        title="
                        <fmt:bundle basename="${loc}" prefix="title.">
                             <fmt:message key="numbers_20_symbol"></fmt:message>
-                       </fmt:bundle>"+()/>
+                       </fmt:bundle>" +()/>
                 <span>
                      <fmt:bundle basename="${loc}" prefix="registration.">
                          <fmt:message key="phone_number"></fmt:message>
@@ -216,7 +217,7 @@
             </div>
 
             <div class="inputBox">
-                <button type="submit" >
+                <button type="submit">
                     <fmt:bundle basename="${loc}" prefix="profile.">
                         <fmt:message key="change"></fmt:message>
                     </fmt:bundle>

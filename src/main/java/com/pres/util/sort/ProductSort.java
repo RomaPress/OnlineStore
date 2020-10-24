@@ -9,6 +9,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class used for performing sorting products.
+ *
+ * @author Pres Roman
+ **/
 public class ProductSort {
     public static final Logger LOG = Logger.getLogger(ProductSort.class);
 
