@@ -95,7 +95,7 @@
                         <fmt:message key="total"></fmt:message>
                     </fmt:bundle> = <c:out value="${total}"/>₴
                     <br>
-                    <form method="post" action="${pageContext.request.contextPath}/basket">
+                    <form method="post" action="${pageContext.request.contextPath}/cart">
                         <button class="btn" type="submit" name="order">
                             <fmt:bundle basename="${loc}" prefix="cart.">
                                 <fmt:message key="order"></fmt:message>
@@ -117,7 +117,7 @@
         </fmt:bundle>
     </a>
 
-    <c:if test="${currentUser.role != UNKNOW}">
+    <c:if test="${currentUser.role != UNKNOW || currentUser.role != BLOCK}">
         <a href="${pageContext.request.contextPath}/cart">
             <fmt:bundle basename="${loc}" prefix="side.">
                 <fmt:message key="cart"></fmt:message>
